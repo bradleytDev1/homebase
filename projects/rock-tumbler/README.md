@@ -45,16 +45,33 @@ parameters and re-cuts the end plates to match.
 ## What's in here
 
 ```
-tools/tumbler_calc.py     design calculator — speeds, spacing, torque, VACTUAL
-cad/tumbler.scad          parametric model — rollers, end plates, motor mount, liner
-firmware/tmc2209.py       single-wire UART driver for the TMC2209
-firmware/main.py          controller: soft start, reversal, slip detection, odometer
+tools/tumbler_calc.py       design calculator — speeds, spacing, torque, VACTUAL
+tools/timer1_calc.py        AVR Timer1 step-generation maths, verified
+cad/tumbler.scad            parametric model — rollers, end plates, mount, liner
+
+firmware/tmc2209.py         single-wire UART driver for the TMC2209   } Pico
+firmware/main.py            soft start, reversal, slip detection       }  route
+
+firmware/arduino/tumbler_uno/tumbler_uno.ino    same machine, classic  } Arduino
+firmware/arduino/test/                          step/dir drivers       }  route
 ```
 
-Every file self-tests. `python3 tumbler_calc.py --selftest`,
-`python3 tmc2209.py`, `python3 main.py --selftest`. The last one runs a
-simulated six-week tumbling campaign in about a millisecond, which is the most
-satisfying ratio in the project.
+Two firmware routes, same machine. Pick by what's in your parts drawer —
+§ *Driving it with what you have* below.
+
+Everything self-tests:
+
+```
+python3 tools/tumbler_calc.py --selftest
+python3 tools/timer1_calc.py  --selftest
+python3 firmware/tmc2209.py
+python3 firmware/main.py --selftest      # simulates a six-week campaign
+cd firmware/arduino/test && make         # compile-checks the sketch
+```
+
+`main.py --selftest` runs a full six-week tumbling campaign in about a
+millisecond, which is the most satisfying ratio in the project. The Arduino
+sketch compiles clean under `-Wall -Wextra` for an ATmega328P in 4.3 KB.
 
 ---
 
@@ -141,6 +158,112 @@ Print structural parts in **PETG or ASA**. And set the driver current *low* —
 `IRUN = 8`, about a quarter scale. The torque demand is 11 N·cm against a NEMA
 17's 40-plus. Every unnecessary amp is heat in a plastic bracket for a
 thousand hours.
+
+---
+
+## Driving it with what you have
+
+STEP/DIR is a universal interface. A4988, DRV8825, TB6600 and a TMC2209 in
+standalone mode are all identical from the microcontroller's side, so one
+Arduino sketch drives whatever's in the drawer.
+
+| Driver | Microsteps | Practical current | Notes |
+|---|---|---|---|
+| **A4988** | 1/16 | ~1 A bare, 1.5 A cooled | Cheapest, everywhere. Audible chop. |
+| **DRV8825** | 1/32 | ~1.5 A cooled | Smoother, has a FAULT pin worth wiring |
+| **TB6600** | 1/32 | 1–4 A, DIP-set | Opto-isolated and rugged. Minimum setting often ≥1 A — more than this needs |
+| **TMC2208/2209** | 1/256 | ~1.4 A | Quiet. 2209 adds the UART tricks |
+
+### The AVR has its own VACTUAL
+
+The obvious approach is AccelStepper in a loop. **Don't.** On a 16 MHz AVR it
+tops out near 4,000 steps/s because `runSpeed()` does floating-point work on
+every pulse, and this machine wants ~8,990 at 1/16. You'd get a barrel running
+at half speed, stuttering whenever the serial port is busy, and no obvious
+reason why.
+
+Instead: **Timer1 in CTC mode with hardware pin toggle.** Set `COM1A0` and
+`WGM12`, load `OCR1A`, and the silicon emits a rock-steady square wave on pin
+D9 forever with the CPU completely uninvolved — the same architectural win as
+VACTUAL, different chip.
+
+$$f_{step} = \frac{F_{CPU}}{2N(1 + OCR1A)}$$
+
+At 16 MHz with prescaler 1 that spans 122 Hz to 4 MHz, swallowing the whole
+design space whole. For the recommended build: `OCR1A = 889` → 8,988.8 Hz
+against a wanted 8,989.9. Error is bounded by half an OCR step —
+0.056% here, ~0.13% at the fastest sensible build. `tools/timer1_calc.py`
+verifies this, and D9 is not negotiable: it's OC1A.
+
+One gotcha the sketch handles: writing `OCR1A` *below* the current `TCNT1`
+misses the compare match, so the counter runs all the way to 0xFFFF before
+wrapping — a 4 ms hole in the step train, visible as a stutter during the
+soft-start ramp. Reset `TCNT1` when lowering the target.
+
+### Set the current low, and know the formula
+
+The single most common way to destroy a driver and a motor is leaving Vref at
+the factory setting. You need ~11 N·cm out of a 40–50 N·cm motor, which is
+roughly a quarter of rated current — and it runs 24/7 for six weeks.
+
+Measure Vref between the trimpot wiper and ground, powered, motor idle:
+
+| Driver | Formula | For 0.6 A |
+|---|---|---|
+| A4988, `R100` sense resistors (0.1 Ω) | V<sub>ref</sub> = I × 8 × R<sub>S</sub> | **0.48 V** |
+| A4988, `R068` (0.068 Ω) | " | **0.33 V** |
+| A4988, `R050` (0.05 Ω) | " | **0.24 V** |
+| DRV8825, `R100` (0.1 Ω) | V<sub>ref</sub> = I × 5 × R<sub>S</sub> | **0.30 V** |
+
+**Read the sense resistors on your actual board** — the little black chips
+beside the chip, marked `R050`/`R068`/`R100`. Clones vary, and using the wrong
+constant is a 2× current error in whichever direction hurts.
+
+Method: start at 0.6 A. Wind it down in 0.1 A steps until the barrel fails to
+start with a full charge, then add 30% back. Expect to land near 0.4 A, which
+is a cool driver and a motor you can hold your hand on.
+
+### Two bugs that only appear after week six
+
+Both are written around in the sketch; both would be invisible in testing.
+
+1. **`millis()` rolls over at 49.7 days.** A four-stage campaign runs months,
+   and a single stage at 42 days comes uncomfortably close. Every comparison
+   must use `(uint32_t)(now - then) >= interval`, which is correct across the
+   wrap. Comparing timestamps directly is not — `timer1_calc.py` demonstrates
+   it going negative by 4.29 billion.
+2. **AVR `float` is 32-bit.** Twenty-four bits of mantissa, so above ~16.7
+   million the gaps between representable values exceed 1 and small increments
+   vanish outright. A microstep counter crosses that in half an hour; a
+   realistic fractional accumulator drifts **4% in fifty minutes**. All dose
+   arithmetic in the sketch is integer — `revs = runSec × rpm_x10 / 600`, which
+   peaks around 3.6 × 10⁸ and never threatens a `uint32_t`.
+
+There's also no filesystem, so the odometer lives in EEPROM — which endures
+~100,000 writes. Saving every 500 revolutions is ~4,800 writes per campaign,
+enough to wear out a fixed location in about twenty batches. The sketch uses a
+32-slot ring with a checksum per record, picking the newest valid slot at boot,
+which both spreads the wear and survives a power cut landing mid-write.
+
+### About the noise, honestly
+
+I'd overstated this earlier. The dominant sound is the rocks — a barrel of
+stone and grit is a continuous gravel pour, and no driver choice touches that.
+The **TPU liner and tyres do far more for noise than the electronics do.**
+
+What the driver changes is *character*: A4988s and DRV8825s add a tonal whine,
+and tonal noise is more irritating per decibel than broadband. If it grates
+after a week, a TMC2208 is a few pounds and drops straight into an A4988
+socket — though expect the motor direction to flip, and note the current-setting
+procedure is different. That's a fix you can apply later without touching the
+sketch.
+
+### If you have an ESP32 instead
+
+The LEDC peripheral does the same hardware-PWM job as Timer1, and you get WiFi
+— which means watching a six-week run's dose curve from your phone, and getting
+a push notification when slip starts climbing. For a machine that runs
+unattended for a month and a half, that's more appealing than it first sounds.
 
 ---
 
@@ -280,8 +403,10 @@ can't.
 5. **Drive**: GT2 belt from the motor to the driven roller, motor mounted
    *outboard* and *out of the drip zone*. Wet silicon carbide in a stepper's
    bearings ends the stepper.
-6. **Wire** per the header comment in `firmware/main.py`, flash MicroPython,
-   copy `tmc2209.py` and `main.py` to the Pico.
+6. **Wire and flash**, per the header comment in whichever firmware you use:
+   Pico + TMC2209 (`firmware/main.py`), or Arduino + any STEP/DIR driver
+   (`firmware/arduino/tumbler_uno/`). Set the driver current *before* first
+   run — see § *Driving it with what you have*.
 7. **Calibrate**: run it empty, count barrel revolutions against a stopwatch,
    trim `f_clk` until commanded and measured agree.
 

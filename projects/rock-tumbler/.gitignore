@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
 *.stl
+*.elf
+firmware/arduino/test/sketch.cpp
