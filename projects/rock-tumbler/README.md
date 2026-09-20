@@ -309,6 +309,72 @@ ride height   =  (R_barrel + r_roller)·cos α
 
 ---
 
+## Build or buy?
+
+Commercial hobby tumblers run roughly $170–200. Worth being honest about what
+building actually buys, because it is not money.
+
+### What the market says it values
+
+The control panel of a current mid-range unit offers: power, **1–9 days**,
+**3 speeds**, pause/resume, and a "memory function" that survives a power cut.
+
+That timer is the whole argument for this project in one detail. **They count
+days.** The headline feature is remembering *elapsed time* across a power
+blip — which means they solved the same persistence problem this firmware
+solves, and then stored the weaker variable. Time is a proxy for abrasive dose;
+revolutions are the dose. Nobody ships the measurement that Archard's law says
+actually matters.
+
+Three fixed speeds is the same story. Three speeds are matched to *their*
+barrel. Change barrel diameter and the presets are simply wrong, because the
+right speed is a function of the geometry — and no panel button can know yours.
+
+| | Bought, ~$185 | This build |
+|---|---|---|
+| Progress metric | 1–9 days | Barrel revolutions (the real dose) |
+| Speed | 3 fixed presets | Computed from *your* barrel geometry |
+| Survives power cut | Yes ("memory function") | Yes, checksummed EEPROM ring |
+| Direction reversal | No | Every 6 hours |
+| Slip detection | No | Closed loop on a hall sensor |
+| Barrel | Good moulded rubber | The part worth buying |
+| Works on day one | Yes | After a weekend or three |
+
+### The honest arithmetic
+
+Assuming the motors, drivers, microcontroller and a power supply are already
+yours, the new parts are roughly:
+
+| Item | Approx |
+|---|---|
+| 4 × 608-2RS bearings, 8 mm rod | $12 |
+| PETG + TPU filament used | $18 |
+| Barrel (PVC route) | $12 |
+| GT2 belt and pulleys | $8 |
+| Hall sensor, magnet, fasteners | $10 |
+| **Total** | **~$60** |
+
+Grit costs the same either way — budget $25–40 for a four-stage kit — so it
+isn't a differentiator.
+
+So you save perhaps $120 and spend fifteen to twenty-five hours. As an economic
+trade that is well under minimum wage, and anyone presenting this as a
+money-saver is doing arithmetic they haven't checked.
+
+**Build it for the instrumentation, the parametric barrel sizing, and the fact
+that every part is a file you can reprint** — or simply because building it is
+the point. Those are good reasons. "It's cheaper" is not one.
+
+### The hybrid worth considering
+
+Buy the barrel, build everything else. It takes the one genuinely
+hard-to-DIY component off the table, costs a fraction of a whole machine, and
+leaves you building the half that is actually interesting — the drive, the
+geometry and the control. If the goal is a working tumbler *and* a good
+project rather than a purity test, this is the strongest path.
+
+---
+
 ## Don't print the barrel. Do print the liner.
 
 **Don't print the barrel.** Three reasons, each sufficient: printed layer lines
@@ -317,10 +383,16 @@ excavates layer boundaries; and a leaking tumbler barrel is a legendarily
 miserable event involving abrasive slurry and every horizontal surface you own.
 
 Good barrels, in order of preference:
-1. **4" PVC DWV pipe** with a threaded cleanout adapter and plug — a real
-   screw-top barrel for a few pounds, and genuinely watertight.
-2. A **wide-mouth HDPE jar** with a gasketed screw lid.
-3. An actual **Lortone/Thumler's rubber barrel**, if one turns up secondhand.
+1. **A replacement rubber barrel bought as a spare part.** Lortone and
+   Thumler's sell barrels separately, and this is the one component where the
+   commercial product is genuinely better engineering than anything you can
+   make. Moulded rubber, a seal designed for six wet weeks, and the hexagonal
+   lift already in it. Buying just the barrel costs a fraction of a whole
+   machine and removes the project's single biggest failure risk.
+2. **4" PVC DWV pipe** with a threaded cleanout adapter and plug — a real
+   screw-top barrel for a few pounds, and genuinely watertight. Needs the
+   printed liner below to tumble properly.
+3. A **wide-mouth HDPE jar** with a gasketed screw lid.
 
 **Do print the liner.** This is the part that earns the printer its keep.
 Commercial barrels are rubber-lined and hexagonal, for two reasons that both
