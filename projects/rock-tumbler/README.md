@@ -394,18 +394,88 @@ Good barrels, in order of preference:
    printed liner below to tumble properly.
 3. A **wide-mouth HDPE jar** with a gasketed screw lid.
 
-**Do print the liner.** This is the part that earns the printer its keep.
-Commercial barrels are rubber-lined and hexagonal, for two reasons that both
-matter:
+**Do print the liner.** This is the part that earns the printer its keep, and
+it's doing two separable jobs:
 
-- **The rubber** damps noise and cushions the stone.
-- **The flats lift the load** so it cascades instead of sliding as a lump
-  against a smooth wall. A bare PVC pipe tumbles badly. The same pipe with a
-  hexagonal liner tumbles like a machine that cost ten times as much.
+- **Damping** — killing noise and cushioning the stone.
+- **Lift** — catching the charge so it cascades instead of sliding as a lump
+  against a smooth wall.
 
-So: print a **hexagonal TPU sleeve** that press-fits inside the pipe
-(`PART="hex_liner"`). TPU is exceptionally abrasion-resistant — it's what the
-tyres are made of too, and it's most of why the machine is quiet.
+Worth separating those, because the best material for one isn't the best for
+the other.
+
+### Lift: bars beat flats
+
+Commercial barrels don't use a plain hexagon. They use **discrete lifter
+bars** — the same solution tumbling mills have used for a century. Both
+approaches deliver a similar *amount* of lift; in a 100 mm barrel a hex liner
+varies the inner radius by about 6.1 mm and a 6 mm bar by 6.0 mm. They deliver
+it completely differently:
+
+| | Lift | Engagement |
+|---|---|---|
+| Hexagon | 6.1 mm | Gradual, spread around each flat |
+| Octagon | 3.5 mm | Gentler still |
+| 6 mm lifter bar | 6.0 mm | A discrete step with a definite release point |
+
+Bars give positive engagement and don't rely on shell friction. Both modules
+are in the CAD — `PART="hex_liner"` and `PART="lifter_liner"` — and the lifter
+count, height and taper are parameters.
+
+**One change this build forces.** Commercial barrels use an *asymmetric* scoop
+profile, which lifts beautifully — in one direction. They can afford that
+because they only ever turn one way. This machine reverses every six hours, so
+an asymmetric bar would spend half its life dragging backwards through the
+charge. `lifter_bar()` is therefore a **symmetric trapezoid**: slightly worse
+at lifting than a scoop, identical in both directions. A feature constraining a
+geometry three subsystems away is the sort of thing that only shows up when you
+design the whole machine.
+
+### Damping: steal the material, not the design
+
+The commercial barrels are **tire rubber** — SBR/natural rubber loaded with
+carbon black. That's not a cost-cutting choice, it's the right one: tire
+compounds are formulated for high hysteretic damping *and* abrasion resistance,
+which is precisely the pair you want here.
+
+TPU is excellent on abrasion but comparatively resilient — it gives energy back
+rather than dissipating it as heat. So for noise specifically, printed TPU is
+**not** the best answer available to you. Actual rubber is, and it's nearly
+free: a **truck mudflap, an old inner tube, or a offcut of conveyor belt**,
+contact-cemented inside the pipe.
+
+The strong combination is to use each material for its own job:
+
+> **Rubber sheet for damping, bonded inside the pipe. Printed TPU lifter bars
+> on top of it for geometry.** Cheap, quiet, and each part is doing what it's
+> actually good at.
+
+### About that 40 dB
+
+The mechanism is real and the direction is right — this is exactly the lever I
+pointed at when correcting myself earlier: the barrel matters far more for
+noise than the electronics do. It's telling that a manufacturer's entire
+headline feature is the barrel material.
+
+The specific numbers are marketing, though. 70 dB → 40 dB is a **30 dB**
+reduction: a factor of 1,000 in acoustic power. And 40 dB is roughly a quiet
+library, which a barrel of tumbling rock is not going to be. Their own two
+claims also disagree with each other — by the usual convention that 10 dB is a
+halving of perceived loudness, 30 dB would be ~87% quieter, while the "75%" on
+the banner corresponds to about 20 dB.
+
+Expect a real, worthwhile improvement. Don't expect a library.
+
+### Steal the lid, too
+
+That clamp lid — a metal disc pulled down onto a rubber flange by a central
+wing nut — is better than a threaded cleanout plug for one specific reason:
+**there are no threads in the grit path.** Silicon carbide in a tapered thread
+galls it, and eventually you own a barrel you cannot open. A compression seal
+has nothing to seize, and it opens with wet, gritty hands.
+
+If you go the PVC route, a cleanout plug still works — just expect to clean the
+threads religiously, every single time.
 
 ---
 

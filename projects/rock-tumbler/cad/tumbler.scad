@@ -26,7 +26,7 @@
 // RENDER ONE PART
 //   openscad -D 'PART="roller_hub"' -o roller_hub.stl tumbler.scad
 //   PART values: "roller_hub" "tyre" "end_plate" "motor_mount"
-//                "hex_liner" "assembly"
+//                "hex_liner" "lifter_liner" "assembly"
 // ===========================================================================
 
 // --- PART SELECTOR ---------------------------------------------------------
@@ -68,6 +68,12 @@ NEMA_SCREW_D   = 3.4;       // M3 clearance
 // --- BARREL LINER ----------------------------------------------------------
 LINER_FACETS   = 6;         // hexagonal lift is the classic; 6 or 8
 LINER_T        = 4;         // TPU liner thickness at the flats, mm
+
+// Lifter-bar liner (the alternative to the hexagon -- see lifter_liner below).
+LIFTER_N       = 6;         // number of bars around the bore
+LIFTER_H       = 6;         // how far each bar protrudes inward, mm
+LIFTER_W       = 9;         // bar width at its base, mm
+LIFTER_TIP     = 4;         // bar width at its tip, mm (< LIFTER_W = tapered)
 
 $fn = 96;
 
@@ -240,6 +246,65 @@ module hex_liner() {
 }
 
 // ===========================================================================
+// MODULE: lifter_bar
+//   Cross-section of one lifter, extruded along the barrel axis. The base sits
+//   on the liner's inner wall and the bar protrudes toward the axis.
+//
+//   SYMMETRY IS NOT OPTIONAL HERE. Commercial barrels use an asymmetric scoop
+//   profile, which lifts beautifully -- in one direction. They can afford that
+//   because they only ever turn one way. This machine reverses every six hours
+//   to stop the load packing into a channel, so an asymmetric bar would spend
+//   half its life dragging backwards through the charge. Symmetric trapezoid
+//   it is: slightly worse at lifting than a scoop, identical in both directions.
+//
+//   Inputs:  h (number) -- extrusion length along the barrel axis, mm.
+//   Returns: a solid positioned with its base at the origin, growing in -X.
+// ===========================================================================
+module lifter_bar(h) {
+    linear_extrude(height = h)
+        polygon([[0,           -LIFTER_W / 2],
+                 [0,            LIFTER_W / 2],
+                 [-LIFTER_H,    LIFTER_TIP / 2],
+                 [-LIFTER_H,   -LIFTER_TIP / 2]]);
+}
+
+// ===========================================================================
+// MODULE: lifter_liner
+//   A round TPU sleeve carrying discrete lifter bars -- the mineral-processing
+//   answer to the same problem the hexagon solves, and the one commercial
+//   barrels actually use.
+//
+//   WHY BARS RATHER THAN FLATS. Both exist to stop the charge sliding as a
+//   lump against a smooth shell. For a 100 mm barrel they deliver a similar
+//   amount of lift -- a hex varies the inner radius by about 6.1 mm, a 6 mm
+//   bar by 6.0 mm -- but they deliver it completely differently. The hexagon
+//   spreads its lift gradually around each flat; a bar presents a discrete
+//   step that catches the charge and carries it to a definite release point.
+//   Tumbling mills have used lifter bars for a century for exactly this
+//   reason: positive engagement, and no reliance on shell friction.
+//
+//   Print in TPU and bond it to a rubber sheet liner if you want both the
+//   geometry and the damping -- see the README.
+//
+//   Inputs:  none (uses globals). Output: a hollow sleeve, axis on Z.
+//   Print:   TPU 95A, 3 perimeters, no supports. Roll it to insert.
+// ===========================================================================
+module lifter_liner() {
+    r_out = BARREL_ID / 2 - 0.5;        // outer wall touches the barrel bore
+    r_in  = r_out - LINER_T;
+    h     = BARREL_LEN - 6;
+    union() {
+        difference() {
+            cylinder(r = r_out, h = h);
+            translate([0, 0, -1]) cylinder(r = r_in, h = h + 2);
+        }
+        for (i = [0 : LIFTER_N - 1])
+            rotate([0, 0, i * 360 / LIFTER_N])
+                translate([r_in, 0, 0]) lifter_bar(h);
+    }
+}
+
+// ===========================================================================
 // MODULE: assembly
 //   Non-printable visualisation: confirms at a glance that the barrel actually
 //   sits in the vee at the height the arithmetic promised, and that nothing
@@ -271,4 +336,5 @@ else if (PART == "tyre")        tyre();
 else if (PART == "end_plate")   end_plate();
 else if (PART == "motor_mount") motor_mount();
 else if (PART == "hex_liner")   hex_liner();
+else if (PART == "lifter_liner") lifter_liner();
 else                            assembly();
