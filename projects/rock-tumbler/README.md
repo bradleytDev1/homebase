@@ -345,14 +345,48 @@ right speed is a function of the geometry — and no panel button can know yours
 Assuming the motors, drivers, microcontroller and a power supply are already
 yours, the new parts are roughly:
 
+**Chassis and drive — the same whichever barrel you choose**
+
 | Item | Approx |
 |---|---|
-| 4 × 608-2RS bearings, 8 mm rod | $12 |
-| PETG + TPU filament used | $18 |
-| Barrel (PVC route) | $12 |
-| GT2 belt and pulleys | $8 |
-| Hall sensor, magnet, fasteners | $10 |
-| **Total** | **~$60** |
+| 4 × 608-2RS sealed bearings | $8 |
+| 8 mm smooth rod, 2 × 220 mm | $6 |
+| GT2 belt + 2 × 20T pulleys | $8 |
+| Hall sensor (A3144) + magnet | $4 |
+| M3/M5 fasteners, grub screws | $6 |
+| PETG filament — plates, hubs, motor mount | $12 |
+| TPU filament — roller tyres | $6 |
+| **Subtotal** | **~$50** |
+
+**Then one of three barrel routes**
+
+| Route | Parts | Approx | Noise | Verdict |
+|---|---|---|---|---|
+| **A — PVC + rubber + lifters** | 4" DWV pipe, cleanout adapter + plug, rubber sheet, TPU filament for `lifter_liner` | **$26** | Good | Best value; the recommended build |
+| **B — PVC + printed liner only** | as above, no rubber | $20 | Fair | Simplest; louder and harsher on stone |
+| **C — Bought rubber barrel** | Lortone/Thumler's spare part | $40–60 | Best | Buy the hard part, build the rest |
+
+So roughly **$70–110 all in**, against $170–200 for a finished machine.
+
+**Sourcing the rubber sheet.** You want 3–6 mm of high-damping rubber, and the
+best options are nearly free:
+
+| Source | Thickness | Cost | Notes |
+|---|---|---|---|
+| **Truck mudflap** | 5–6 mm | $10–15 | Often literally recycled tire rubber — the same material the commercial barrels advertise |
+| **Motorcycle inner tube**, split open | 2–3 mm | $0–10 | Free from any bike shop's scrap bin. Thinner, so less damping |
+| **Conveyor belt offcut** | 5–10 mm | often free | Fabric-plied and tough; ask at any quarry or warehouse |
+| Bicycle inner tube | ~1 mm | free | Too thin to damp much — skip it |
+
+For a 100 mm × 120 mm barrel you need a piece about **310 × 115 mm** plus
+10 mm of overlap. One mudflap yields several.
+
+**You don't need adhesive.** Set `RUBBER_T` in the CAD to your sheet's measured
+thickness and both liner modules shrink to suit, so the printed sleeve's own
+springiness clamps the rubber against the barrel wall. Roll the rubber in,
+press the liner in after it, done — and it all comes out again for cleaning,
+which a glued liner never does. OpenSCAD echoes the exact sheet size to cut
+when `RUBBER_T > 0`.
 
 Grit costs the same either way — budget $25–40 for a four-stage kit — so it
 isn't a differentiator.

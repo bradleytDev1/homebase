@@ -69,6 +69,13 @@ NEMA_SCREW_D   = 3.4;       // M3 clearance
 LINER_FACETS   = 6;         // hexagonal lift is the classic; 6 or 8
 LINER_T        = 4;         // TPU liner thickness at the flats, mm
 
+// Thickness of a rubber sheet fitted between the barrel wall and the printed
+// liner, in mm. Set to 0 for a printed liner alone. When non-zero, both liner
+// modules shrink to suit, so the printed sleeve's own springiness clamps the
+// rubber against the barrel wall and NO ADHESIVE IS NEEDED. Measure your
+// actual sheet: mudflap is usually 5-6 mm, a split motorcycle inner tube 2-3.
+RUBBER_T       = 0;
+
 // Lifter-bar liner (the alternative to the hexagon -- see lifter_liner below).
 LIFTER_N       = 6;         // number of bars around the bore
 LIFTER_H       = 6;         // how far each bar protrudes inward, mm
@@ -96,6 +103,10 @@ echo(str("barrel OD = ", BARREL_OD, " mm"));
 echo(str("roller shaft spacing = ", ROLLER_SPACE, " mm"));
 echo(str("barrel ride height above shafts = ", RIDE_HEIGHT, " mm"));
 echo(str("plate = ", PLATE_W, " x ", PLATE_H, " x ", PLATE_T, " mm"));
+if (RUBBER_T > 0)
+    echo(str("rubber sheet: cut ", 3.14159 * (BARREL_ID - 2 * RUBBER_T), " x ",
+             BARREL_LEN - 6, " mm (circumference at the mid-thickness, "
+             "plus ~10 mm overlap)"));
 
 // ===========================================================================
 // MODULE: roller_hub
@@ -235,8 +246,9 @@ module motor_mount() {
 //   Print:   TPU 95A, 3 perimeters, no supports. Roll it to insert.
 // ===========================================================================
 module hex_liner() {
-    // Circumscribed radius so the hex corners touch the barrel bore.
-    r_out = BARREL_ID / 2 - 0.5;
+    // Circumscribed radius so the hex corners touch the barrel bore, less any
+    // rubber sheet fitted behind it.
+    r_out = BARREL_ID / 2 - 0.5 - RUBBER_T;
     r_in  = r_out - LINER_T;
     difference() {
         cylinder(r = r_out, h = BARREL_LEN - 6, $fn = LINER_FACETS);
@@ -290,7 +302,7 @@ module lifter_bar(h) {
 //   Print:   TPU 95A, 3 perimeters, no supports. Roll it to insert.
 // ===========================================================================
 module lifter_liner() {
-    r_out = BARREL_ID / 2 - 0.5;        // outer wall touches the barrel bore
+    r_out = BARREL_ID / 2 - 0.5 - RUBBER_T;   // sits against rubber, or the bore
     r_in  = r_out - LINER_T;
     h     = BARREL_LEN - 6;
     union() {

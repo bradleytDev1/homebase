@@ -64,6 +64,9 @@ brew install arduino-cli              # to actually flash the sketch
 
 ## Open items
 
+- **The liner can be printed with or without a rubber sheet behind it.** Set
+  `RUBBER_T` in `cad/tumbler.scad` to the measured sheet thickness; both liner
+  modules shrink so the printed sleeve clamps the rubber without adhesive.
 - **The OpenSCAD has never been visually rendered.** It was written and
   structurally checked in a container without OpenSCAD installed. Render the
   assembly view first (`openscad cad/tumbler.scad`, no `-D`) and confirm the
