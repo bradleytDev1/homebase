@@ -3,10 +3,28 @@
 A two-roller rotary rock tumbler driven by a NEMA 17. Design is derived from
 mill physics rather than rules of thumb; see `README.md` for the full rationale.
 
+## Where things stand
+
+Designed and verified in software; **nothing physical exists yet**. Read
+`WHATS_NEXT.md` before starting work — it carries the prioritised plan, the
+four open decisions, and the risk list. `LESSONS_LEARNED.md` records the
+verification failures that shaped how this repo checks itself.
+
+Build log, newest first:
+
+| Done | What |
+|---|---|
+| CAD rendered and proven | OpenSCAD 2026.09.18 run for the first time. Found the file had never parsed (adjacent string literals) and that the rollers sat 3 mm off, putting the barrel end on a flange. Both fixed and proven by boolean interference test |
+| `tools/render.sh` added | Parse, manifold export, interference tests with a control, renders. Mandatory after any CAD change |
+| Barrel design revised | Lifter bars alongside the hex liner; `RUBBER_T` lets a rubber sheet sit behind the printed liner with no adhesive |
+| Arduino route added | Timer1 CTC hardware step generation; wrap-safe timing; integer dose maths; EEPROM ring odometer |
+| Pico route + calculators | TMC2209 VACTUAL drive, revolution-dose odometer, slip detection, reversal |
+
 ## Layout
 
 ```
 tools/tumbler_calc.py       barrel speed, cradle geometry, torque, VACTUAL
+tools/render.sh             CAD: parse, manifold, interference, renders
 tools/timer1_calc.py        AVR Timer1 step-generation maths
 cad/tumbler.scad            parametric OpenSCAD model
 firmware/tmc2209.py         TMC2209 single-wire UART driver      } Pico route
@@ -27,6 +45,10 @@ python3 firmware/main.py --selftest       # simulates a six-week campaign
 cd firmware/arduino/test && make          # compile-checks the .ino, expect 0 warnings
 tools/render.sh                           # CAD: parse, manifold, interference, renders
 ```
+
+The Arduino compile-check needs the AVR toolchain, which is **not currently
+installed on this Mac**: `brew tap osx-cross/avr && brew install avr-gcc`.
+The other five run as-is.
 
 All six must pass before any commit. They run without hardware.
 
@@ -63,7 +85,8 @@ verify that happened.
 ## macOS toolchain
 
 ```bash
-brew install --cask openscad          # render the CAD
+brew install --cask openscad@snapshot   # render the CAD; the plain
+                                        # "openscad" cask is disabled (Gatekeeper)
 brew tap osx-cross/avr && brew install avr-gcc   # for firmware/arduino/test
 brew install arduino-cli              # to actually flash the sketch
 ```

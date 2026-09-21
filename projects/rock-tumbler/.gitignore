@@ -1,5 +1,7 @@
 __pycache__/
 *.pyc
 *.stl
+*.elf
 build/
 .DS_Store
+firmware/arduino/test/sketch.cpp

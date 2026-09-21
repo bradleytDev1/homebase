@@ -6,6 +6,24 @@ make it *count*.
 
 ---
 
+## Project status
+
+**Designed, computed and verified in software. Nothing built yet.**
+
+| Area | State |
+|---|---|
+| Design calculations | ✅ Verified — self-tests pass; the critical-speed model reproduces a real Lortone 3A's 55–60 rpm |
+| CAD | ✅ Verified — all 6 parts export manifold STLs, no interference, geometry matches the calculator to 4 figures |
+| Pico + TMC2209 firmware | ✅ Logic tested — simulated six-week campaign passes. Never run on hardware |
+| Arduino firmware | ✅ Compiles clean for ATmega328P (`-Wall -Wextra`, 4.3 KB). Never run on hardware |
+| Physical build | ⬜ **Nothing printed, wired or measured** |
+
+Every clearance in this document is nominal, with no allowance for printer
+tolerance. The step rate has never been measured on a scope.
+
+📄 **[WHATS_NEXT.md](WHATS_NEXT.md)** — the path from here to tumbling rock
+📄 **[LESSONS_LEARNED.md](LESSONS_LEARNED.md)** — what this cost to find out
+
 ## The short version
 
 A rotary tumbler is a barrel resting in the vee between two parallel rollers.
@@ -45,6 +63,11 @@ parameters and re-cuts the end plates to match.
 ## What's in here
 
 ```
+README.md                   this file — the design and its reasoning
+WHATS_NEXT.md               prioritised build plan, decisions, risks
+LESSONS_LEARNED.md          what went wrong and what it taught
+CLAUDE.md                   working notes: invariants, verification, open items
+
 tools/tumbler_calc.py       design calculator — speeds, spacing, torque, VACTUAL
 tools/timer1_calc.py        AVR Timer1 step-generation maths, verified
 cad/tumbler.scad            parametric model — rollers, end plates, mount, liner
