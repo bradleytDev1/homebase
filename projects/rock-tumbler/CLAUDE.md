@@ -25,9 +25,15 @@ python3 tools/timer1_calc.py  --selftest
 python3 firmware/tmc2209.py
 python3 firmware/main.py --selftest       # simulates a six-week campaign
 cd firmware/arduino/test && make          # compile-checks the .ino, expect 0 warnings
+tools/render.sh                           # CAD: parse, manifold, interference, renders
 ```
 
-All five must pass before any commit. They run without hardware.
+All six must pass before any commit. They run without hardware.
+
+`tools/render.sh` is not optional after a CAD change. The file sat committed
+for several sessions without OpenSCAD ever being run against it, and when it
+finally was it did not parse at all, and then had a 3 mm misalignment that put
+the barrel end on a roller flange. Neither was visible by reading it.
 
 ## Constraints that are load-bearing
 
@@ -67,10 +73,16 @@ brew install arduino-cli              # to actually flash the sketch
 - **The liner can be printed with or without a rubber sheet behind it.** Set
   `RUBBER_T` in `cad/tumbler.scad` to the measured sheet thickness; both liner
   modules shrink so the printed sleeve clamps the rubber without adhesive.
-- **The OpenSCAD has never been visually rendered.** It was written and
-  structurally checked in a container without OpenSCAD installed. Render the
-  assembly view first (`openscad cad/tumbler.scad`, no `-D`) and confirm the
-  barrel sits in the vee at the computed ride height before printing anything.
+- ~~The OpenSCAD has never been visually rendered.~~ **Done.** OpenSCAD
+  2026.09.18 (`brew install --cask openscad@snapshot`; the plain `openscad`
+  cask is disabled over a Gatekeeper check). All six parts export manifold
+  STLs, the barrel clears both the end plates and the roller flanges, and the
+  echoed geometry matches `tumbler_calc.py` to four figures. Renders are in
+  `cad/renders/`.
+- **Nothing has been printed or measured in the real world yet.** Every
+  clearance above is nominal, with no allowance for printer tolerance. Print
+  one roller hub and one end plate first and check the 608 bearing is a firm
+  press fit before committing to the set.
 - The Arduino sketch is compile-verified, not run on hardware. Timer1 output
   should be confirmed with a scope or frequency counter on D9 before trusting
   the step rate.

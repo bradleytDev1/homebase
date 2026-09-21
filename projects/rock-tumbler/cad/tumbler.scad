@@ -26,7 +26,7 @@
 // RENDER ONE PART
 //   openscad -D 'PART="roller_hub"' -o roller_hub.stl tumbler.scad
 //   PART values: "roller_hub" "tyre" "end_plate" "motor_mount"
-//                "hex_liner" "lifter_liner" "assembly"
+//                "hex_liner" "lifter_liner" "assembly" "section"
 // ===========================================================================
 
 // --- PART SELECTOR ---------------------------------------------------------
@@ -105,7 +105,7 @@ echo(str("barrel ride height above shafts = ", RIDE_HEIGHT, " mm"));
 echo(str("plate = ", PLATE_W, " x ", PLATE_H, " x ", PLATE_T, " mm"));
 if (RUBBER_T > 0)
     echo(str("rubber sheet: cut ", 3.14159 * (BARREL_ID - 2 * RUBBER_T), " x ",
-             BARREL_LEN - 6, " mm (circumference at the mid-thickness, "
+             BARREL_LEN - 6, " mm (circumference at the mid-thickness, ",
              "plus ~10 mm overlap)"));
 
 // ===========================================================================
@@ -330,16 +330,40 @@ module assembly() {
             translate([0, 0, -PLATE_T / 2]) color("SteelBlue") end_plate();
 
     // Rollers, laid along Y at the computed spacing.
+    // Position so the TYRE BAND is centred on the barrel, not the whole hub:
+    // the hub begins with a flange, so the band starts FLANGE_H further along.
     for (x = [-ROLLER_SPACE / 2, ROLLER_SPACE / 2])
-        translate([x, -(BARREL_LEN / 2 + 5), AXIS_Z]) rotate([-90, 0, 0]) {
+        translate([x, -(BARREL_LEN / 2 + 2 + FLANGE_H), AXIS_Z]) rotate([-90, 0, 0]) {
             color("DimGray") roller_hub();
             color("Black") translate([0, 0, FLANGE_H]) tyre();
         }
+
+    // Shafts, running through both end plates.
+    for (x = [-ROLLER_SPACE / 2, ROLLER_SPACE / 2])
+        color("Silver")
+            translate([x, -ROD_LEN / 2, AXIS_Z]) rotate([-90, 0, 0])
+                cylinder(d = ROD_D, h = ROD_LEN);
 
     // Ghosted barrel, sitting where RIDE_HEIGHT says it should.
     color("Gainsboro", 0.35)
         translate([0, -BARREL_LEN / 2, AXIS_Z + RIDE_HEIGHT])
             rotate([-90, 0, 0]) cylinder(d = BARREL_OD, h = BARREL_LEN);
+}
+
+// ===========================================================================
+// MODULE: section
+//   The assembly cut in half across the barrel axis. Render this, not the
+//   front elevation: from the front the near end plate occludes the rollers
+//   and the barrel's lower half, so you cannot see the one thing worth
+//   checking -- that the barrel really does sit in the vee at RIDE_HEIGHT,
+//   touching both tyres and nothing else.
+//   Inputs:  none. Output: a rendered scene, not printable.
+// ===========================================================================
+module section() {
+    difference() {
+        assembly();
+        translate([-400, -800, -400]) cube([800, 800, 800]);   // keep y > 0
+    }
 }
 
 // --- DISPATCH --------------------------------------------------------------
@@ -349,4 +373,5 @@ else if (PART == "end_plate")   end_plate();
 else if (PART == "motor_mount") motor_mount();
 else if (PART == "hex_liner")   hex_liner();
 else if (PART == "lifter_liner") lifter_liner();
+else if (PART == "section")     section();
 else                            assembly();

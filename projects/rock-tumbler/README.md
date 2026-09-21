@@ -560,8 +560,8 @@ can't.
 
 1. **Run the calculator** with your barrel's real measured OD.
    `python3 tools/tumbler_calc.py --barrel 100 --roller 40`
-2. **Paste the numbers** into the parameter block of `cad/tumbler.scad` and
-   render the parts:
+2. **Paste the numbers** into the parameter block of `cad/tumbler.scad`, run
+   `tools/render.sh` to confirm nothing collides, then render the parts:
    ```
    openscad -D 'PART="end_plate"'  -o end_plate.stl  cad/tumbler.scad
    openscad -D 'PART="roller_hub"' -o roller_hub.stl cad/tumbler.scad
@@ -569,8 +569,10 @@ can't.
    openscad -D 'PART="motor_mount"' -o motor_mount.stl cad/tumbler.scad
    openscad -D 'PART="hex_liner"'  -o hex_liner.stl  cad/tumbler.scad
    ```
-   Open it with no `-D` for a ghosted assembly view — worth a look to confirm
-   the barrel really does sit where the arithmetic claims.
+   Open it with no `-D` for a ghosted assembly view, or `PART="section"` for a
+   cut-through of the cradle — which is the view that actually shows the barrel
+   sitting in the vee. A front elevation does not: the near end plate hides
+   everything behind it. Current renders are in `cad/renders/`.
 3. **Print**: 2 end plates, 2 roller hubs, 1 motor mount in PETG/ASA, 4
    perimeters, 30% infill. 2 tyres and 1 liner in TPU 95A.
 4. **Assemble**: 608-2RS bearings press into the plates, 8 mm rod through,
