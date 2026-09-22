@@ -399,7 +399,7 @@ article del{color:var(--soft)}
 <wa-page mobile-breakpoint="900">
 <div slot="header" class="topbar"><!--{{DOCKET_NAV}}--><span class="brand">The <span>Docket</span></span><span class="sub">A stepper-driven rock tumbler</span><span class="grow"></span><wa-button id="expandall" size="s" appearance="plain"><wa-icon slot="start" name="chevron-down"></wa-icon>Expand all</wa-button><wa-button id="collapseall" size="s" appearance="plain"><wa-icon slot="start" name="chevron-right"></wa-icon>Collapse all</wa-button></div>
 <nav slot="navigation">
-<p class="built">built 2026-09-22 17:03<span id="diag"></span></p>
+<p class="built">built 2026-09-22 17:31<span id="diag"></span></p>
 <div class="look"><wa-select id="look" size="s" value="docket" aria-label="Look"><wa-option value="docket">Docket</wa-option><wa-option value="mellow">Mellow</wa-option><wa-option value="playful">Playful</wa-option><wa-option value="classic">Classic</wa-option></wa-select><wa-button id="themebtn" size="s" appearance="outlined"><wa-icon name="circle-half-stroke" label="Light or dark (or press t)"></wa-icon></wa-button></div>
 <input id="filter" placeholder="Filter  (press /)" autocomplete="off">
 <div class="jumps"><a href="#top">Front matter</a><a href="#index">Code index</a></div>
@@ -507,6 +507,7 @@ article del{color:var(--soft)}
 <li><a href="#questions-q-07-should-the-console-show-anything-of-the-tumblers-own">Q-07 — Should the console show anything of the tumbler&#x27;s own?</a></li>
 <li><a href="#questions-q-08-may-the-two-downloaded-reference-designs-be-committed-to-the-repository">Q-08 — May the two downloaded reference designs be committed to the repository?</a></li>
 <li><a href="#questions-q-09-which-ideas-from-the-reference-designs-should-be-adopted">Q-09 — Which ideas from the reference designs should be adopted?</a></li>
+<li><a href="#questions-q-10-can-the-prusa-mini-print-tpu">Q-10 — Can the Prusa MINI print TPU?</a></li>
 </ul>
 <li><a href="#questions-answered">Answered</a></li>
 </ul>
@@ -515,6 +516,7 @@ article del{color:var(--soft)}
 <a class="jump" href="#devplan">Open this document</a>
 <ul class="heads">
 <li><a href="#devplan-layout">Layout</a></li>
+<li><a href="#devplan-workshop-inventory">Workshop inventory</a></li>
 <li><a href="#devplan-one-model-computed-twice">One model, computed twice</a></li>
 <li><a href="#devplan-decisions-with-a-technical-shape">Decisions with a technical shape</a></li>
 <ul>
@@ -531,6 +533,7 @@ article del{color:var(--soft)}
 <li class="doc"><wa-details class="docd" summary=""><span slot="summary" class="dsum"><span class="dlab"><small>When</small><b>CHANGELOG.md</b></span></span>
 <a class="jump" href="#changelog">Open this document</a>
 <ul class="heads">
+<li><a href="#changelog-071-2026-09-22-checked-against-the-owners-device-inventory">0.7.1 — 2026-09-22 — Checked against the owner&#x27;s device inventory</a></li>
 <li><a href="#changelog-070-2026-09-22-two-published-designs-evaluated">0.7.0 — 2026-09-22 — Two published designs evaluated</a></li>
 <li><a href="#changelog-061-2026-09-22-rendersh-no-longer-counts-stale-stls">0.6.1 — 2026-09-22 — render.sh no longer counts stale STLs</a></li>
 <li><a href="#changelog-060-2026-09-22-the-docket-adopted">0.6.0 — 2026-09-22 — The Docket adopted</a></li>
@@ -609,7 +612,7 @@ when a session ends. The Docket exists so that a decision made in conversation �
 in an answer, an aside, a correction, a choice between options — is written down
 in the same turn it is made, in the document that owns it.</p><p>It is built to be read by someone arriving cold: a person, or a fresh Claude
 session with no memory of how any of this came to be.</p>
-<ul class="stats"><li><b>9</b><span>documents</span></li><li><b>41</b><span>codes</span></li><li><b>13</b><span>decisions</span></li><li><b>9</b><span>open questions</span></li><li><b>0</b><span>answered</span></li><li><b>19</b><span>lessons</span></li></ul></div>
+<ul class="stats"><li><b>9</b><span>documents</span></li><li><b>42</b><span>codes</span></li><li><b>13</b><span>decisions</span></li><li><b>10</b><span>open questions</span></li><li><b>0</b><span>answered</span></li><li><b>19</b><span>lessons</span></li></ul></div>
 <h2 class="section">How it is kept</h2>
 <p>Loosely after the TASB policy manuals — coded sections, a permanent numbering, and an index that makes a topic followable across every volume that touches it.</p>
 <div class="practice"><b>Codes are permanent.</b> A letter is a domain; each added letter is a level down: <code>C</code> a domain, <code>CA</code> an area within it, <code>CAA</code> a feature, <code>CAAA</code> a detail. A retired feature keeps its code and a new sibling never renumbers its neighbours, so a reference written a year ago still resolves. When a sequence is exhausted it rolls over — <code>KZ</code> is followed by <code>KAA</code>, not by a renumbering.</div>
@@ -702,10 +705,12 @@ session with no memory of how any of this came to be.</p>
 <li class="l3"><a href="#questions-q-07-should-the-console-show-anything-of-the-tumblers-own">Q-07 — Should the console show anything of the tumbler&#x27;s own?</a><em>Raised: 2026-09-22 · Affects: the Docket console · Status: open</em></li>
 <li class="l3"><a href="#questions-q-08-may-the-two-downloaded-reference-designs-be-committed-to-the-repository">Q-08 — May the two downloaded reference designs be committed to the repository?</a><em>Raised: 2026-09-22 · Affects: XD1 · Status: open</em></li>
 <li class="l3"><a href="#questions-q-09-which-ideas-from-the-reference-designs-should-be-adopted">Q-09 — Which ideas from the reference designs should be adopted?</a><em>Raised: 2026-09-22 · Affects: MA5, MA6, MB6, MB7, MB8, EB2, EC1 · Status: open</em></li>
+<li class="l3"><a href="#questions-q-10-can-the-prusa-mini-print-tpu">Q-10 — Can the Prusa MINI print TPU?</a><em>Raised: 2026-09-22 · Affects: MA3, BB1, BB2 · Status: open</em></li>
 <li class=""><a href="#questions-answered">Answered</a><em>Settled questions move to answered_questions.md.</em></li>
 </ul></div>
 <div class="d"><a href="#devplan">development_plan.md</a> <span class="codes"><span class="kind">How</span></span><p>The technical record — architecture, file map, and the reasoning behind specific implementation choices.</p><ul>
 <li class=""><a href="#devplan-layout">Layout</a><em>VERSION the project version: the one constant (TB4) tools/tumbler_calc.py barrel speed, cradle geometry, torque, VACTUAL TA1 tools/timer1_calc.py AVR Timer1 arithmetic and failure demos TA2</em></li>
+<li class=""><a href="#devplan-workshop-inventory">Workshop inventory</a><em>Read from ~/Projects/devices on 2026-09-22, where the owner&#x27;s devices are documented.</em></li>
 <li class=""><a href="#devplan-one-model-computed-twice">One model, computed twice</a><em>The physical model lives in two places on purpose: tools/tumbler_calc.py computes the build sheet, and cad/tumbler.scad computes the same geometry to cut the parts.</em></li>
 <li class=""><a href="#devplan-decisions-with-a-technical-shape">Decisions with a technical shape</a><em>The TMC2209 has an internal step generator: write a velocity to register 0x22 and it spins indefinitely with no step pulses from the controller.</em></li>
 <li class="l3"><a href="#devplan-fa1-why-the-pico-route-uses-vactual">FA1 — Why the Pico route uses VACTUAL</a><em>The TMC2209 has an internal step generator: write a velocity to register 0x22 and it spins indefinitely with no step pulses from the controller.</em></li>
@@ -717,6 +722,7 @@ session with no memory of how any of this came to be.</p>
 <li class=""><a href="#devplan-verification">Verification</a><em>Every check runs without hardware. ./scripts/check-docs.sh runs the ones this Mac can run, and says which it skipped and why.</em></li>
 </ul></div>
 <div class="d"><a href="#changelog">CHANGELOG.md</a> <span class="codes"><span class="kind">When</span></span><p>What shipped, in which build, and what it fixed.</p><ul>
+<li class=""><a href="#changelog-071-2026-09-22-checked-against-the-owners-device-inventory">0.7.1 — 2026-09-22 — Checked against the owner&#x27;s device inventory</a><em>Read ~/Projects/devices: the printer is a Prusa MINI (180 mm cube, hardened nozzle).</em></li>
 <li class=""><a href="#changelog-070-2026-09-22-two-published-designs-evaluated">0.7.0 — 2026-09-22 — Two published designs evaluated</a><em>Evaluated Arofarn&#x27;s NEMA 17 CNC tumbler and 3DPrintOrlando&#x27;s heavy-duty adjustable tumbler by measurement: meshes, a DXF, a FreeCAD source, the firmware and the build photos (XD1, chapter).</em></li>
 <li class=""><a href="#changelog-061-2026-09-22-rendersh-no-longer-counts-stale-stls">0.6.1 — 2026-09-22 — render.sh no longer counts stale STLs</a><em>The part-export loop in tools/render.sh now deletes each STL before rendering it (TB1, LE-18).</em></li>
 <li class=""><a href="#changelog-060-2026-09-22-the-docket-adopted">0.6.0 — 2026-09-22 — The Docket adopted</a><em>Adopted the Docket documentation framework (4.2.0) in place: Gameplan.md, features_and_functions.md, development_plan.md, critical_path.md, open_questions.md, answered_questions.md, chapters/, this changelog,</em></li>
@@ -783,11 +789,11 @@ session with no memory of how any of this came to be.</p>
 </li>
 <li class=""><div class="row"><span class="c">KB</span><span class="m">Barrel speed is 35–50% of critical speed; 45% by default. N_crit = 42.3/√D, D in metres.</span><span class="w"><a href="#gameplan">Why</a><a href="#devplan">How</a><a href="#changelog">When</a><a href="#ch-xd1-reference-designs">XD1</a></span></div>
 </li>
-<li class=""><div class="row"><span class="c">KC</span><span class="m">Structural prints are PETG or ASA, never PLA.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a></span></div>
+<li class=""><div class="row"><span class="c">KC</span><span class="m">Structural prints are PETG or ASA, never PLA.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#devplan">How</a></span></div>
 </li>
 <li class=""><div class="row"><span class="c">KD</span><span class="m">Rollers are 40 mm in diameter.</span><span class="w"><a href="#gameplan">Why</a><a href="#devplan">How</a><a href="#ch-xd1-reference-designs">XD1</a></span></div>
 </li>
-<li class=""><div class="row"><span class="c">KE</span><span class="m">Driver current runs low, about 0.4–0.6 A per phase, set by winding down until a full barrel fails to start and adding 30% back.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a></span></div>
+<li class=""><div class="row"><span class="c">KE</span><span class="m">Driver current runs low, about 0.4–0.6 A per phase, set by winding down until a full barrel fails to start and adding 30% back.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a><a href="#devplan">How</a></span></div>
 </li>
 <li class=""><div class="row"><span class="c">KF</span><span class="m">The firmware never auto-advances between grit stages. It stops at the target and waits.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a></span></div>
 </li>
@@ -811,11 +817,11 @@ session with no memory of how any of this came to be.</p>
 <ul>
 <li class=""><div class="row"><span class="c">Q-01</span><span class="m">Which barrel?</span><span class="w"><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a><a href="#changelog">When</a></span></div>
 </li>
-<li class=""><div class="row"><span class="c">Q-02</span><span class="m">Which stepper driver board will you use?</span><span class="w"><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a></span></div>
+<li class=""><div class="row"><span class="c">Q-02</span><span class="m">Which stepper driver board will you use?</span><span class="w"><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a><a href="#devplan">How</a><a href="#changelog">When</a></span></div>
 </li>
-<li class=""><div class="row"><span class="c">Q-03</span><span class="m">12 V or 24 V supply?</span><span class="w"><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a></span></div>
+<li class=""><div class="row"><span class="c">Q-03</span><span class="m">12 V or 24 V supply?</span><span class="w"><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a><a href="#devplan">How</a><a href="#changelog">When</a></span></div>
 </li>
-<li class=""><div class="row"><span class="c">Q-04</span><span class="m">Pico or Arduino?</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a><a href="#changelog">When</a></span></div>
+<li class=""><div class="row"><span class="c">Q-04</span><span class="m">Pico or Arduino?</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a><a href="#devplan">How</a><a href="#changelog">When</a></span></div>
 </li>
 <li class=""><div class="row"><span class="c">Q-05</span><span class="m">Should the tumbler stay in homebase?</span><span class="w"><a href="#gameplan">Why</a><a href="#questions">Unsettled</a></span></div>
 </li>
@@ -826,6 +832,8 @@ session with no memory of how any of this came to be.</p>
 <li class=""><div class="row"><span class="c">Q-08</span><span class="m">May the two downloaded reference designs be committed to the repository?</span><span class="w"><a href="#features">What</a><a href="#questions">Unsettled</a><a href="#changelog">When</a><a href="#ch-xd1-reference-designs">XD1</a></span></div>
 </li>
 <li class=""><div class="row"><span class="c">Q-09</span><span class="m">Which ideas from the reference designs should be adopted?</span><span class="w"><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a><a href="#changelog">When</a><a href="#ch-xd1-reference-designs">XD1</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">Q-10</span><span class="m">Can the Prusa MINI print TPU?</span><span class="w"><a href="#features">What</a><a href="#questions">Unsettled</a><a href="#devplan">How</a><a href="#changelog">When</a></span></div>
 </li>
 </ul>
 </li>
@@ -1150,10 +1158,10 @@ MA1      Feature
 <ul>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Cradle geometry: 40° contact angle, 97.7 mm shaft spacing, 58.2 mm barrel ride height for a 112 mm OD barrel on 40 mm rollers. Computed twice, in <code>tools/tumbler_calc.py</code> and in <code>cad/tumbler.scad</code>, agreeing to four figures. Rendered; not built</div></wa-card>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Roller hub: PETG/ASA, 8 mm bore, grub-screwed to the shaft, with end flanges that keep the barrel from walking. Exports as a manifold STL; not printed. <em>Risk: the flange lip is only 5 mm proud of the tyre</em></div></wa-card>
-<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">TPU tyre, a 0.4 mm interference fit over the hub. Not printed</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">TPU tyre, a 0.4 mm interference fit over the hub. Not printed. ❓<strong>Q-10</strong></div></wa-card>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA4</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Two 8 mm shafts in four 608-2RS sealed bearings. Specified; not bought</div></wa-card>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA5</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">Slotted end plates, so the roller spacing adjusts to a different barrel without reprinting. From the heavy-duty reference design (<a href="chapters/XD1-reference-designs.md">chapter</a>). ❓<strong>Q-09</strong></div></wa-card>
-<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA6</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">Two barrels side by side on longer rollers, separated by guide rings, so two rock hardnesses or two grit stages run at once. Motor margin falls from ~3.6× to ~1.8×; shaft deflection unchecked; needs a second hall sensor. From the heavy-duty design. ❓<strong>Q-09</strong></div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA6</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">Two barrels side by side on longer rollers, separated by guide rings, so two rock hardnesses or two grit stages run at once. Motor margin falls from ~3.6× to ~1.8×; shaft deflection unchecked; needs a second hall sensor. Its ~260 mm rollers exceed the Prusa MINI's 180 mm, so they would print in sections. From the heavy-duty design. ❓<strong>Q-09</strong></div></wa-card>
 </ul>
 <h3 id="features-mb-frame-and-drive">MB — Frame and drive</h3>
 <ul>
@@ -1176,8 +1184,8 @@ MA1      Feature
 </ul>
 <h3 id="features-bb-liner">BB — Liner</h3>
 <ul>
-<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BB1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Hexagonal TPU liner, about 6.1 mm of gradual lift. Exports manifold; not printed</div></wa-card>
-<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BB2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Lifter-bar liner: six symmetric trapezoidal bars, 6 mm high (<strong>KG</strong>). Rendered; not printed. ❓<strong>Q-01</strong></div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BB1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Hexagonal TPU liner, about 6.1 mm of gradual lift. Exports manifold; not printed. ❓<strong>Q-10</strong></div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BB2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Lifter-bar liner: six symmetric trapezoidal bars, 6 mm high (<strong>KG</strong>). Rendered; not printed. ❓<strong>Q-01</strong> ❓<strong>Q-10</strong></div></wa-card>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BB3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Rubber sheet behind the printed liner: set <code>RUBBER_T</code> and both liners shrink, so the sleeve clamps the rubber with no adhesive. Parametric; no rubber sourced yet. ❓<strong>Q-01</strong></div></wa-card>
 </ul>
 <h3 id="features-bc-lid">BC — Lid</h3>
@@ -1685,6 +1693,9 @@ different formula per board, and it depends on tiny resistors printed on the
 board) and <strong>how loud it is</strong> (the TMC2209 is near-silent; the others whine).</p>
 <p><strong>Why now:</strong> the current has to be set before the motor is first connected,
 and the procedure depends on the board.</p>
+<p><em>Checked 2026-09-22: the device notes in <code>~/Projects/devices</code> record no
+stepper drivers, stepper motors, Arduinos or bench power supplies, so this
+still needs you.</em></p>
 <p><strong>Working assumption:</strong> <strong>an A4988 or DRV8825 on the Arduino</strong>, since those
 are the commonest boards in a drawer. The README's table covers both. If it
 is a TMC2209, the Pico route (<strong>Q-04</strong>) becomes the more natural choice.</p>
@@ -1701,6 +1712,8 @@ is a TMC2209, the Pico route (<strong>Q-04</strong>) becomes the more natural ch
 <p>Both do the revolution counting, slip detection and reversal.</p>
 <p><strong>Why now:</strong> it decides what gets wired and flashed first, and which of the
 two firmwares gets tested on real hardware.</p>
+<p><em>Checked 2026-09-22: the only Pico recorded in <code>~/Projects/devices</code> is the
+Pimoroni Interstate 75 W, which is busy driving an LED-matrix display.</em></p>
 <p><strong>Working assumption:</strong> <strong>Arduino</strong>, because it works with whichever driver is
 in the drawer (<strong>Q-02</strong>). If you choose the Pico, the Arduino route stays in
 the repo untested and the TMC2209 becomes a purchase.</p>
@@ -1802,6 +1815,26 @@ batch has run. <strong>5</strong>, <strong>6</strong> and <strong>7</strong> are
 <p><strong>Working assumption:</strong> all seven stay as ideas. Nothing changes in the CAD or
 the plan until you choose; approving 1–3 would add three small parts to the
 print set in <code>critical_path.md</code> column 2.</p>
+<h3 id="questions-q-10-can-the-prusa-mini-print-tpu">Q-10 — Can the Prusa MINI print TPU?</h3>
+<p><strong>Raised:</strong> 2026-09-22 · <strong>Affects:</strong> <strong>MA3</strong>, <strong>BB1</strong>, <strong>BB2</strong> · <strong>Status:</strong> open</p>
+<p>Three parts are designed in TPU, a soft rubbery filament: the two <strong>roller
+tyres</strong> (the grippy sleeves the barrel rides on) and the <strong>barrel liner</strong> (the
+sleeve that lifts the rocks). The notes on your Prusa MINI in
+<code>~/Projects/devices/prusa/</code> cover PETG, ASA, ABS and PC in detail but never
+mention TPU. The MINI pushes filament down a long tube to the nozzle (a
+"Bowden" feed). Soft filament tends to buckle in that tube, so TPU on a MINI
+is possible but slow and fiddly.</p>
+<p><strong>Why now:</strong> these parts are in the first print set, after the test print.</p>
+<p><strong>Working assumption:</strong> <strong>TPU 95A is printable slowly</strong>, so the design stays
+as it is. If it isn't, there are two good fallbacks, neither needing TPU:</p>
+<ul>
+<li><strong>Tyres:</strong> rubber O-rings in grooves on the roller hub, or silicone tubing
+  slid over it. That is how the Arofarn reference design does it
+  (<a href="chapters/XD1-reference-designs.md">chapter</a>).</li>
+<li><strong>Liner:</strong> barrel route A's rubber sheet does the damping; the lifter bars
+  could be printed in PETG and bonded or clipped on.</li>
+</ul>
+<p>Either change means a new hub profile in the CAD; nothing else moves.</p>
 <hr />
 <h2 id="questions-answered">Answered</h2>
 <p><em>Settled questions move to <a href="answered_questions.md"><code>answered_questions.md</code></a>.</em></p>
@@ -1833,6 +1866,102 @@ scripts/                    the Docket's checks and tools
 docket-archive/             superseded documents, with a manifest
 </code></pre>
 <hr />
+<h2 id="devplan-workshop-inventory">Workshop inventory</h2>
+<p><em>Read from <code>~/Projects/devices</code> on 2026-09-22, where the owner's devices are
+documented. What that folder does </em><em>not</em><em> record matters as much as what it
+does.</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>What the devices folder says</th>
+<th>Consequence here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Printer</strong></td>
+<td>Prusa MINI (<code>prusa/CLAUDE.md</code>): <strong>180 × 180 × 180 mm</strong> build volume, 0.4 mm <strong>hardened-steel</strong> nozzle, tuned PETG profiles; PLA, PETG, ASA, ABS and PC all listed as safe</td>
+<td>Every part fits (below). PETG and ASA are ready (<strong>KC</strong>)</td>
+</tr>
+<tr>
+<td><strong>Filament on hand</strong></td>
+<td>A PC + carbon-fibre blend spool, with notes: bed pinned at 100 °C, warps on the open frame</td>
+<td>An option for the motor mount, which runs hot: PC holds shape well above PETG's softening point. Not needed at low current (<strong>KE</strong>)</td>
+</tr>
+<tr>
+<td>TPU filament</td>
+<td><strong>Never mentioned</strong></td>
+<td>The tyres (<strong>MA3</strong>) and liners (<strong>BB1</strong>, <strong>BB2</strong>) are TPU, and the MINI's long Bowden feed tube makes soft filament difficult. ❓<strong>Q-10</strong></td>
+</tr>
+<tr>
+<td><strong>Microcontrollers</strong></td>
+<td>A Pico W exists, but it is the Pimoroni Interstate 75 W (<code>pim/</code>) driving an LED-matrix display, with its pins taken</td>
+<td>Not a free Pico for this machine (<strong>Q-04</strong>)</td>
+</tr>
+<tr>
+<td><strong>Stepper motors, drivers, Arduinos, bench supplies</strong></td>
+<td><strong>Not recorded anywhere</strong></td>
+<td><strong>Q-02</strong>, <strong>Q-03</strong> and <strong>Q-04</strong> still need the owner</td>
+</tr>
+<tr>
+<td><strong>Vinyl cutter</strong></td>
+<td>Seikitech SK-870T (<code>plotter/</code>)</td>
+<td>Not a motor source</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Every part fits the MINI</strong>, measured from the exported STLs:</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Size (mm)</th>
+<th>Longest side</th>
+<th>Spare</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>roller_hub</code></td>
+<td>50 × 50 × 136</td>
+<td>136</td>
+<td>44</td>
+</tr>
+<tr>
+<td><code>end_plate</code></td>
+<td>148 × 50 × 10</td>
+<td>148</td>
+<td>32</td>
+</tr>
+<tr>
+<td><code>tyre</code></td>
+<td>40 × 40 × 124</td>
+<td>124</td>
+<td>56</td>
+</tr>
+<tr>
+<td><code>lifter_liner</code></td>
+<td>99 × 99 × 114</td>
+<td>114</td>
+<td>66</td>
+</tr>
+<tr>
+<td><code>hex_liner</code></td>
+<td>99 × 86 × 114</td>
+<td>114</td>
+<td>66</td>
+</tr>
+<tr>
+<td><code>motor_mount</code></td>
+<td>58 × 68 × 6</td>
+<td>68</td>
+<td>112</td>
+</tr>
+</tbody>
+</table>
+<p>The first thing that would <strong>not</strong> fit is a twin-barrel roller (<strong>MA6</strong>):
+two barrels need a roller around 260 mm long, so it would print in sections.</p>
 <h2 id="devplan-one-model-computed-twice">One model, computed twice</h2>
 <p>The physical model lives in two places on purpose: <code>tools/tumbler_calc.py</code>
 computes the build sheet, and <code>cad/tumbler.scad</code> computes the same geometry to
@@ -1934,7 +2063,7 @@ being wrong. The distinction is in the Docket framework's §4.</p>
 </article>
 <article id="changelog"><div class="head"><b>CHANGELOG.md</b><span>When</span></div>
 <h1>Rock tumbler — Changelog</h1>
-<p><strong>Current: 0.7.0</strong> — designed, computed and verified in software; nothing printed, wired or measured yet.</p>
+<p><strong>Current: 0.7.1</strong> — designed, computed and verified in software; nothing printed, wired or measured yet.</p>
 <blockquote>
 <p>Codes in brackets refer to <a href="features_and_functions.md"><code>features_and_functions.md</code></a>.
 The version is a single constant, in <a href="VERSION"><code>VERSION</code></a>.</p>
@@ -1948,6 +2077,17 @@ per commit, when the Docket was adopted. Before then the project had no
 version. Their dates and contents come from the commit record; the version
 numbers themselves are reconstructed.</em></p>
 <hr />
+<h2 id="changelog-071-2026-09-22-checked-against-the-owners-device-inventory">0.7.1 — 2026-09-22 — Checked against the owner's device inventory</h2>
+<ul>
+<li>Read <code>~/Projects/devices</code>: the printer is a Prusa MINI (180 mm cube, hardened
+  nozzle). Every part fits, with the roller hub the tallest at 136 mm; a
+  twin-barrel roller (<strong>MA6</strong>) would not. Recorded in <code>development_plan.md</code>.</li>
+<li>No stepper motors, drivers, Arduinos or supplies are recorded, so <strong>Q-02</strong>,
+  <strong>Q-03</strong> and <strong>Q-04</strong> still need the owner; the only Pico is committed to a
+  display.</li>
+<li><strong>Q-10</strong>: TPU is never mentioned for the MINI, and three parts use it.
+  Fallbacks recorded: O-ring or silicone-tube tyres, and a rubber-sheet liner.</li>
+</ul>
 <h2 id="changelog-070-2026-09-22-two-published-designs-evaluated">0.7.0 — 2026-09-22 — Two published designs evaluated</h2>
 <ul>
 <li>Evaluated Arofarn's NEMA 17 CNC tumbler and 3DPrintOrlando's heavy-duty

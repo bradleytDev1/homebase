@@ -47,10 +47,10 @@ MA1      Feature
 
 - 🔨 **MA1** Cradle geometry: 40° contact angle, 97.7 mm shaft spacing, 58.2 mm barrel ride height for a 112 mm OD barrel on 40 mm rollers. Computed twice, in `tools/tumbler_calc.py` and in `cad/tumbler.scad`, agreeing to four figures. Rendered; not built
 - 🔨 **MA2** Roller hub: PETG/ASA, 8 mm bore, grub-screwed to the shaft, with end flanges that keep the barrel from walking. Exports as a manifold STL; not printed. *Risk: the flange lip is only 5 mm proud of the tyre*
-- 🔨 **MA3** TPU tyre, a 0.4 mm interference fit over the hub. Not printed
+- 🔨 **MA3** TPU tyre, a 0.4 mm interference fit over the hub. Not printed. ❓**Q-10**
 - 🔨 **MA4** Two 8 mm shafts in four 608-2RS sealed bearings. Specified; not bought
 - 💡 **MA5** Slotted end plates, so the roller spacing adjusts to a different barrel without reprinting. From the heavy-duty reference design ([chapter](chapters/XD1-reference-designs.md)). ❓**Q-09**
-- 💡 **MA6** Two barrels side by side on longer rollers, separated by guide rings, so two rock hardnesses or two grit stages run at once. Motor margin falls from ~3.6× to ~1.8×; shaft deflection unchecked; needs a second hall sensor. From the heavy-duty design. ❓**Q-09**
+- 💡 **MA6** Two barrels side by side on longer rollers, separated by guide rings, so two rock hardnesses or two grit stages run at once. Motor margin falls from ~3.6× to ~1.8×; shaft deflection unchecked; needs a second hall sensor. Its ~260 mm rollers exceed the Prusa MINI's 180 mm, so they would print in sections. From the heavy-duty design. ❓**Q-09**
 
 ### MB — Frame and drive
 
@@ -75,8 +75,8 @@ MA1      Feature
 
 ### BB — Liner
 
-- 🔨 **BB1** Hexagonal TPU liner, about 6.1 mm of gradual lift. Exports manifold; not printed
-- 🔨 **BB2** Lifter-bar liner: six symmetric trapezoidal bars, 6 mm high (**KG**). Rendered; not printed. ❓**Q-01**
+- 🔨 **BB1** Hexagonal TPU liner, about 6.1 mm of gradual lift. Exports manifold; not printed. ❓**Q-10**
+- 🔨 **BB2** Lifter-bar liner: six symmetric trapezoidal bars, 6 mm high (**KG**). Rendered; not printed. ❓**Q-01** ❓**Q-10**
 - 🔨 **BB3** Rubber sheet behind the printed liner: set `RUBBER_T` and both liners shrink, so the sleeve clamps the rubber with no adhesive. Parametric; no rubber sourced yet. ❓**Q-01**
 
 ### BC — Lid

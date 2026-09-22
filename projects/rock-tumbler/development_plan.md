@@ -30,6 +30,35 @@ docket-archive/             superseded documents, with a manifest
 
 ---
 
+## Workshop inventory
+
+*Read from `~/Projects/devices` on 2026-09-22, where the owner's devices are
+documented. What that folder does **not** record matters as much as what it
+does.*
+
+| | What the devices folder says | Consequence here |
+|---|---|---|
+| **Printer** | Prusa MINI (`prusa/CLAUDE.md`): **180 × 180 × 180 mm** build volume, 0.4 mm **hardened-steel** nozzle, tuned PETG profiles; PLA, PETG, ASA, ABS and PC all listed as safe | Every part fits (below). PETG and ASA are ready (**KC**) |
+| **Filament on hand** | A PC + carbon-fibre blend spool, with notes: bed pinned at 100 °C, warps on the open frame | An option for the motor mount, which runs hot: PC holds shape well above PETG's softening point. Not needed at low current (**KE**) |
+| TPU filament | **Never mentioned** | The tyres (**MA3**) and liners (**BB1**, **BB2**) are TPU, and the MINI's long Bowden feed tube makes soft filament difficult. ❓**Q-10** |
+| **Microcontrollers** | A Pico W exists, but it is the Pimoroni Interstate 75 W (`pim/`) driving an LED-matrix display, with its pins taken | Not a free Pico for this machine (**Q-04**) |
+| **Stepper motors, drivers, Arduinos, bench supplies** | **Not recorded anywhere** | **Q-02**, **Q-03** and **Q-04** still need the owner |
+| **Vinyl cutter** | Seikitech SK-870T (`plotter/`) | Not a motor source |
+
+**Every part fits the MINI**, measured from the exported STLs:
+
+| Part | Size (mm) | Longest side | Spare |
+|---|---|---|---|
+| `roller_hub` | 50 × 50 × 136 | 136 | 44 |
+| `end_plate` | 148 × 50 × 10 | 148 | 32 |
+| `tyre` | 40 × 40 × 124 | 124 | 56 |
+| `lifter_liner` | 99 × 99 × 114 | 114 | 66 |
+| `hex_liner` | 99 × 86 × 114 | 114 | 66 |
+| `motor_mount` | 58 × 68 × 6 | 68 | 112 |
+
+The first thing that would **not** fit is a twin-barrel roller (**MA6**):
+two barrels need a roller around 260 mm long, so it would print in sections.
+
 ## One model, computed twice
 
 The physical model lives in two places on purpose: `tools/tumbler_calc.py`

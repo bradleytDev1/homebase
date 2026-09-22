@@ -1,6 +1,6 @@
 # Rock tumbler — Changelog
 
-**Current: 0.7.0** — designed, computed and verified in software; nothing printed, wired or measured yet.
+**Current: 0.7.1** — designed, computed and verified in software; nothing printed, wired or measured yet.
 
 > Codes in brackets refer to [`features_and_functions.md`](features_and_functions.md).
 > The version is a single constant, in [`VERSION`](VERSION).
@@ -16,6 +16,17 @@ version. Their dates and contents come from the commit record; the version
 numbers themselves are reconstructed.*
 
 ---
+
+## 0.7.1 — 2026-09-22 — Checked against the owner's device inventory
+
+- Read `~/Projects/devices`: the printer is a Prusa MINI (180 mm cube, hardened
+  nozzle). Every part fits, with the roller hub the tallest at 136 mm; a
+  twin-barrel roller (**MA6**) would not. Recorded in `development_plan.md`.
+- No stepper motors, drivers, Arduinos or supplies are recorded, so **Q-02**,
+  **Q-03** and **Q-04** still need the owner; the only Pico is committed to a
+  display.
+- **Q-10**: TPU is never mentioned for the MINI, and three parts use it.
+  Fallbacks recorded: O-ring or silicone-tube tyres, and a rubber-sheet liner.
 
 ## 0.7.0 — 2026-09-22 — Two published designs evaluated
 

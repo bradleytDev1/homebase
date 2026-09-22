@@ -78,6 +78,10 @@ board) and **how loud it is** (the TMC2209 is near-silent; the others whine).
 **Why now:** the current has to be set before the motor is first connected,
 and the procedure depends on the board.
 
+*Checked 2026-09-22: the device notes in `~/Projects/devices` record no
+stepper drivers, stepper motors, Arduinos or bench power supplies, so this
+still needs you.*
+
 **Working assumption:** **an A4988 or DRV8825 on the Arduino**, since those
 are the commonest boards in a drawer. The README's table covers both. If it
 is a TMC2209, the Pico route (**Q-04**) becomes the more natural choice.
@@ -97,6 +101,9 @@ Both do the revolution counting, slip detection and reversal.
 
 **Why now:** it decides what gets wired and flashed first, and which of the
 two firmwares gets tested on real hardware.
+
+*Checked 2026-09-22: the only Pico recorded in `~/Projects/devices` is the
+Pimoroni Interstate 75 W, which is busy driving an LED-matrix display.*
 
 **Working assumption:** **Arduino**, because it works with whichever driver is
 in the drawer (**Q-02**). If you choose the Pico, the Arduino route stays in
@@ -221,6 +228,29 @@ batch has run. **5**, **6** and **7** are optional.
 **Working assumption:** all seven stay as ideas. Nothing changes in the CAD or
 the plan until you choose; approving 1–3 would add three small parts to the
 print set in `critical_path.md` column 2.
+
+### Q-10 — Can the Prusa MINI print TPU?
+**Raised:** 2026-09-22 · **Affects:** **MA3**, **BB1**, **BB2** · **Status:** open
+
+Three parts are designed in TPU, a soft rubbery filament: the two **roller
+tyres** (the grippy sleeves the barrel rides on) and the **barrel liner** (the
+sleeve that lifts the rocks). The notes on your Prusa MINI in
+`~/Projects/devices/prusa/` cover PETG, ASA, ABS and PC in detail but never
+mention TPU. The MINI pushes filament down a long tube to the nozzle (a
+"Bowden" feed). Soft filament tends to buckle in that tube, so TPU on a MINI
+is possible but slow and fiddly.
+
+**Why now:** these parts are in the first print set, after the test print.
+
+**Working assumption:** **TPU 95A is printable slowly**, so the design stays
+as it is. If it isn't, there are two good fallbacks, neither needing TPU:
+- **Tyres:** rubber O-rings in grooves on the roller hub, or silicone tubing
+  slid over it. That is how the Arofarn reference design does it
+  ([chapter](chapters/XD1-reference-designs.md)).
+- **Liner:** barrel route A's rubber sheet does the damping; the lifter bars
+  could be printed in PETG and bonded or clipped on.
+
+Either change means a new hub profile in the CAD; nothing else moves.
 
 ---
 
