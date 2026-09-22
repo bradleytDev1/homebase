@@ -399,7 +399,7 @@ article del{color:var(--soft)}
 <wa-page mobile-breakpoint="900">
 <div slot="header" class="topbar"><!--{{DOCKET_NAV}}--><span class="brand">The <span>Docket</span></span><span class="sub">A stepper-driven rock tumbler</span><span class="grow"></span><wa-button id="expandall" size="s" appearance="plain"><wa-icon slot="start" name="chevron-down"></wa-icon>Expand all</wa-button><wa-button id="collapseall" size="s" appearance="plain"><wa-icon slot="start" name="chevron-right"></wa-icon>Collapse all</wa-button></div>
 <nav slot="navigation">
-<p class="built">built 2026-09-22 16:53<span id="diag"></span></p>
+<p class="built">built 2026-09-22 17:03<span id="diag"></span></p>
 <div class="look"><wa-select id="look" size="s" value="docket" aria-label="Look"><wa-option value="docket">Docket</wa-option><wa-option value="mellow">Mellow</wa-option><wa-option value="playful">Playful</wa-option><wa-option value="classic">Classic</wa-option></wa-select><wa-button id="themebtn" size="s" appearance="outlined"><wa-icon name="circle-half-stroke" label="Light or dark (or press t)"></wa-icon></wa-button></div>
 <input id="filter" placeholder="Filter  (press /)" autocomplete="off">
 <div class="jumps"><a href="#top">Front matter</a><a href="#index">Code index</a></div>
@@ -446,6 +446,7 @@ article del{color:var(--soft)}
 <ul>
 <li><a href="#features-ea-motor-driver-and-supply">EA — Motor, driver and supply</a></li>
 <li><a href="#features-eb-sensing">EB — Sensing</a></li>
+<li><a href="#features-ec-enclosure">EC — Enclosure</a></li>
 </ul>
 <li><a href="#features-f-firmware">F — Firmware</a></li>
 <ul>
@@ -468,6 +469,7 @@ article del{color:var(--soft)}
 <li><a href="#features-xa-simulation">XA — Simulation</a></li>
 <li><a href="#features-xb-measurement">XB — Measurement</a></li>
 <li><a href="#features-xc-other-machines">XC — Other machines</a></li>
+<li><a href="#features-xd-reference-designs">XD — Reference designs</a></li>
 </ul>
 </ul>
 </wa-details></li>
@@ -503,6 +505,8 @@ article del{color:var(--soft)}
 <li><a href="#questions-q-05-should-the-tumbler-stay-in-homebase">Q-05 — Should the tumbler stay in homebase?</a></li>
 <li><a href="#questions-q-06-three-files-were-left-outside-the-docket">Q-06 — Three files were left outside the Docket</a></li>
 <li><a href="#questions-q-07-should-the-console-show-anything-of-the-tumblers-own">Q-07 — Should the console show anything of the tumbler&#x27;s own?</a></li>
+<li><a href="#questions-q-08-may-the-two-downloaded-reference-designs-be-committed-to-the-repository">Q-08 — May the two downloaded reference designs be committed to the repository?</a></li>
+<li><a href="#questions-q-09-which-ideas-from-the-reference-designs-should-be-adopted">Q-09 — Which ideas from the reference designs should be adopted?</a></li>
 </ul>
 <li><a href="#questions-answered">Answered</a></li>
 </ul>
@@ -527,6 +531,8 @@ article del{color:var(--soft)}
 <li class="doc"><wa-details class="docd" summary=""><span slot="summary" class="dsum"><span class="dlab"><small>When</small><b>CHANGELOG.md</b></span></span>
 <a class="jump" href="#changelog">Open this document</a>
 <ul class="heads">
+<li><a href="#changelog-070-2026-09-22-two-published-designs-evaluated">0.7.0 — 2026-09-22 — Two published designs evaluated</a></li>
+<li><a href="#changelog-061-2026-09-22-rendersh-no-longer-counts-stale-stls">0.6.1 — 2026-09-22 — render.sh no longer counts stale STLs</a></li>
 <li><a href="#changelog-060-2026-09-22-the-docket-adopted">0.6.0 — 2026-09-22 — The Docket adopted</a></li>
 <li><a href="#changelog-051-2026-09-21-project-state-documented-0ec8a74">0.5.1 — 2026-09-21 — Project state documented · 0ec8a74</a></li>
 <li><a href="#changelog-050-2026-09-21-cad-rendered-for-the-first-time-63577c9">0.5.0 — 2026-09-21 — CAD rendered for the first time · 63577c9</a></li>
@@ -564,10 +570,35 @@ article del{color:var(--soft)}
 <li><a href="#lessons-le-17-distinguish-committed-from-confirmed">LE-17 — Distinguish &quot;committed&quot; from &quot;confirmed&quot;</a></li>
 <li><a href="#lessons-found-while-adopting-the-docket">Found while adopting the Docket</a></li>
 <li><a href="#lessons-le-18-a-fix-applied-to-one-loop-is-not-a-fix-applied-to-the-harness">LE-18 — A fix applied to one loop is not a fix applied to the harness</a></li>
+<li><a href="#lessons-le-19-a-published-model-can-be-a-broken-mesh-that-every-slicer-quietly-forgives">LE-19 — A published model can be a broken mesh that every slicer quietly forgives</a></li>
 </ul>
 </wa-details></li>
 <li class="doc"><wa-details class="docd" summary=""><span slot="summary" class="dsum"><span class="dlab"><small>Settled</small><b>answered_questions.md</b></span></span>
 <a class="jump" href="#answered">Open this document</a>
+</wa-details></li>
+<li class="grouphead">Chapters — the long form</li>
+<li class="doc"><wa-details class="docd" summary=""><span slot="summary" class="dsum"><span class="dlab"><small>XD1-reference-designs.md</small><b>XD1</b></span></span>
+<a class="jump" href="#ch-xd1-reference-designs">Open this document</a>
+<ul class="heads">
+<li><a href="#ch-xd1-reference-designs-the-short-version">The short version</a></li>
+<li><a href="#ch-xd1-reference-designs-method-and-how-far-to-trust-each-number">Method, and how far to trust each number</a></li>
+<li><a href="#ch-xd1-reference-designs-arofarn-affordable-rock-tumbler-nema17-version-for-cnc-routing">Arofarn — Affordable Rock Tumbler, NEMA17 version for CNC routing</a></li>
+<ul>
+<li><a href="#ch-xd1-reference-designs-what-it-is">What it is</a></li>
+<li><a href="#ch-xd1-reference-designs-measured">Measured</a></li>
+<li><a href="#ch-xd1-reference-designs-reading-it-against-this-project">Reading it against this project</a></li>
+<li><a href="#ch-xd1-reference-designs-usable-from-arofarn">Usable from Arofarn</a></li>
+</ul>
+<li><a href="#ch-xd1-reference-designs-3dprintorlando-rock-tumbler-heavy-duty-adjustable">3DPrintOrlando — Rock Tumbler, Heavy Duty &amp; Adjustable</a></li>
+<ul>
+<li><a href="#ch-xd1-reference-designs-what-it-is">What it is</a></li>
+<li><a href="#ch-xd1-reference-designs-measured">Measured</a></li>
+<li><a href="#ch-xd1-reference-designs-reading-it-against-this-project">Reading it against this project</a></li>
+<li><a href="#ch-xd1-reference-designs-usable-from-the-heavy-duty-design">Usable from the heavy-duty design</a></li>
+</ul>
+<li><a href="#ch-xd1-reference-designs-licensing-in-one-place">Licensing, in one place</a></li>
+<li><a href="#ch-xd1-reference-designs-attribution">Attribution</a></li>
+</ul>
 </wa-details></li>
 </ul>
 <p class="railkey">A red chip is blocking work now; amber is needed soon. The number is how many sit under that heading.</p>
@@ -578,7 +609,7 @@ when a session ends. The Docket exists so that a decision made in conversation �
 in an answer, an aside, a correction, a choice between options — is written down
 in the same turn it is made, in the document that owns it.</p><p>It is built to be read by someone arriving cold: a person, or a fresh Claude
 session with no memory of how any of this came to be.</p>
-<ul class="stats"><li><b>8</b><span>documents</span></li><li><b>38</b><span>codes</span></li><li><b>13</b><span>decisions</span></li><li><b>7</b><span>open questions</span></li><li><b>0</b><span>answered</span></li><li><b>18</b><span>lessons</span></li></ul></div>
+<ul class="stats"><li><b>9</b><span>documents</span></li><li><b>41</b><span>codes</span></li><li><b>13</b><span>decisions</span></li><li><b>9</b><span>open questions</span></li><li><b>0</b><span>answered</span></li><li><b>19</b><span>lessons</span></li></ul></div>
 <h2 class="section">How it is kept</h2>
 <p>Loosely after the TASB policy manuals — coded sections, a permanent numbering, and an index that makes a topic followable across every volume that touches it.</p>
 <div class="practice"><b>Codes are permanent.</b> A letter is a domain; each added letter is a level down: <code>C</code> a domain, <code>CA</code> an area within it, <code>CAA</code> a feature, <code>CAAA</code> a detail. A retired feature keeps its code and a new sibling never renumbers its neighbours, so a reference written a year ago still resolves. When a sequence is exhausted it rolls over — <code>KZ</code> is followed by <code>KAA</code>, not by a renumbering.</div>
@@ -628,6 +659,7 @@ session with no memory of how any of this came to be.</p>
 <li class=""><a href="#features-e-electronics">E — Electronics</a><em>🔨 EA1 NEMA 17 at ~169 rpm, ~11 N·cm demand against 40–50 available.</em></li>
 <li class="l3"><a href="#features-ea-motor-driver-and-supply">EA — Motor, driver and supply</a><em>🔨 EA1 NEMA 17 at ~169 rpm, ~11 N·cm demand against 40–50 available.</em></li>
 <li class="l3"><a href="#features-eb-sensing">EB — Sensing</a><em>⬜ EB1 Hall sensor (A3144) on the frame, magnet on the barrel end cap: exactly one pulse per revolution.</em></li>
+<li class="l3"><a href="#features-ec-enclosure">EC — Enclosure</a><em>💡 EC1 A splash-proof enclosure for the controller and driver, outboard of the drip zone.</em></li>
 <li class=""><a href="#features-f-firmware">F — Firmware</a><em>🔨 FA1 TMC2209 single-wire UART driver using VACTUAL, the chip&#x27;s internal step generator.</em></li>
 <li class="l3"><a href="#features-fa-pico-route-raspberry-pi-pico-tmc2209">FA — Pico route (Raspberry Pi Pico + TMC2209)</a><em>🔨 FA1 TMC2209 single-wire UART driver using VACTUAL, the chip&#x27;s internal step generator.</em></li>
 <li class="l3"><a href="#features-fb-arduino-route-unonano-any-stepdir-driver">FB — Arduino route (Uno/Nano + any STEP/DIR driver)</a><em>🔨 FB1 Timer1 CTC hardware step generation on D9 (KI).</em></li>
@@ -642,6 +674,7 @@ session with no memory of how any of this came to be.</p>
 <li class="l3"><a href="#features-xa-simulation">XA — Simulation</a><em>💡 XA1 Blender rigid-body simulation of the charge.</em></li>
 <li class="l3"><a href="#features-xb-measurement">XB — Measurement</a><em>💡 XB1 Dose–finish curves: stop batches at 300, 450, 600 and 750 thousand revolutions and measure the finish - 💡 XB2 Acoustic monitoring: tune the speed until an FFT of the barrel&#x27;s sound says &quot;cascading&quot;</em></li>
 <li class="l3"><a href="#features-xc-other-machines">XC — Other machines</a><em>💡 XC1 Direct barrel drive: the stepper coupled straight to a barrel shaft, which eliminates slip - 💡 XC2 Vibratory conversion: off-centre masses on the steppers already owned</em></li>
+<li class="l3"><a href="#features-xd-reference-designs">XD — Reference designs</a><em>✅ XD1 Two published designs evaluated with measurements: Arofarn&#x27;s NEMA 17 CNC tumbler and 3DPrintOrlando&#x27;s heavy-duty adjustable tumbler.</em></li>
 </ul></div>
 <div class="d"><a href="#path">critical_path.md</a> <span class="codes"><span class="kind">What order</span></span><p>What can be started today and what is waiting on what. Derived from the feature list, never authoritative over it.</p><ul>
 <li class=""><a href="#path-the-chart">The chart</a><em>graph LR subgraph DECIDE[&quot;🟡 Decisions — one sentence each&quot;] Q01[Q-01 barrel route] Q02[Q-02 driver board] Q03[Q-03 supply voltage] Q04[Q-04 Pico or Arduino] end subgraph C1[&quot;Column 1 — startable today&quot;] TEST[To…</em></li>
@@ -667,6 +700,8 @@ session with no memory of how any of this came to be.</p>
 <li class="l3"><a href="#questions-q-05-should-the-tumbler-stay-in-homebase">Q-05 — Should the tumbler stay in homebase?</a><em>Raised: 2026-09-21, filed 2026-09-22 · Affects: where the project lives · Status: open</em></li>
 <li class="l3"><a href="#questions-q-06-three-files-were-left-outside-the-docket">Q-06 — Three files were left outside the Docket</a><em>Raised: 2026-09-22 · Affects: adoption · Status: open</em></li>
 <li class="l3"><a href="#questions-q-07-should-the-console-show-anything-of-the-tumblers-own">Q-07 — Should the console show anything of the tumbler&#x27;s own?</a><em>Raised: 2026-09-22 · Affects: the Docket console · Status: open</em></li>
+<li class="l3"><a href="#questions-q-08-may-the-two-downloaded-reference-designs-be-committed-to-the-repository">Q-08 — May the two downloaded reference designs be committed to the repository?</a><em>Raised: 2026-09-22 · Affects: XD1 · Status: open</em></li>
+<li class="l3"><a href="#questions-q-09-which-ideas-from-the-reference-designs-should-be-adopted">Q-09 — Which ideas from the reference designs should be adopted?</a><em>Raised: 2026-09-22 · Affects: MA5, MA6, MB6, MB7, MB8, EB2, EC1 · Status: open</em></li>
 <li class=""><a href="#questions-answered">Answered</a><em>Settled questions move to answered_questions.md.</em></li>
 </ul></div>
 <div class="d"><a href="#devplan">development_plan.md</a> <span class="codes"><span class="kind">How</span></span><p>The technical record — architecture, file map, and the reasoning behind specific implementation choices.</p><ul>
@@ -682,6 +717,8 @@ session with no memory of how any of this came to be.</p>
 <li class=""><a href="#devplan-verification">Verification</a><em>Every check runs without hardware. ./scripts/check-docs.sh runs the ones this Mac can run, and says which it skipped and why.</em></li>
 </ul></div>
 <div class="d"><a href="#changelog">CHANGELOG.md</a> <span class="codes"><span class="kind">When</span></span><p>What shipped, in which build, and what it fixed.</p><ul>
+<li class=""><a href="#changelog-070-2026-09-22-two-published-designs-evaluated">0.7.0 — 2026-09-22 — Two published designs evaluated</a><em>Evaluated Arofarn&#x27;s NEMA 17 CNC tumbler and 3DPrintOrlando&#x27;s heavy-duty adjustable tumbler by measurement: meshes, a DXF, a FreeCAD source, the firmware and the build photos (XD1, chapter).</em></li>
+<li class=""><a href="#changelog-061-2026-09-22-rendersh-no-longer-counts-stale-stls">0.6.1 — 2026-09-22 — render.sh no longer counts stale STLs</a><em>The part-export loop in tools/render.sh now deletes each STL before rendering it (TB1, LE-18).</em></li>
 <li class=""><a href="#changelog-060-2026-09-22-the-docket-adopted">0.6.0 — 2026-09-22 — The Docket adopted</a><em>Adopted the Docket documentation framework (4.2.0) in place: Gameplan.md, features_and_functions.md, development_plan.md, critical_path.md, open_questions.md, answered_questions.md, chapters/, this changelog,</em></li>
 <li class=""><a href="#changelog-051-2026-09-21-project-state-documented-0ec8a74">0.5.1 — 2026-09-21 — Project state documented · 0ec8a74</a><em>WHATS_NEXT.md (the phased plan, four decisions, risks) and LESSONS_LEARNED.md (seventeen lessons) written.</em></li>
 <li class=""><a href="#changelog-050-2026-09-21-cad-rendered-for-the-first-time-63577c9">0.5.0 — 2026-09-21 — CAD rendered for the first time · 63577c9</a><em>OpenSCAD run against cad/tumbler.scad for the first time.</em></li>
@@ -699,7 +736,7 @@ session with no memory of how any of this came to be.</p>
 <li class=""><a href="#lessons-le-03-a-test-that-can-only-report-success-is-not-a-test">LE-03 — A test that can only report success is not a test</a><em>Gate: the self-intersection control in tools/render.sh, which must come back non-empty or the whole run fails.</em></li>
 <li class=""><a href="#lessons-le-04-identical-results-from-different-tests-are-a-smell">LE-04 — Identical results from different tests are a smell</a><em>The first broken harness reported 16280 facets for two completely different intersections.</em></li>
 <li class=""><a href="#lessons-le-05-grep--i-error-matches-noerror">LE-05 — grep -i error matches NoError</a><em>The validation script marked all six parts as FAILED because OpenSCAD&#x27;s success line is:</em></li>
-<li class=""><a href="#lessons-le-06-empty-output-is-not-the-same-as-no-output">LE-06 — Empty output is not the same as no output</a><em>Gate: partial. tools/render.sh deletes the interference-test target before each run, but its part-export loop does not — a part that rendered empty would be reported ok from the previous run&#x27;s STL.</em></li>
+<li class=""><a href="#lessons-le-06-empty-output-is-not-the-same-as-no-output">LE-06 — Empty output is not the same as no output</a><em>Gate: tools/render.sh deletes every target before generating it — the interference tests since 0.5.0, the part exports since 0.6.1 (LE-18).</em></li>
 <li class=""><a href="#lessons-le-07-two-independent-implementations-agreeing-is-real-evidence">LE-07 — Two independent implementations agreeing is real evidence</a><em>Gate: none yet — the agreement was checked by eye.</em></li>
 <li class=""><a href="#lessons-le-08-validate-the-model-against-something-real-before-writing-any-code">LE-08 — Validate the model against something real before writing any code</a><em>Gate: tools/tumbler_calc.py --selftest asserts the 4.5-inch barrel lands at 48–62 rpm; check-docs.sh runs it.</em></li>
 <li class=""><a href="#lessons-designing-for-the-long-run">Designing for the long run</a><em>Gate: tools/timer1_calc.py --selftest demonstrates both failures numerically on every run of check-docs.sh.</em></li>
@@ -716,8 +753,25 @@ session with no memory of how any of this came to be.</p>
 <li class=""><a href="#lessons-le-17-distinguish-committed-from-confirmed">LE-17 — Distinguish &quot;committed&quot; from &quot;confirmed&quot;</a><em>For four rounds, the CAD was described as verified when it had only been checked.</em></li>
 <li class=""><a href="#lessons-found-while-adopting-the-docket">Found while adopting the Docket</a><em>Found 2026-09-22, reading tools/render.sh to verify a claim about it.</em></li>
 <li class=""><a href="#lessons-le-18-a-fix-applied-to-one-loop-is-not-a-fix-applied-to-the-harness">LE-18 — A fix applied to one loop is not a fix applied to the harness</a><em>Found 2026-09-22, reading tools/render.sh to verify a claim about it.</em></li>
+<li class=""><a href="#lessons-le-19-a-published-model-can-be-a-broken-mesh-that-every-slicer-quietly-forgives">LE-19 — A published model can be a broken mesh that every slicer quietly forgives</a><em>Found 2026-09-22, evaluating two reference designs (XD1).</em></li>
 </ul></div>
 <div class="d"><a href="#answered">answered_questions.md</a> <span class="codes"><span class="kind">Settled</span></span><p>Questions asked and answered, with the answer and a pointer to where the decision was recorded. Nothing is ever deleted.</p><ul>
+</ul></div>
+<div class="d"><a href="#ch-xd1-reference-designs">chapters/XD1-reference-designs.md</a> <span class="codes"><span class="kind">XD1</span></span><p>A chapter: the long form, for a topic too large for a list entry. Chapters are derived, never authoritative.</p><ul>
+<li class=""><a href="#ch-xd1-reference-designs-the-short-version">The short version</a><em>Two open designs were downloaded into this folder, and each was taken apart with measurements rather than impressions: STL meshes measured, a CAD source file and a DXF parsed, the firmware read, and the build p…</em></li>
+<li class=""><a href="#ch-xd1-reference-designs-method-and-how-far-to-trust-each-number">Method, and how far to trust each number</a><em>One of my own guesses was corrected by measuring.</em></li>
+<li class=""><a href="#ch-xd1-reference-designs-arofarn-affordable-rock-tumbler-nema17-version-for-cnc-routing">Arofarn — Affordable Rock Tumbler, NEMA17 version for CNC routing</a><em>Printables, 2021, updated 2022 · remix of Thingiverse 2744886 · CC BY-SA 4.0 · firmware GPLv3 · source at framagit.org/arofarn/polisseur</em></li>
+<li class="l3"><a href="#ch-xd1-reference-designs-what-it-is">What it is</a><em>A NEMA 17 turning M8 threaded rods through a printed 16/25-tooth, module 2 gear pair (a 1.5625:1 reduction).</em></li>
+<li class="l3"><a href="#ch-xd1-reference-designs-measured">Measured</a><em>The speed is right for its purpose and wrong for rock.</em></li>
+<li class="l3"><a href="#ch-xd1-reference-designs-reading-it-against-this-project">Reading it against this project</a><em>The speed is right for its purpose and wrong for rock.</em></li>
+<li class="l3"><a href="#ch-xd1-reference-designs-usable-from-arofarn">Usable from Arofarn</a><em>The architecture, as evidence. A built, photographed machine on the same motor, rods, bearings, pipe and liner concept.</em></li>
+<li class=""><a href="#ch-xd1-reference-designs-3dprintorlando-rock-tumbler-heavy-duty-adjustable">3DPrintOrlando — Rock Tumbler, Heavy Duty &amp; Adjustable</a><em>Printables, 2024 · CC BY-NC-SA 4.0 (no commercial use; derivatives must carry the same licence)</em></li>
+<li class="l3"><a href="#ch-xd1-reference-designs-what-it-is">What it is</a><em>A 2020-extrusion frame with printed side covers, two 10 mm rollers (400 mm and 350 mm) in pillow blocks, the front roller sleeved in a 30 mm TPU tube, a 421 rpm 24 V DC gearmotor with a PWM speed controller, a…</em></li>
+<li class="l3"><a href="#ch-xd1-reference-designs-measured">Measured</a><em>Full speed would chip the stones, and nothing says so.</em></li>
+<li class="l3"><a href="#ch-xd1-reference-designs-reading-it-against-this-project">Reading it against this project</a><em>Full speed would chip the stones, and nothing says so.</em></li>
+<li class="l3"><a href="#ch-xd1-reference-designs-usable-from-the-heavy-duty-design">Usable from the heavy-duty design</a><em>TPU feet (MB6). Both designs have them. - Guarding the drive and the electronics (MB7, EC1).</em></li>
+<li class=""><a href="#ch-xd1-reference-designs-licensing-in-one-place">Licensing, in one place</a><em>Everything taken from them here is an idea, not geometry or code, so this project&#x27;s own files carry no obligation from either.</em></li>
+<li class=""><a href="#ch-xd1-reference-designs-attribution">Attribution</a><em>Arofarn, Affordable Rock Tumbler — NEMA17 Version for CNC routing, Printables model 53950, and framagit.org/arofarn/polisseur.</em></li>
 </ul></div>
 </div></details>
 <h2 class="section" id="index">The code index</h2>
@@ -725,13 +779,13 @@ session with no memory of how any of this came to be.</p>
 <ul class="ctree">
 <li class="root"><div class="row"><span class="c">K</span><span class="m">Standing decisions — Gameplan K</span><span class="w"></span></div>
 <ul>
-<li class=""><div class="row"><span class="c">KA</span><span class="m">Barrel revolutions are the dose, not elapsed days. Grit stages are specified as revolution targets (600,000 each).</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#changelog">When</a><a href="#answered">Settled</a></span></div>
+<li class=""><div class="row"><span class="c">KA</span><span class="m">Barrel revolutions are the dose, not elapsed days. Grit stages are specified as revolution targets (600,000 each).</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#changelog">When</a><a href="#answered">Settled</a><a href="#ch-xd1-reference-designs">XD1</a></span></div>
 </li>
-<li class=""><div class="row"><span class="c">KB</span><span class="m">Barrel speed is 35–50% of critical speed; 45% by default. N_crit = 42.3/√D, D in metres.</span><span class="w"><a href="#gameplan">Why</a><a href="#devplan">How</a></span></div>
+<li class=""><div class="row"><span class="c">KB</span><span class="m">Barrel speed is 35–50% of critical speed; 45% by default. N_crit = 42.3/√D, D in metres.</span><span class="w"><a href="#gameplan">Why</a><a href="#devplan">How</a><a href="#changelog">When</a><a href="#ch-xd1-reference-designs">XD1</a></span></div>
 </li>
 <li class=""><div class="row"><span class="c">KC</span><span class="m">Structural prints are PETG or ASA, never PLA.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a></span></div>
 </li>
-<li class=""><div class="row"><span class="c">KD</span><span class="m">Rollers are 40 mm in diameter.</span><span class="w"><a href="#gameplan">Why</a><a href="#devplan">How</a></span></div>
+<li class=""><div class="row"><span class="c">KD</span><span class="m">Rollers are 40 mm in diameter.</span><span class="w"><a href="#gameplan">Why</a><a href="#devplan">How</a><a href="#ch-xd1-reference-designs">XD1</a></span></div>
 </li>
 <li class=""><div class="row"><span class="c">KE</span><span class="m">Driver current runs low, about 0.4–0.6 A per phase, set by winding down until a full barrel fails to start and adding 30% back.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a></span></div>
 </li>
@@ -741,7 +795,7 @@ session with no memory of how any of this came to be.</p>
 </li>
 <li class=""><div class="row"><span class="c">KH</span><span class="m">Do not print the barrel. Buy one, or use PVC or HDPE with a printed liner.</span><span class="w"><a href="#gameplan">Why</a><a href="#changelog">When</a></span></div>
 </li>
-<li class=""><div class="row"><span class="c">KI</span><span class="m">On Arduino, steps come from Timer1 in CTC mode toggling OC1A, which is pin D9. Not AccelStepper; and D9 cannot be reassigned.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#devplan">How</a><a href="#changelog">When</a></span></div>
+<li class=""><div class="row"><span class="c">KI</span><span class="m">On Arduino, steps come from Timer1 in CTC mode toggling OC1A, which is pin D9. Not AccelStepper; and D9 cannot be reassigned.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#devplan">How</a><a href="#changelog">When</a><a href="#ch-xd1-reference-designs">XD1</a></span></div>
 </li>
 <li class=""><div class="row"><span class="c">KJ</span><span class="m">All AVR dose arithmetic is integer, and all timing uses (uint32_t)(now - then) &gt;= gap.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#devplan">How</a><a href="#changelog">When</a></span></div>
 </li>
@@ -763,11 +817,15 @@ session with no memory of how any of this came to be.</p>
 </li>
 <li class=""><div class="row"><span class="c">Q-04</span><span class="m">Pico or Arduino?</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a><a href="#changelog">When</a></span></div>
 </li>
-<li class=""><div class="row"><span class="c">Q-05</span><span class="m">Should the tumbler stay in homebase?</span><span class="w"><a href="#questions">Unsettled</a></span></div>
+<li class=""><div class="row"><span class="c">Q-05</span><span class="m">Should the tumbler stay in homebase?</span><span class="w"><a href="#gameplan">Why</a><a href="#questions">Unsettled</a></span></div>
 </li>
 <li class=""><div class="row"><span class="c">Q-06</span><span class="m">Three files were left outside the Docket</span><span class="w"><a href="#questions">Unsettled</a></span></div>
 </li>
-<li class=""><div class="row"><span class="c">Q-07</span><span class="m">Should the console show anything of the tumbler&#x27;s own?</span><span class="w"><a href="#questions">Unsettled</a></span></div>
+<li class=""><div class="row"><span class="c">Q-07</span><span class="m">Should the console show anything of the tumbler&#x27;s own?</span><span class="w"><a href="#gameplan">Why</a><a href="#questions">Unsettled</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">Q-08</span><span class="m">May the two downloaded reference designs be committed to the repository?</span><span class="w"><a href="#features">What</a><a href="#questions">Unsettled</a><a href="#changelog">When</a><a href="#ch-xd1-reference-designs">XD1</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">Q-09</span><span class="m">Which ideas from the reference designs should be adopted?</span><span class="w"><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a><a href="#changelog">When</a><a href="#ch-xd1-reference-designs">XD1</a></span></div>
 </li>
 </ul>
 </li>
@@ -808,6 +866,8 @@ session with no memory of how any of this came to be.</p>
 <li class=""><div class="row"><span class="c">LE-17</span><span class="m">Distinguish &quot;committed&quot; from &quot;confirmed&quot;</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#changelog">When</a><a href="#lessons">What broke</a></span></div>
 </li>
 <li class=""><div class="row"><span class="c">LE-18</span><span class="m">A fix applied to one loop is not a fix applied to the harness</span><span class="w"><a href="#features">What</a><a href="#changelog">When</a><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-19</span><span class="m">A published model can be a broken mesh that every slicer quietly forgives</span><span class="w"><a href="#changelog">When</a><a href="#lessons">What broke</a><a href="#ch-xd1-reference-designs">XD1</a></span></div>
 </li>
 </ul>
 </li>
@@ -855,15 +915,19 @@ build my own rock tumbler. For fun."</em></p>
 <tbody>
 <tr>
 <td><strong>Shape</strong></td>
-<td>A physical bench machine with embedded firmware, plus local command-line design tools (Python calculators, an OpenSCAD model, a render/verification script). No web interface of any kind</td>
+<td>A physical bench machine with embedded firmware, plus local command-line design tools (Python calculators, an OpenSCAD model, a render/verification script). No web interface of any kind. The Docket console shows no project cards (❓<strong>Q-07</strong>)</td>
 </tr>
 <tr>
 <td><strong>Runs on</strong></td>
-<td>Design tools: the owner's Mac. Machine: a Raspberry Pi Pico or an Arduino Uno/Nano in the workshop (❓ which one is open as <strong>Q-04</strong>)</td>
+<td>Design tools: the owner's Mac. Machine: a Raspberry Pi Pico or an Arduino Uno/Nano in the workshop (❓<strong>Q-04</strong>)</td>
 </tr>
 <tr>
 <td><strong>Reached by</strong></td>
 <td>The owner only</td>
+</tr>
+<tr>
+<td><strong>Repository</strong></td>
+<td><code>projects/rock-tumbler/</code> inside the owner's <code>homebase</code> repo, on branch <code>claude/diy-rock-tumbler-6qi824</code>, pull request #1 open. ❓<strong>Q-05</strong> asks whether it should move to its own repository</td>
 </tr>
 <tr>
 <td><strong>Holds</strong></td>
@@ -1030,7 +1094,7 @@ record. The owner confirmed all of them as standing on 2026-09-22.</p>
 project that bar is high on purpose: firmware that has only run in a
 simulation, and parts that have only been rendered, are 🔨 — because nothing
 has been printed, wired or measured yet (<strong>LE-17</strong>).</p>
-<p><strong>❓Q-nn</strong> marks an entry with an unanswered question attached. The link is
+<p>❓<strong>Q-nn</strong> marks an entry with an unanswered question attached. The link is
 maintained both ways and checked.</p>
 <hr />
 <h2 id="features-the-code-system">The code system</h2>
@@ -1088,6 +1152,8 @@ MA1      Feature
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Roller hub: PETG/ASA, 8 mm bore, grub-screwed to the shaft, with end flanges that keep the barrel from walking. Exports as a manifold STL; not printed. <em>Risk: the flange lip is only 5 mm proud of the tyre</em></div></wa-card>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">TPU tyre, a 0.4 mm interference fit over the hub. Not printed</div></wa-card>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA4</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Two 8 mm shafts in four 608-2RS sealed bearings. Specified; not bought</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA5</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">Slotted end plates, so the roller spacing adjusts to a different barrel without reprinting. From the heavy-duty reference design (<a href="chapters/XD1-reference-designs.md">chapter</a>). ❓<strong>Q-09</strong></div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA6</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">Two barrels side by side on longer rollers, separated by guide rings, so two rock hardnesses or two grit stages run at once. Motor margin falls from ~3.6× to ~1.8×; shaft deflection unchecked; needs a second hall sensor. From the heavy-duty design. ❓<strong>Q-09</strong></div></wa-card>
 </ul>
 <h3 id="features-mb-frame-and-drive">MB — Frame and drive</h3>
 <ul>
@@ -1096,20 +1162,23 @@ MA1      Feature
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MB3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Baseboard: plywood or 2020 extrusion. Not modelled</div></wa-card>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MB4</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Drip tray. <em>Risk: only 20 mm of clearance under the barrel</em></div></wa-card>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MB5</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">GT2 belt drive, 20T pulleys, motor outboard of the drip zone. Described in the README; not modelled</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MB6</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">TPU vibration-isolating feet. <strong>Both</strong> reference designs have them and this one has none. ❓<strong>Q-09</strong></div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MB7</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">A guard over the belt and pulleys. Both reference designs guard their drive. ❓<strong>Q-09</strong></div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MB8</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">End plates cut from sheet (HDPE, acrylic or plywood) using a DXF exported from the model, as the Arofarn design's frame is CNC-cut. ❓<strong>Q-09</strong></div></wa-card>
 </ul>
 <hr />
 <h2 id="features-b-barrel">B — Barrel</h2>
 <h3 id="features-ba-barrel-body">BA — Barrel body</h3>
 <ul>
-<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BA1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">4-inch PVC DWV pipe with a threaded cleanout plug, lined per <strong>BB</strong>. ❓Q-01</div></wa-card>
-<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BA2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Bought rubber barrel, a Lortone or Thumler's spare part. ❓Q-01</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BA1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">4-inch PVC DWV pipe with a threaded cleanout plug, lined per <strong>BB</strong>. ❓<strong>Q-01</strong></div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BA2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Bought rubber barrel, a Lortone or Thumler's spare part. ❓<strong>Q-01</strong></div></wa-card>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BA3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">Wide-mouth HDPE jar with a gasketed lid</div></wa-card>
 </ul>
 <h3 id="features-bb-liner">BB — Liner</h3>
 <ul>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BB1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Hexagonal TPU liner, about 6.1 mm of gradual lift. Exports manifold; not printed</div></wa-card>
-<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BB2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Lifter-bar liner: six symmetric trapezoidal bars, 6 mm high (<strong>KG</strong>). Rendered; not printed. ❓Q-01</div></wa-card>
-<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BB3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Rubber sheet behind the printed liner: set <code>RUBBER_T</code> and both liners shrink, so the sleeve clamps the rubber with no adhesive. Parametric; no rubber sourced yet. ❓Q-01</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BB2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Lifter-bar liner: six symmetric trapezoidal bars, 6 mm high (<strong>KG</strong>). Rendered; not printed. ❓<strong>Q-01</strong></div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BB3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Rubber sheet behind the printed liner: set <code>RUBBER_T</code> and both liners shrink, so the sleeve clamps the rubber with no adhesive. Parametric; no rubber sourced yet. ❓<strong>Q-01</strong></div></wa-card>
 </ul>
 <h3 id="features-bc-lid">BC — Lid</h3>
 <ul>
@@ -1120,25 +1189,30 @@ MA1      Feature
 <h3 id="features-ea-motor-driver-and-supply">EA — Motor, driver and supply</h3>
 <ul>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">EA1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">NEMA 17 at ~169 rpm, ~11 N·cm demand against 40–50 available. The owner has the motors; not wired</div></wa-card>
-<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">EA2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Stepper driver. A4988, DRV8825, TB6600 or TMC2209; all speak STEP/DIR. ❓Q-02</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">EA2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Stepper driver. A4988, DRV8825, TB6600 or TMC2209; all speak STEP/DIR. ❓<strong>Q-02</strong></div></wa-card>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">EA3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Driver current procedure: Vref formulas by sense-resistor value, start at 0.6 A, wind down, add 30% (<strong>KE</strong>). Written in the README; never performed</div></wa-card>
-<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">EA4</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Supply: 12 V or 24 V. ❓Q-03</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">EA4</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Supply: 12 V or 24 V. ❓<strong>Q-03</strong></div></wa-card>
 </ul>
 <h3 id="features-eb-sensing">EB — Sensing</h3>
 <ul>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">EB1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Hall sensor (A3144) on the frame, magnet on the barrel end cap: exactly one pulse per revolution. Not fitted</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">EB2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">A local display and rotary knob showing dose progress, speed and slip, so the machine reports without a laptop. The Arofarn design has a four-digit display and encoder, though it shows a countdown. ❓<strong>Q-09</strong></div></wa-card>
+</ul>
+<h3 id="features-ec-enclosure">EC — Enclosure</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">EC1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">A splash-proof enclosure for the controller and driver, outboard of the drip zone. Both reference designs box their electronics; this one's sit bare. ❓<strong>Q-09</strong></div></wa-card>
 </ul>
 <hr />
 <h2 id="features-f-firmware">F — Firmware</h2>
 <h3 id="features-fa-pico-route-raspberry-pi-pico-tmc2209">FA — Pico route (Raspberry Pi Pico + TMC2209)</h3>
 <ul>
-<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FA1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">TMC2209 single-wire UART driver using <code>VACTUAL</code>, the chip's internal step generator. CRC cross-checked two ways; the read datagram matches the published example. Never on hardware. ❓Q-04</div></wa-card>
-<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FA2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Pico control loop: soft start, reversal, odometer in a flash file, slip detection. A simulated six-week campaign passes. Never on hardware. ❓Q-04</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FA1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">TMC2209 single-wire UART driver using <code>VACTUAL</code>, the chip's internal step generator. CRC cross-checked two ways; the read datagram matches the published example. Never on hardware. ❓<strong>Q-04</strong></div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FA2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Pico control loop: soft start, reversal, odometer in a flash file, slip detection. A simulated six-week campaign passes. Never on hardware. ❓<strong>Q-04</strong></div></wa-card>
 </ul>
 <h3 id="features-fb-arduino-route-unonano-any-stepdir-driver">FB — Arduino route (Uno/Nano + any STEP/DIR driver)</h3>
 <ul>
-<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FB1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Timer1 CTC hardware step generation on D9 (<strong>KI</strong>). Compiles clean for the ATmega328P; the step rate has never been measured. ❓Q-04</div></wa-card>
-<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FB2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">EEPROM odometer: a 32-slot checksummed ring for wear levelling and power-cut safety. Compiles; never run. ❓Q-04</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FB1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Timer1 CTC hardware step generation on D9 (<strong>KI</strong>). Compiles clean for the ATmega328P; the step rate has never been measured. ❓<strong>Q-04</strong></div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FB2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">EEPROM odometer: a 32-slot checksummed ring for wear levelling and power-cut safety. Compiles; never run. ❓<strong>Q-04</strong></div></wa-card>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FB3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Wrap-safe timing and integer-only dose arithmetic (<strong>KJ</strong>). Compiles; never run</div></wa-card>
 </ul>
 <h3 id="features-fc-behaviour-both-routes-share">FC — Behaviour both routes share</h3>
@@ -1161,7 +1235,7 @@ MA1      Feature
 </ul>
 <h3 id="features-tb-verification">TB — Verification</h3>
 <ul>
-<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">TB1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="success">built</wa-tag></div><div class="featbody"><code>tools/render.sh</code>: parses the CAD with OpenSCAD, exports every part as a manifold STL, runs interference tests with a control, and writes renders. <em>Its part-export loop does not delete stale STLs first (</em><em>LE-18</em><em>)</em></div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">TB1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="success">built</wa-tag></div><div class="featbody"><code>tools/render.sh</code>: parses the CAD with OpenSCAD, exports every part as a manifold STL, runs interference tests with a control, and writes renders. Every target is deleted before it is generated (<strong>LE-18</strong>, fixed 0.6.1)</div></wa-card>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">TB2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Arduino compile check (<code>firmware/arduino/test/</code>): real ATmega328P headers through a minimal Arduino shim. Passed in the cloud container; <strong>cannot run on this Mac until <code>avr-gcc</code> is installed</strong></div></wa-card>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">TB3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="success">built</wa-tag></div><div class="featbody">Firmware self-tests: <code>firmware/tmc2209.py</code> and <code>firmware/main.py --selftest</code>, the latter a simulated six-week campaign</div></wa-card>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">TB4</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">The project version shown in the upper-right corner of every interface: both calculators' output, <code>render.sh</code>'s output, and each firmware's serial banner. Wired to the single <code>VERSION</code> file. Required by the owner's standing rule for all projects</div></wa-card>
@@ -1191,6 +1265,10 @@ MA1      Feature
 <ul>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">XC1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">Direct barrel drive: the stepper coupled straight to a barrel shaft, which eliminates slip</div></wa-card>
 <wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">XC2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">Vibratory conversion: off-centre masses on the steppers already owned</div></wa-card>
+</ul>
+<h3 id="features-xd-reference-designs">XD — Reference designs</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">XD1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="success">built</wa-tag></div><div class="featbody">Two published designs evaluated with measurements: Arofarn's NEMA 17 CNC tumbler and 3DPrintOrlando's heavy-duty adjustable tumbler. Neither reaches the correct speed band: one tops out at 19–22% of critical, the other runs to 86–92%. Seven ideas extracted (<strong>MA5</strong>, <strong>MA6</strong>, <strong>MB6</strong>, <strong>MB7</strong>, <strong>MB8</strong>, <strong>EB2</strong>, <strong>EC1</strong>). Full evaluation: <a href="chapters/XD1-reference-designs.md">chapter</a>. Whether the downloaded files may be committed: ❓<strong>Q-08</strong></div></wa-card>
 </ul>
 </article>
 <article id="path"><div class="head"><b>critical_path.md</b><span>What order</span></div>
@@ -1311,6 +1389,11 @@ commitments.</em></p>
 <td>⬜ <strong>Q-04</strong></td>
 <td>Pico or Arduino?</td>
 <td>What gets wired and flashed (column 4)</td>
+</tr>
+<tr>
+<td>⬜ <strong>Q-09</strong></td>
+<td>Which reference-design ideas to adopt?</td>
+<td>Feet, belt guard and enclosure would join the column 2 print set</td>
 </tr>
 </tbody>
 </table>
@@ -1504,6 +1587,11 @@ so none of them stops column 1.</p>
 <td>Verify pulses per revolution in column 5</td>
 </tr>
 <tr>
+<td>Cradle too shallow for the real barrel</td>
+<td>Barrel wanders on the hand test</td>
+<td>Keep the 40° angle (<strong>MA1</strong>); a published design at 28–31° relies on its barrel's caps acting as flanges (<strong>XD1</strong>)</td>
+</tr>
+<tr>
 <td>Step rate wrong</td>
 <td>Barrel speed differs from the calculation</td>
 <td>Scope D9 in column 4</td>
@@ -1676,6 +1764,44 @@ own cards.</p>
 seeing those at a glance would be useful.</p>
 <p><strong>Working assumption:</strong> <strong>no project cards.</strong> The console shows the Docket,
 the questions and the capture page, and nothing else.</p>
+<h3 id="questions-q-08-may-the-two-downloaded-reference-designs-be-committed-to-the-repository">Q-08 — May the two downloaded reference designs be committed to the repository?</h3>
+<p><strong>Raised:</strong> 2026-09-22 · <strong>Affects:</strong> <strong>XD1</strong> · <strong>Status:</strong> open</p>
+<p>Two open designs were downloaded into this folder: Arofarn's <em>Affordable Rock
+Tumbler — NEMA17</em> (licensed CC BY-SA 4.0) and 3DPrintOrlando's <em>Heavy Duty &amp;
+Adjustable</em> (CC BY-NC-SA 4.0, which forbids commercial use). Both licences
+allow copying them with attribution. Committing them would still mean
+<strong>publishing someone else's files</strong> in your GitHub repository, which is your
+call. It would also add about 3.6 MB of STLs and zips.</p>
+<p>The evaluation took <strong>ideas only</strong> from them, no geometry or code, so none of
+this project's own files carries any obligation either way.</p>
+<p><strong>Working assumption:</strong> <strong>they stay on disk and out of git</strong> (listed in
+<code>.gitignore</code>); the chapter records what was learned and credits both authors.
+If you want them committed, I'll move them into a <code>reference/</code> folder with
+their licence and attribution alongside.</p>
+<h3 id="questions-q-09-which-ideas-from-the-reference-designs-should-be-adopted">Q-09 — Which ideas from the reference designs should be adopted?</h3>
+<p><strong>Raised:</strong> 2026-09-22 · <strong>Affects:</strong> <strong>MA5</strong>, <strong>MA6</strong>, <strong>MB6</strong>, <strong>MB7</strong>, <strong>MB8</strong>, <strong>EB2</strong>, <strong>EC1</strong> · <strong>Status:</strong> open</p>
+<p>The evaluation (<a href="chapters/XD1-reference-designs.md"><code>chapters/XD1-reference-designs.md</code></a>)
+found seven things the two published tumblers do that this one doesn't. Each
+is marked 💡 (an idea, not approved) until you say otherwise:</p>
+<ol>
+<li><strong>TPU feet</strong> to isolate vibration (<strong>MB6</strong>). Both designs have them.</li>
+<li><strong>A belt guard</strong> (<strong>MB7</strong>). Both designs guard their drive.</li>
+<li><strong>An electronics enclosure</strong> (<strong>EC1</strong>). Both designs box theirs.</li>
+<li><strong>Two barrels at once</strong> on longer rollers (<strong>MA6</strong>). Doubles throughput,
+   or runs two rock hardnesses at once. Needs longer shafts, a second sensor,
+   and firmware that keeps two doses.</li>
+<li><strong>Adjustable roller spacing</strong> (<strong>MA5</strong>). Worth it only if you'll use more
+   than one barrel size.</li>
+<li><strong>A display and knob</strong> on the machine (<strong>EB2</strong>).</li>
+<li><strong>End plates cut from sheet material</strong> rather than printed (<strong>MB8</strong>).</li>
+</ol>
+<p><strong>My recommendation:</strong> approve <strong>1, 2 and 3</strong> now. They are cheap, both
+reference designs independently agree on them, and they address noise, safety
+and splash, which this design hasn't covered. Park <strong>4</strong> until the first
+batch has run. <strong>5</strong>, <strong>6</strong> and <strong>7</strong> are optional.</p>
+<p><strong>Working assumption:</strong> all seven stay as ideas. Nothing changes in the CAD or
+the plan until you choose; approving 1–3 would add three small parts to the
+print set in <code>critical_path.md</code> column 2.</p>
 <hr />
 <h2 id="questions-answered">Answered</h2>
 <p><em>Settled questions move to <a href="answered_questions.md"><code>answered_questions.md</code></a>.</em></p>
@@ -1808,7 +1934,7 @@ being wrong. The distinction is in the Docket framework's §4.</p>
 </article>
 <article id="changelog"><div class="head"><b>CHANGELOG.md</b><span>When</span></div>
 <h1>Rock tumbler — Changelog</h1>
-<p><strong>Current: 0.6.0</strong> — designed, computed and verified in software; nothing printed, wired or measured yet.</p>
+<p><strong>Current: 0.7.0</strong> — designed, computed and verified in software; nothing printed, wired or measured yet.</p>
 <blockquote>
 <p>Codes in brackets refer to <a href="features_and_functions.md"><code>features_and_functions.md</code></a>.
 The version is a single constant, in <a href="VERSION"><code>VERSION</code></a>.</p>
@@ -1822,6 +1948,31 @@ per commit, when the Docket was adopted. Before then the project had no
 version. Their dates and contents come from the commit record; the version
 numbers themselves are reconstructed.</em></p>
 <hr />
+<h2 id="changelog-070-2026-09-22-two-published-designs-evaluated">0.7.0 — 2026-09-22 — Two published designs evaluated</h2>
+<ul>
+<li>Evaluated Arofarn's NEMA 17 CNC tumbler and 3DPrintOrlando's heavy-duty
+  adjustable tumbler by measurement: meshes, a DXF, a FreeCAD source, the
+  firmware and the build photos (<strong>XD1</strong>,
+  <a href="chapters/XD1-reference-designs.md">chapter</a>).</li>
+<li>Finding: neither reaches the correct speed band. Arofarn tops out at 19–22%
+  of critical speed; the heavy-duty design runs to 86–92%. Both chose speed
+  without the physics (<strong>KB</strong>).</li>
+<li>Seven ideas added as 💡, pending the owner's choice (<strong>Q-09</strong>): TPU feet
+  (<strong>MB6</strong>), a belt guard (<strong>MB7</strong>), an electronics enclosure (<strong>EC1</strong>),
+  two barrels (<strong>MA6</strong>), adjustable spacing (<strong>MA5</strong>), a display and knob
+  (<strong>EB2</strong>), and sheet-cut end plates (<strong>MB8</strong>).</li>
+<li><strong>Q-08</strong> asks whether the downloaded files may be committed; until then
+  they stay git-ignored.</li>
+<li><strong>LE-19</strong>: seven of the heavy-duty design's 22 STLs are open meshes that
+  slicers forgive and OpenSCAD rejects.</li>
+</ul>
+<h2 id="changelog-061-2026-09-22-rendersh-no-longer-counts-stale-stls">0.6.1 — 2026-09-22 — <code>render.sh</code> no longer counts stale STLs</h2>
+<ul>
+<li>The part-export loop in <code>tools/render.sh</code> now deletes each STL before
+  rendering it (<strong>TB1</strong>, <strong>LE-18</strong>). OpenSCAD writes no file for an empty
+  result, so a part that rendered empty was reported <code>ok</code> from the previous
+  run's file. Reproduced before fixing.</li>
+</ul>
 <h2 id="changelog-060-2026-09-22-the-docket-adopted">0.6.0 — 2026-09-22 — The Docket adopted</h2>
 <ul>
 <li>Adopted the Docket documentation framework (4.2.0) in place: <code>Gameplan.md</code>,
@@ -1963,7 +2114,7 @@ almost never a coincidence — it means neither question was actually asked.</p>
 reports <code>NoError</code>, <code>ErrorCount: 0</code>, or <code>errors=0</code>. Match the tool's actual
 error prefix — <code>^ERROR:</code> — not a hopeful substring.</p>
 <h2 id="lessons-le-06-empty-output-is-not-the-same-as-no-output">LE-06 — Empty output is not the same as no output</h2>
-<p><strong>Gate:</strong> partial. <code>tools/render.sh</code> deletes the interference-test target before each run, but its part-export loop does not — a part that rendered empty would be reported <code>ok</code> from the previous run's STL. Found 2026-09-22 while adopting the Docket; see <strong>LE-18</strong>.</p>
+<p><strong>Gate:</strong> <code>tools/render.sh</code> deletes every target before generating it — the interference tests since 0.5.0, the part exports since 0.6.1 (<strong>LE-18</strong>).</p>
 <p>OpenSCAD writes nothing when a result is empty. Many tools behave this way.
 If your script reads the output file afterwards, it reads whatever was there
 before.</p>
@@ -2108,8 +2259,30 @@ non-empty, so nothing has exercised the gap.</p>
 <p>When a bug is fixed, search the file for the pattern, not only the line
 that failed.</p>
 </blockquote>
-<p><strong>Gate:</strong> ⬜ the fix is a separate change (<strong>TB1</strong>); this entry will say so
-when it lands.</p>
+<p><strong>Gate:</strong> fixed in 0.6.1 (<strong>TB1</strong>). The export loop now deletes each STL
+before rendering it. Reproduced first: rendering an empty model into an
+existing <code>part.stl</code> left the old 12-facet file in place, which the loop would
+have counted as a pass.</p>
+<h2 id="lessons-le-19-a-published-model-can-be-a-broken-mesh-that-every-slicer-quietly-forgives">LE-19 — A published model can be a broken mesh that every slicer quietly forgives</h2>
+<p><em>Found 2026-09-22, evaluating two reference designs (</em><em>XD1</em><em>).</em></p>
+<p>Seven of the heavy-duty design's 22 STLs are <strong>open meshes</strong>: edges that do
+not close into a solid, 573 of them in one bracket. They print, because
+slicers repair open meshes silently, so neither the author nor anyone who
+printed them would see a problem. OpenSCAD refuses them outright: it cannot
+slice them, and it could not combine them with this project's model.</p>
+<p>How it hid: the only tool most people run on an STL is a slicer, and a slicer's
+job is to make a print happen, not to report that the input was wrong.</p>
+<p>The same evaluation hit <strong>LE-06</strong> once more. A slice taken above the part's
+top produced an empty result, OpenSCAD wrote no file, and the script's reader
+failed on the missing file. This time it failed loudly, because the reader
+opened the file rather than testing a stale one.</p>
+<blockquote>
+<p>Before building on third-party geometry, check it is a closed solid.
+"It printed" is not evidence.</p>
+</blockquote>
+<p><strong>Gate:</strong> none needed while nothing third-party enters <code>cad/</code>. If anything
+ever does, it goes through <code>tools/render.sh</code>, whose manifold check would
+reject it (<strong>TB1</strong>).</p>
 </article>
 <article id="answered"><div class="head"><b>answered_questions.md</b><span>Settled</span></div>
 <h1>Rock tumbler — Answered Questions</h1>
@@ -2127,6 +2300,357 @@ were asked before any <code>Q-nn</code> existed. Their answers went straight int
 <code>Gameplan.md</code> as </em><em>KK</em><em>, </em><em>KL</em><em> and </em><em>KM</em><em>, and as the confirmations on
 </em><em>KA</em><em>–</em><em>KK</em><em>.</em></p>
 <hr />
+</article>
+<article id="ch-xd1-reference-designs"><div class="head"><b>chapters/XD1-reference-designs.md</b><span>XD1</span></div>
+<h1>XD1 — Two published designs, evaluated</h1>
+<p><em>Chapter for </em><em>XD1</em><em>. Evaluated 2026-09-22 at the owner's request: "thoroughly
+evaluate those two and modify our plan or determine what's usable from them."
+The canonical list is <a href="../features_and_functions.md"><code>../features_and_functions.md</code></a>;
+where this chapter and the list disagree, the list wins.</em></p>
+<hr />
+<h2 id="ch-xd1-reference-designs-the-short-version">The short version</h2>
+<p>Two open designs were downloaded into this folder, and each was taken apart
+with measurements rather than impressions: STL meshes measured, a CAD source
+file and a DXF parsed, the firmware read, and the build photos checked.</p>
+<p><strong>The headline is speed.</strong> Run through this project's physics model, the two
+designs miss the correct band in opposite directions:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Drive</th>
+<th>Top barrel speed</th>
+<th>% of critical</th>
+<th>Correct band (<strong>KB</strong>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Arofarn</strong>, <em>Affordable Rock Tumbler — NEMA17</em></td>
+<td>Stepper through printed gears</td>
+<td>25–28 rpm</td>
+<td><strong>19–22%</strong>: cannot reach rock speed</td>
+<td>35–50%</td>
+</tr>
+<tr>
+<td><strong>3DPrintOrlando</strong>, <em>Heavy Duty &amp; Adjustable</em></td>
+<td>DC gearmotor, PWM dial</td>
+<td>110–126 rpm</td>
+<td><strong>86–92%</strong>: near centrifuging</td>
+<td>35–50%</td>
+</tr>
+</tbody>
+</table>
+<p>Neither chose its speed from the physics. One is a slow polisher for
+metal-filled prints; the other hands over a dial whose right setting,
+roughly half throttle, it never tells you. This is the strongest outside
+evidence yet for <strong>KB</strong> and for deriving speed rather than choosing it.</p>
+<p><strong>What is worth taking</strong>, in order of value:</p>
+<ol>
+<li><strong>Vibration-isolating feet.</strong> Both designs have them; this one doesn't.
+   Cheap, printable in TPU, and aimed at the noise problem (<strong>MB6</strong>).</li>
+<li><strong>A guard over the drive.</strong> Both designs guard their gears or belt; this
+   one's belt is exposed (<strong>MB7</strong>).</li>
+<li><strong>An electronics enclosure.</strong> Both designs box the electronics; this one's
+   Arduino and driver sit bare near a wet machine (<strong>EC1</strong>).</li>
+<li><strong>Two barrels on longer rollers</strong>, separated by guide rings. That would
+   allow two rock hardnesses at once, which the one-hardness-per-batch rule
+   (<strong>PA2</strong>) otherwise forbids. Our motor has the torque; the odometer would
+   need a second sensor (<strong>MA6</strong>).</li>
+<li><strong>Slotted end plates</strong> so the roller spacing adjusts to different barrels
+   without reprinting (<strong>MA5</strong>).</li>
+<li><strong>A local display and knob</strong>, so the machine shows its own progress
+   rather than needing a laptop on a serial cable (<strong>EB2</strong>).</li>
+<li><strong>End plates cut from sheet</strong> (HDPE, acrylic or plywood) from a DXF the
+   model exports, as Arofarn cut its frame by CNC (<strong>MB8</strong>).</li>
+</ol>
+<p><strong>What confirms what we already have:</strong> the Arofarn build is almost exactly
+our barrel route A (PVC pipe, screw caps, printed faceted liner, 8 mm rods,
+608 bearings, NEMA 17). It exists, it was photographed working, and it
+polishes. That is real evidence the architecture works.</p>
+<p><strong>What not to take:</strong> their geometry (licensing, and seven of the heavy-duty
+parts are broken meshes), their firmware (it makes the exact AccelStepper
+mistake <strong>KI</strong> avoids), gear drive (we need no reduction, <strong>KD</strong>), and a DC
+motor (no exact speed, nothing to count).</p>
+<p>Two decisions for the owner are filed: <strong>Q-08</strong> (whether these files may be
+committed) and <strong>Q-09</strong> (which of the ideas above to adopt).</p>
+<hr />
+<h2 id="ch-xd1-reference-designs-method-and-how-far-to-trust-each-number">Method, and how far to trust each number</h2>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Measured</strong></td>
+<td>Mesh bounding boxes and facet directions (Python over the STLs); Arofarn's frame hole positions (its <code>frame.dxf</code>); gear tooth counts and module (its FreeCAD file, <code>polisseur.fcstd</code>); firmware behaviour (its <code>code_polisseur.ino</code>, from the author's repository); mesh closure (every edge checked for exactly two triangles)</td>
+</tr>
+<tr>
+<td><strong>Stated by the author</strong></td>
+<td>Motor speeds, pulley sizes, rod sizes and supplies (the Printables pages and the Arofarn README)</td>
+</tr>
+<tr>
+<td><strong>Estimated</strong></td>
+<td>Arofarn's effective roller diameter with its O-ring (~26 mm) and which diameter of its barrel touches the rollers (110–125 mm), both read from photographs. That is why its numbers are given as ranges</td>
+</tr>
+<tr>
+<td><strong>Not measured</strong></td>
+<td>The heavy-duty design's range of roller-spacing adjustment. Its slots sit on a curved, sloping face that a straight slice cannot isolate, and the part is an open mesh that OpenSCAD refuses to cut. It is recorded as adjustable, without a number</td>
+</tr>
+</tbody>
+</table>
+<p>One of my own guesses was corrected by measuring. The heavy-duty author says
+a 100 mm drum's "max RPM should be 125". I first read that as critical speed
+(133.7 rpm by our formula; close). Measuring the parts showed it is the
+<strong>drive's top speed</strong>: a 421 rpm motor, 1:1 pulleys, a 30 mm roller, a 100 mm
+drum, giving 421 × 30 / 100 = 126 rpm. The closeness to critical speed is a
+coincidence, and a dangerous one: flat out, that machine nearly centrifuges.</p>
+<hr />
+<h2 id="ch-xd1-reference-designs-arofarn-affordable-rock-tumbler-nema17-version-for-cnc-routing">Arofarn — <em>Affordable Rock Tumbler, NEMA17 version for CNC routing</em></h2>
+<p>Printables, 2021, updated 2022 · remix of Thingiverse 2744886 ·
+<strong>CC BY-SA 4.0</strong> · firmware <strong>GPLv3</strong> · source at framagit.org/arofarn/polisseur</p>
+<h3 id="ch-xd1-reference-designs-what-it-is">What it is</h3>
+<p>A NEMA 17 turning M8 threaded rods through a printed <strong>16/25-tooth, module 2
+gear pair</strong> (a 1.5625:1 reduction). The barrel rides on four 24.4 mm printed
+pulleys fitted with O-rings. The frame is two 15 mm HDPE plates, cut by CNC
+from a DXF, joined by 10 mm rods. The barrel is a 110 mm PVC pipe with
+screw-on caps, fitted with a printed <strong>decagonal</strong> insert. An ATmega328 board
+with a four-digit display and a rotary encoder sets speed and a countdown
+timer. Its stated purpose is <strong>polishing 3D prints made from metal-filled
+filament</strong>, "and rocks of course".</p>
+<h3 id="ch-xd1-reference-designs-measured">Measured</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Arofarn</th>
+<th>This project</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shaft spacing</td>
+<td><strong>70 mm</strong> (bearing seats at −60 and +10 in <code>frame.dxf</code>)</td>
+<td>97.7 mm</td>
+</tr>
+<tr>
+<td>Cradle half-angle</td>
+<td><strong>28–31°</strong></td>
+<td>40° (<strong>MA1</strong>)</td>
+</tr>
+<tr>
+<td>Roller</td>
+<td>24.4 mm pulley + O-ring, ~26 mm</td>
+<td>40 mm hub + TPU tyre (<strong>KD</strong>)</td>
+</tr>
+<tr>
+<td>Reduction</td>
+<td>25/16 = 1.5625 (gears)</td>
+<td>none; the roller diameter is the ratio</td>
+</tr>
+<tr>
+<td>Microstepping</td>
+<td>1/8, capped at 5,000 steps/s</td>
+<td>1/16, ~8,990 steps/s in hardware</td>
+</tr>
+<tr>
+<td>Barrel top speed</td>
+<td><strong>25–28 rpm, 19–22% of critical</strong></td>
+<td>60 rpm, 45%</td>
+</tr>
+<tr>
+<td>Liner</td>
+<td>10 flats, ~2.5 mm of lift</td>
+<td>6 flats (6.1 mm) or 6 lifter bars (6 mm)</td>
+</tr>
+<tr>
+<td>Meshes</td>
+<td>all 10 closed</td>
+<td>all closed (<strong>TB1</strong>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ch-xd1-reference-designs-reading-it-against-this-project">Reading it against this project</h3>
+<ul>
+<li><strong>The speed is right for its purpose and wrong for rock.</strong> At 19–22% of
+  critical the charge slides rather than cascades, per <strong>KB</strong>. For burnishing
+  brass-filled prints, gentle is correct. For grinding stone it would take far
+  longer than seven days per stage, if it rounded the stone at all.</li>
+<li><strong>Its cradle is at the edge of stable.</strong> 28–31° is at the "wanders" end of
+  <strong>MA1</strong>'s 30–50° range. In the photographs the barrel's own screw caps sit
+  against the pulleys and act as flanges, which is probably what keeps it on.</li>
+<li><strong>The firmware demonstrates the trap </strong>KI<strong> avoids.</strong> It steps with
+  AccelStepper's <code>runSpeed()</code> inside a loop that also multiplexes the display
+  and polls the encoder, and it drops to 1/8 microstepping to stay under a
+  5,000 steps/s cap. Every display refresh delays a step.</li>
+<li><strong>The firmware's <code>current_rpm</code> is steps per second.</strong> AccelStepper's
+  <code>setSpeed()</code> takes steps/s, so the number the display calls RPM overstates
+  the motor speed roughly eightfold. The user is dialling a number that means
+  something else.</li>
+<li><strong>Nothing survives a power cut.</strong> The countdown and speed reset. And the
+  countdown is elapsed seconds, capped at ten days: time as a proxy for dose,
+  the same choice <strong>KA</strong> rejects.</li>
+<li><strong>Its direction pin is D0</strong>, which is also the serial receive pin while
+  <code>Serial.begin()</code> runs. Harmless while it only turns one way; a trap for
+  anyone who adds reversal. This project uses D2, D7, D8 and D9, and avoids
+  D0 and D1.</li>
+<li><strong>The printed liner scuffs.</strong> The build photo shows grit scoring on the
+  insert's flats. It supports treating any printed liner as a consumable, and
+  printing ours in TPU (<strong>BB1</strong>, <strong>BB2</strong>).</li>
+</ul>
+<h3 id="ch-xd1-reference-designs-usable-from-arofarn">Usable from Arofarn</h3>
+<ul>
+<li><strong>The architecture, as evidence.</strong> A built, photographed machine on the same
+  motor, rods, bearings, pipe and liner concept. It lowers the risk of <strong>BA1</strong>.</li>
+<li><strong>The CNC-from-DXF frame</strong>, as an idea (<strong>MB8</strong>).</li>
+<li><strong>The display and encoder</strong>, as an idea (<strong>EB2</strong>), paired with our dose
+  rather than a countdown.</li>
+<li><strong>Not the gears.</strong> This project needs no reduction because the roller
+  diameter is the ratio (<strong>KD</strong>). Printed spur gears are also louder than a
+  belt, and put the motor under the barrel, in the drip zone.</li>
+<li><strong>Not the code.</strong> GPLv3, and the approach is the one this project exists
+  to improve on.</li>
+</ul>
+<hr />
+<h2 id="ch-xd1-reference-designs-3dprintorlando-rock-tumbler-heavy-duty-adjustable">3DPrintOrlando — <em>Rock Tumbler, Heavy Duty &amp; Adjustable</em></h2>
+<p>Printables, 2024 · <strong>CC BY-NC-SA 4.0</strong> (no commercial use; derivatives must
+carry the same licence)</p>
+<h3 id="ch-xd1-reference-designs-what-it-is">What it is</h3>
+<p>A 2020-extrusion frame with printed side covers, two 10 mm rollers (400 mm
+and 350 mm) in pillow blocks, the front roller sleeved in a 30 mm TPU tube, a
+421 rpm 24 V DC gearmotor with a PWM speed controller, a 1:1 belt drive with
+an idler tensioner, a cooling fan, printed TPU feet, and printed guide rings
+on the rear roller that separate up to three barrels. The author states
+~100 hours of printing, ~1 kg PETG, ~150 g TPU and about $130 of parts, and
+that it takes two standard drums or one 15 lb drum.</p>
+<h3 id="ch-xd1-reference-designs-measured">Measured</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Heavy duty</th>
+<th>This project</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Roller</td>
+<td>30 mm TPU sleeve over a 10 mm rod, full length</td>
+<td>40 mm, 3 mm TPU tyre on a PETG hub</td>
+</tr>
+<tr>
+<td>Top barrel speed</td>
+<td>126 rpm (100 mm drum), 110 rpm (4.5 in drum)</td>
+<td>60 rpm, fixed by the arithmetic</td>
+</tr>
+<tr>
+<td>As % of critical</td>
+<td><strong>86–92%</strong></td>
+<td>45%</td>
+</tr>
+<tr>
+<td>Right PWM setting</td>
+<td>~49–52% of full, never stated</td>
+<td>not applicable</td>
+</tr>
+<tr>
+<td>Speed regulation</td>
+<td>none: a DC motor's speed falls with load and supply</td>
+<td>exact, step-locked</td>
+</tr>
+<tr>
+<td>Barrels</td>
+<td>up to three, with guide rings</td>
+<td>one</td>
+</tr>
+<tr>
+<td>Spacing</td>
+<td>adjustable in slots; range not measurable here</td>
+<td>fixed per barrel, reprint to change</td>
+</tr>
+<tr>
+<td>Feet</td>
+<td>TPU, 24.5 × 19.5 mm hourglass</td>
+<td>none</td>
+</tr>
+<tr>
+<td>Meshes</td>
+<td><strong>7 of 22 open</strong>, the front motor bracket with 573 bad edges</td>
+<td>all closed</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ch-xd1-reference-designs-reading-it-against-this-project">Reading it against this project</h3>
+<ul>
+<li><strong>Full speed would chip the stones, and nothing says so.</strong> At 86–92% of
+  critical the charge is close to pinning to the wall. Its owner has to find
+  the right PWM position by ear. This project computes it.</li>
+<li><strong>The DC motor is simpler and blinder.</strong> It has no exact speed and nothing
+  to count, so no dose, no slip detection and no reversal. It is the
+  machine this project was designed not to be.</li>
+<li><strong>Its broken meshes are a warning about third-party geometry.</strong> Slicers
+  quietly repair open meshes, so they print. OpenSCAD refuses them, so none of
+  these parts could be combined with this project's model without repair first
+  (<strong>LE-19</strong>).</li>
+</ul>
+<h3 id="ch-xd1-reference-designs-usable-from-the-heavy-duty-design">Usable from the heavy-duty design</h3>
+<ul>
+<li><strong>TPU feet</strong> (<strong>MB6</strong>). Both designs have them.</li>
+<li><strong>Guarding the drive and the electronics</strong> (<strong>MB7</strong>, <strong>EC1</strong>). It covers the
+  belt, the motor and the power entry.</li>
+<li><strong>Multiple barrels on long rollers with guide rings</strong> (<strong>MA6</strong>). The idea
+  that changes the process most: two barrels can run two rock hardnesses, or
+  two grit stages, at once. Our motor's margin drops from ~3.6× to ~1.8× with
+  two 1.5 kg charges (22 N·cm against 40–50), which is still workable. The
+  8 mm shafts would lengthen, and their deflection should be checked before
+  committing. Each barrel would need its own hall sensor for its own dose.</li>
+<li><strong>Adjustable spacing</strong> (<strong>MA5</strong>), if more than one barrel size is ever used.</li>
+<li><strong>Not the geometry.</strong> Its licence forbids commercial use and requires
+  derivatives to carry the same licence; seven parts are open meshes; and
+  it is dimensioned for a different machine. Ideas are free to use; the files
+  are not ours to build on.</li>
+</ul>
+<hr />
+<h2 id="ch-xd1-reference-designs-licensing-in-one-place">Licensing, in one place</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Licence</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Arofarn models</td>
+<td>CC BY-SA 4.0</td>
+<td>Free to use and adapt with attribution; <strong>anything derived from the geometry must carry the same licence</strong></td>
+</tr>
+<tr>
+<td>Arofarn firmware</td>
+<td>GPLv3</td>
+<td>Same, for code</td>
+</tr>
+<tr>
+<td>Heavy-duty models</td>
+<td>CC BY-NC-SA 4.0</td>
+<td>As above, <strong>and no commercial use</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Everything taken from them here is an idea, not geometry or code</strong>, so this
+project's own files carry no obligation from either. Whether the downloaded
+files themselves should be committed to the repository is <strong>Q-08</strong>.</p>
+<h2 id="ch-xd1-reference-designs-attribution">Attribution</h2>
+<ul>
+<li>Arofarn, <em>Affordable Rock Tumbler — NEMA17 Version for CNC routing</em>,
+  Printables model 53950, and framagit.org/arofarn/polisseur.</li>
+<li>3DPrintOrlando, <em>Rock Tumbler — Heavy Duty &amp; Adjustable</em>, Printables model
+  854211.</li>
+</ul>
 </article>
 <a class="top" href="#top">↑ top</a>
 </main></wa-page><script type='module'>

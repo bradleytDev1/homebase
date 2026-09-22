@@ -11,7 +11,7 @@ code's entry, from every `Q-nn` it explains, and from `../README.md`.
 
 ## The chapters
 
-*None yet.* The project's long form currently lives in
+The project's main long form currently lives in
 [`../README.md`](../README.md), whose sections the Docket documents link into
 (see **Q-06** in `../open_questions.md` for whether that should change). The
 first chapter this project is likely to earn is the Blender charge simulation
@@ -19,3 +19,4 @@ first chapter this project is likely to earn is the Blender charge simulation
 
 | Chapter | Code | Status |
 |---|---|---|
+| [Two published designs, evaluated](XD1-reference-designs.md) | **XD1** | ✅ 2026-09-22 |

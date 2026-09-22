@@ -1,6 +1,6 @@
 # Rock tumbler — Changelog
 
-**Current: 0.6.1** — designed, computed and verified in software; nothing printed, wired or measured yet.
+**Current: 0.7.0** — designed, computed and verified in software; nothing printed, wired or measured yet.
 
 > Codes in brackets refer to [`features_and_functions.md`](features_and_functions.md).
 > The version is a single constant, in [`VERSION`](VERSION).
@@ -16,6 +16,24 @@ version. Their dates and contents come from the commit record; the version
 numbers themselves are reconstructed.*
 
 ---
+
+## 0.7.0 — 2026-09-22 — Two published designs evaluated
+
+- Evaluated Arofarn's NEMA 17 CNC tumbler and 3DPrintOrlando's heavy-duty
+  adjustable tumbler by measurement: meshes, a DXF, a FreeCAD source, the
+  firmware and the build photos (**XD1**,
+  [chapter](chapters/XD1-reference-designs.md)).
+- Finding: neither reaches the correct speed band. Arofarn tops out at 19–22%
+  of critical speed; the heavy-duty design runs to 86–92%. Both chose speed
+  without the physics (**KB**).
+- Seven ideas added as 💡, pending the owner's choice (**Q-09**): TPU feet
+  (**MB6**), a belt guard (**MB7**), an electronics enclosure (**EC1**),
+  two barrels (**MA6**), adjustable spacing (**MA5**), a display and knob
+  (**EB2**), and sheet-cut end plates (**MB8**).
+- **Q-08** asks whether the downloaded files may be committed; until then
+  they stay git-ignored.
+- **LE-19**: seven of the heavy-duty design's 22 STLs are open meshes that
+  slicers forgive and OpenSCAD rejects.
 
 ## 0.6.1 — 2026-09-22 — `render.sh` no longer counts stale STLs
 

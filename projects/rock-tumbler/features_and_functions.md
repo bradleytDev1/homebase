@@ -49,6 +49,8 @@ MA1      Feature
 - 🔨 **MA2** Roller hub: PETG/ASA, 8 mm bore, grub-screwed to the shaft, with end flanges that keep the barrel from walking. Exports as a manifold STL; not printed. *Risk: the flange lip is only 5 mm proud of the tyre*
 - 🔨 **MA3** TPU tyre, a 0.4 mm interference fit over the hub. Not printed
 - 🔨 **MA4** Two 8 mm shafts in four 608-2RS sealed bearings. Specified; not bought
+- 💡 **MA5** Slotted end plates, so the roller spacing adjusts to a different barrel without reprinting. From the heavy-duty reference design ([chapter](chapters/XD1-reference-designs.md)). ❓**Q-09**
+- 💡 **MA6** Two barrels side by side on longer rollers, separated by guide rings, so two rock hardnesses or two grit stages run at once. Motor margin falls from ~3.6× to ~1.8×; shaft deflection unchecked; needs a second hall sensor. From the heavy-duty design. ❓**Q-09**
 
 ### MB — Frame and drive
 
@@ -57,6 +59,9 @@ MA1      Feature
 - ⬜ **MB3** Baseboard: plywood or 2020 extrusion. Not modelled
 - ⬜ **MB4** Drip tray. *Risk: only 20 mm of clearance under the barrel*
 - ⬜ **MB5** GT2 belt drive, 20T pulleys, motor outboard of the drip zone. Described in the README; not modelled
+- 💡 **MB6** TPU vibration-isolating feet. **Both** reference designs have them and this one has none. ❓**Q-09**
+- 💡 **MB7** A guard over the belt and pulleys. Both reference designs guard their drive. ❓**Q-09**
+- 💡 **MB8** End plates cut from sheet (HDPE, acrylic or plywood) using a DXF exported from the model, as the Arofarn design's frame is CNC-cut. ❓**Q-09**
 
 ---
 
@@ -92,6 +97,11 @@ MA1      Feature
 ### EB — Sensing
 
 - ⬜ **EB1** Hall sensor (A3144) on the frame, magnet on the barrel end cap: exactly one pulse per revolution. Not fitted
+- 💡 **EB2** A local display and rotary knob showing dose progress, speed and slip, so the machine reports without a laptop. The Arofarn design has a four-digit display and encoder, though it shows a countdown. ❓**Q-09**
+
+### EC — Enclosure
+
+- 💡 **EC1** A splash-proof enclosure for the controller and driver, outboard of the drip zone. Both reference designs box their electronics; this one's sit bare. ❓**Q-09**
 
 ---
 
@@ -164,3 +174,7 @@ MA1      Feature
 
 - 💡 **XC1** Direct barrel drive: the stepper coupled straight to a barrel shaft, which eliminates slip
 - 💡 **XC2** Vibratory conversion: off-centre masses on the steppers already owned
+
+### XD — Reference designs
+
+- ✅ **XD1** Two published designs evaluated with measurements: Arofarn's NEMA 17 CNC tumbler and 3DPrintOrlando's heavy-duty adjustable tumbler. Neither reaches the correct speed band: one tops out at 19–22% of critical, the other runs to 86–92%. Seven ideas extracted (**MA5**, **MA6**, **MB6**, **MB7**, **MB8**, **EB2**, **EC1**). Full evaluation: [chapter](chapters/XD1-reference-designs.md). Whether the downloaded files may be committed: ❓**Q-08**

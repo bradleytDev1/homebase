@@ -177,6 +177,51 @@ seeing those at a glance would be useful.
 **Working assumption:** **no project cards.** The console shows the Docket,
 the questions and the capture page, and nothing else.
 
+### Q-08 — May the two downloaded reference designs be committed to the repository?
+**Raised:** 2026-09-22 · **Affects:** **XD1** · **Status:** open
+
+Two open designs were downloaded into this folder: Arofarn's *Affordable Rock
+Tumbler — NEMA17* (licensed CC BY-SA 4.0) and 3DPrintOrlando's *Heavy Duty &
+Adjustable* (CC BY-NC-SA 4.0, which forbids commercial use). Both licences
+allow copying them with attribution. Committing them would still mean
+**publishing someone else's files** in your GitHub repository, which is your
+call. It would also add about 3.6 MB of STLs and zips.
+
+The evaluation took **ideas only** from them, no geometry or code, so none of
+this project's own files carries any obligation either way.
+
+**Working assumption:** **they stay on disk and out of git** (listed in
+`.gitignore`); the chapter records what was learned and credits both authors.
+If you want them committed, I'll move them into a `reference/` folder with
+their licence and attribution alongside.
+
+### Q-09 — Which ideas from the reference designs should be adopted?
+**Raised:** 2026-09-22 · **Affects:** **MA5**, **MA6**, **MB6**, **MB7**, **MB8**, **EB2**, **EC1** · **Status:** open
+
+The evaluation ([`chapters/XD1-reference-designs.md`](chapters/XD1-reference-designs.md))
+found seven things the two published tumblers do that this one doesn't. Each
+is marked 💡 (an idea, not approved) until you say otherwise:
+
+1. **TPU feet** to isolate vibration (**MB6**). Both designs have them.
+2. **A belt guard** (**MB7**). Both designs guard their drive.
+3. **An electronics enclosure** (**EC1**). Both designs box theirs.
+4. **Two barrels at once** on longer rollers (**MA6**). Doubles throughput,
+   or runs two rock hardnesses at once. Needs longer shafts, a second sensor,
+   and firmware that keeps two doses.
+5. **Adjustable roller spacing** (**MA5**). Worth it only if you'll use more
+   than one barrel size.
+6. **A display and knob** on the machine (**EB2**).
+7. **End plates cut from sheet material** rather than printed (**MB8**).
+
+**My recommendation:** approve **1, 2 and 3** now. They are cheap, both
+reference designs independently agree on them, and they address noise, safety
+and splash, which this design hasn't covered. Park **4** until the first
+batch has run. **5**, **6** and **7** are optional.
+
+**Working assumption:** all seven stay as ideas. Nothing changes in the CAD or
+the plan until you choose; approving 1–3 would add three small parts to the
+print set in `critical_path.md` column 2.
+
 ---
 
 ## Answered

@@ -65,6 +65,7 @@ graph LR
 | ⬜ **Q-02** | Which driver board? | The current-setting procedure (column 4) |
 | ⬜ **Q-03** | 12 V or 24 V? | Nothing in the design; the supply to buy or use |
 | ⬜ **Q-04** | Pico or Arduino? | What gets wired and flashed (column 4) |
+| ⬜ **Q-09** | Which reference-design ideas to adopt? | Feet, belt guard and enclosure would join the column 2 print set |
 
 Each carries a working assumption in [`open_questions.md`](open_questions.md),
 so none of them stops column 1.
@@ -133,6 +134,7 @@ This is the part that makes it worth building rather than buying.
 | Grit seizes the cleanout threads | Plug stiffens each time | Clean the threads every opening, or a compression lid (**BC1**) |
 | Printed mount softens | Motor mount warm or deformed | Lower the current; ASA over PETG |
 | Hall sensor miscounts | Dose advances at the wrong rate | Verify pulses per revolution in column 5 |
+| Cradle too shallow for the real barrel | Barrel wanders on the hand test | Keep the 40° angle (**MA1**); a published design at 28–31° relies on its barrel's caps acting as flanges (**XD1**) |
 | Step rate wrong | Barrel speed differs from the calculation | Scope D9 in column 4 |
 
 ---

@@ -283,3 +283,28 @@ non-empty, so nothing has exercised the gap.
 before rendering it. Reproduced first: rendering an empty model into an
 existing `part.stl` left the old 12-facet file in place, which the loop would
 have counted as a pass.
+
+## LE-19 — A published model can be a broken mesh that every slicer quietly forgives
+
+*Found 2026-09-22, evaluating two reference designs (**XD1**).*
+
+Seven of the heavy-duty design's 22 STLs are **open meshes**: edges that do
+not close into a solid, 573 of them in one bracket. They print, because
+slicers repair open meshes silently, so neither the author nor anyone who
+printed them would see a problem. OpenSCAD refuses them outright: it cannot
+slice them, and it could not combine them with this project's model.
+
+How it hid: the only tool most people run on an STL is a slicer, and a slicer's
+job is to make a print happen, not to report that the input was wrong.
+
+The same evaluation hit **LE-06** once more. A slice taken above the part's
+top produced an empty result, OpenSCAD wrote no file, and the script's reader
+failed on the missing file. This time it failed loudly, because the reader
+opened the file rather than testing a stale one.
+
+> Before building on third-party geometry, check it is a closed solid.
+> "It printed" is not evidence.
+
+**Gate:** none needed while nothing third-party enters `cad/`. If anything
+ever does, it goes through `tools/render.sh`, whose manifold check would
+reject it (**TB1**).

@@ -27,7 +27,7 @@ now* 📄 **[critical_path.md](critical_path.md)**
 
 ### Version and the Docket
 
-**0.6.1** · designed, computed and verified in software; nothing printed, wired
+**0.7.0** · designed, computed and verified in software; nothing printed, wired
 or measured yet. History in [`CHANGELOG.md`](CHANGELOG.md).
 
 The planning documents are the **Docket**: [`Gameplan.md`](Gameplan.md) (why and
