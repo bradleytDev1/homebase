@@ -1,0 +1,14 @@
+# .docket — how this project is to be treated
+
+**numbering: numbers**
+
+This project adopted the Docket fresh, at framework 4.2.0 on 2026-09-22, so its
+codes number the leaf: `M`, `MA`, `MA1`, `MA2`.
+
+The updater stamped this file `numbering: letters` on install, on the
+assumption that any project it runs against predates numbered leaves. That
+assumption is false for a fresh install made by the documented route (run the
+updater at install step 3), and it silently stops `check_codes.py` recognising
+`MA1` as a code at all. Corrected by hand and reported to the master Docket.
+
+Do not re-index. Codes are permanent.

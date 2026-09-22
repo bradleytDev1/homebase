@@ -1,0 +1,19 @@
+# A Web Awesome kit for THIS project only. You almost certainly do not need it.
+#
+# **Projects inherit the master Docket's kit automatically.** Leave this file as
+# `.example` and nothing else is required — every Docket surface here will load
+# components from the same kit as every other project on this machine, and
+# changing the master's `.docket-webawesome` changes them all at once.
+#
+# Rename this to `.docket-webawesome` and put a URL on the first line only if
+# THIS project must differ from the others. That is an exception, not a step.
+#
+# Pro kit:
+#   https://ka-p.webawesome.com/kit/YOUR_KIT_ID/webawesome@3.13.0
+#
+# Free CDN (non-Pro components only):
+#   https://early.webawesome.com/webawesome@3.0.0-beta.6/dist
+#
+# The look — Docket, Mellow, Playful, Classic — is not set here. It is the
+# reader's choice, picked in the navigation rail or the viewer's sidebar, and
+# remembered per browser.

@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Console</title>
+<!--{{WA_HEAD}}-->
+<style>
+  html, body { min-height: 100%; padding: 0; margin: 0; }
+  wa-page { --menu-width: auto; }
+  .gutter { padding-inline: var(--wa-space-l); }
+  .lede { color: var(--wa-color-neutral-on-quiet); max-width: 72ch; }
+  .brand { font-weight: var(--wa-font-weight-bold); }
+  .grow { flex: 1 1 auto; }
+  .quiet { color: var(--wa-color-neutral-on-quiet); }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* The tones themselves now live in the shared theme — one definition for the
+     console, the capture dashboard and the questions page, at the tint depth the
+     palette actually needs. They were duplicated here at the 95/80 tints, which
+     on the natural palette is indistinguishable from white: the cards were
+     "colour-coded" and the code was invisible. */
+
+  .card-link { text-decoration: none; color: inherit; display: block; }
+  .card-link:hover wa-card::part(body) { filter: brightness(0.97); }
+  .card-dead { opacity: .72; }
+  h3 { margin: 0 0 var(--wa-space-3xs); font-size: var(--wa-font-size-l);
+       color: var(--c-ink); }
+  .where { margin-block-start: var(--wa-space-2xs); }
+  code { font-size: var(--wa-font-size-s); }
+
+  /* No kit, no components: without Web Awesome nothing upgrades and the cards
+     collapse into an unstyled list. These keep the page legible anyway. */
+  wa-card:not(:defined) { display: block; border: 1px solid #ccc; border-radius: 8px;
+                          padding: 14px 16px; margin-block-end: 12px; background: #fff }
+  wa-tag:not(:defined), wa-badge:not(:defined) { display: inline-block; font-size: 12px;
+                          border: 1px solid #bbb; border-radius: 999px; padding: 1px 8px }
+</style>
+</head>
+<body>
+<wa-page mobile-breakpoint="900">
+
+  <!--{{WA_CHROME}}-->
+
+  <header slot="header" class="gutter wa-cluster wa-align-items-center">
+    <span class="brand docket-headname" id="brand">Console</span>
+    <span class="grow"></span>
+    <span id="health" class="wa-cluster wa-gap-2xs"></span>
+  </header>
+
+  <main class="gutter wa-stack wa-gap-l">
+
+    <!-- **The project's name, at the size of the question it answers.** Every
+         Docket console on this machine is served from 127.0.0.1 and looks like
+         every other one; the name is what tells them apart, so it is the
+         largest thing on the page rather than a word in the corner. -->
+    <div class="docket-masthead" id="masthead">
+      <div class="docket-mast-row">
+        <div>
+          <h1 class="docket-project" id="proj">…</h1>
+          <p class="docket-tagline" id="lede">&nbsp;</p>
+        </div>
+        <div class="wa-cluster wa-gap-2xs wa-align-items-center" id="versionbox"></div>
+      </div>
+      <!-- Full width, under the masthead. Hung off the badge it stretched the
+           masthead's right column and squeezed the project name, which is the
+           one thing on this page that is not allowed to shrink. -->
+      <div id="versionwhat"></div>
+    </div>
+
+    <h2 style="margin:0">Everything that runs on this machine</h2>
+
+    <div class="wa-grid wa-gap-m" style="--min-column-size:19rem" id="cards"></div>
+
+    <wa-card class="toned t-gray" id="footnote" hidden>
+      <p class="grp">Where these actually are</p>
+      <p class="lede" id="footnote-text"></p>
+    </wa-card>
+  </main>
+</wa-page>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var root = document.documentElement;
+
+  /* Light/dark and the look now live in the navigation rail, which every page
+     shares — they are properties of all the Docket surfaces, not of this one.
+     See `dashboard/chrome.html`. */
+
+  /* Only the version callout builds HTML from data, and that data comes from
+     a changelog in this repository — but it is still text from a file being
+     written into innerHTML, so it is escaped rather than trusted. */
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
+  }
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function tag(host, label, variant) {
+    var t = document.createElement('wa-tag');
+    t.setAttribute('size', 's');
+    t.setAttribute('variant', variant);
+    t.textContent = label;
+    host.appendChild(t);
+  }
+
+  /* **A version is two numbers and the distance between them.** What this
+     project has, what the skill on this machine has, and — when those differ —
+     the releases in between, because "2.1.3 → 2.2.0" is not something anybody
+     can act on. */
+  function paintVersion(v) {
+    var box = $('versionbox'), what = $('versionwhat');
+    if (!box) return;
+    box.innerHTML = '';
+    if (what) what.innerHTML = '';
+    if (!v) return;
+
+    var t = document.createElement('wa-tag');
+    t.setAttribute('size', 's');
+    t.setAttribute('appearance', 'outlined');
+    t.className = 'num';
+    t.textContent = 'Docket ' + (v.installed || 'unstamped');
+    box.appendChild(t);
+
+    if (v.master) {
+      $('masthead').classList.add('is-master');
+      tag(box, 'defines this version', 'brand');
+      if (what) what.innerHTML =
+        '<wa-callout variant="brand" style="margin-block-start:var(--wa-space-m)">' +
+        '<wa-icon slot="icon" name="crown"></wa-icon>' +
+        '<strong>This is the master Docket.</strong> What is decided here defines the ' +
+        'skill, and the skill defines what every other project receives. ' +
+        'A change made here is a release.</wa-callout>';
+      return;
+    }
+    if (v.unstamped) {
+      tag(box, 'no .docket-version', 'warning');
+      if (what) what.innerHTML =
+        '<wa-callout variant="warning" open style="margin-block-start:var(--wa-space-m)">' +
+        '<strong>This project cannot say which Docket it has.</strong> Run ' +
+        '<code>./scripts/docket.sh --update --apply</code>.</wa-callout>';
+      return;
+    }
+    if (!v.behind) {
+      var ok = el('span', 'quiet', v.current ? 'current' : 'skill not on this machine');
+      ok.style.fontSize = 'var(--wa-font-size-xs)';
+      box.appendChild(ok);
+      return;
+    }
+
+    tag(box, v.current + ' available', 'warning');
+    if (!what) return;
+    var html = '<wa-callout variant="warning" style="margin-block-start:var(--wa-space-m)">' +
+      '<wa-icon slot="icon" name="circle-up"></wa-icon>' +
+      '<strong>' + v.changes.length + ' release' + (v.changes.length === 1 ? '' : 's') +
+      ' behind.</strong> Run <code>./scripts/docket.sh --update</code> — it reports ' +
+      'first and changes nothing until <code>--apply</code>.' +
+      '<div class="wa-cluster wa-gap-xs wa-align-items-center" ' +
+      'style="margin-block-start:var(--wa-space-s)">' +
+      '<wa-button id="whatwould" size="small" appearance="outlined">' +
+      '<wa-icon slot="start" name="list-check"></wa-icon>What would change?</wa-button>' +
+      '<span class="quiet" style="font-size:var(--wa-font-size-xs)">' +
+      'runs the updater in report mode — changes nothing</span></div>' +
+      '<div id="wouldout"></div>' +
+      '<wa-details summary="What is in them" style="margin-block-start:var(--wa-space-xs)">';
+    v.changes.forEach(function (e) {
+      html += '<p style="margin:0 0 .25rem"><b>' + esc(e.version) + '</b> — ' +
+              esc(e.summary) + '</p><ul style="margin:0 0 .75rem;padding-inline-start:1.1rem">' +
+              e.bullets.map(function (b) { return '<li>' + esc(b) + '</li>'; }).join('') +
+              e.do.map(function (d) { return '<li><b>By hand:</b> ' + esc(d) + '</li>'; }).join('') +
+              '</ul>';
+    });
+    what.innerHTML = html + '</wa-details></wa-callout>';
+
+    // **Report only.** The endpoint does not accept `--apply` and cannot
+    // write, so no argument a browser can send makes this change anything.
+    // The button exists because finding out what you are missing should not
+    // need a terminal. Taking it still does — the updater's discipline is that
+    // you read the report first, and this is the half worth making easy.
+    var btn = document.getElementById('whatwould');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var out = document.getElementById('wouldout');
+      btn.loading = true; btn.disabled = true;
+      out.innerHTML = '<p class="quiet" style="margin:.5rem 0 0">running the updater…</p>';
+      fetch('/api/update-report', {method: 'POST',
+                                   headers: {'Content-Type': 'application/json'},
+                                   body: '{}'})
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          btn.loading = false; btn.disabled = false;
+          out.innerHTML =
+            '<pre style="margin-block-start:var(--wa-space-s);white-space:pre-wrap;' +
+            'font-size:var(--wa-font-size-xs);max-height:26rem;overflow:auto;' +
+            'padding:var(--wa-space-s);background:var(--wa-color-surface-lowered);' +
+            'border-radius:var(--wa-border-radius-m)">' + esc(d.out || '(no output)') +
+            '</pre>' +
+            '<p class="quiet" style="margin:.5rem 0 0;font-size:var(--wa-font-size-xs)">' +
+            'Nothing was changed. To take it: ' +
+            '<code>./scripts/docket.sh --update --apply</code> — or ask Claude, ' +
+            'which reads the report to you and handles the manual steps.</p>';
+        })
+        .catch(function (e) {
+          btn.loading = false; btn.disabled = false;
+          // `fetch` rejects with a TypeError when nothing answered at all, which
+          // here almost always means the console was stopped while this page
+          // stayed open — the server's life is the terminal's (KAR). Printing
+          // the exception was useless: "TypeError: Failed to fetch" says
+          // nothing about what to do, and the thing to do is one line.
+          var gone = (e instanceof TypeError);
+          out.innerHTML =
+            '<wa-callout variant="' + (gone ? 'warning' : 'danger') + '" open ' +
+            'style="margin-block-start:var(--wa-space-s)">' +
+            '<wa-icon slot="icon" name="' + (gone ? 'plug-circle-xmark' : 'triangle-exclamation') +
+            '"></wa-icon>' +
+            (gone
+              ? '<strong>The console is not running.</strong> Nothing answered at ' +
+                esc(location.origin) + '. It only runs while its terminal does, ' +
+                'on purpose \u2014 it is a local server with shell access and is ' +
+                'not left up unattended. Start it again and reload:' +
+                '<br><code>./scripts/docket-server.py</code>'
+              : '<strong>The report could not be run.</strong> ' + esc(String(e))) +
+            '</wa-callout>';
+        });
+    });
+  }
+
+  var WHERE_VARIANT = {
+    'this server': 'success', 'another local server': 'brand',
+    'live site': 'warning', 'not running': 'neutral'
+  };
+
+  function card(s) {
+    var box = el('wa-card', 'toned t-' + (s.tone || 'gray'));
+    box.classList.add('card');
+    if (s.group) box.appendChild(el('p', 'grp', s.group));
+    box.appendChild(el('h3', null, s.label));
+    if (s.note) box.appendChild(el('p', 'lede', s.note));
+    var stat = el('p', 'quiet num');
+    stat.id = 'stat-' + (s.key || s.label).replace(/\W+/g, '');
+    stat.innerHTML = '&nbsp;';
+    box.appendChild(stat);
+
+    var w = el('div', 'where wa-cluster wa-gap-2xs');
+    tag(w, s.where, WHERE_VARIANT[s.where] || 'neutral');
+    box.appendChild(w);
+
+    if (s.where === 'not running') {
+      box.classList.add('card-dead');
+      if (s.start) {
+        var p = el('p', 'quiet');
+        p.appendChild(el('code', null, s.start));
+        box.appendChild(p);
+      }
+      return box;
+    }
+    var a = el('a', 'card-link');
+    a.href = s.href;
+    if (s.where === 'live site') { a.target = '_blank'; a.rel = 'noopener'; }
+    a.appendChild(box);
+    return a;
+  }
+
+  /* **Asked of the server, not guessed at.** The browser cannot tell whether
+     another local server is up: a cross-origin fetch comes back opaque, and
+     no-cors cannot distinguish a 200 from a refused connection. One socket
+     server-side gives an honest answer. */
+  fetch('/api/surfaces').then(function (r) { return r.json(); }).then(function (d) {
+    if (d.project) { $('brand').textContent = d.project;
+                     $('proj').textContent = d.project;
+                     document.title = d.project + ' — console'; }
+    if (d.lede) $('lede').textContent = d.lede;
+    paintVersion(d.docket);
+    var host = $('cards');
+    host.innerHTML = '';
+    (d.surfaces || []).forEach(function (s) { host.appendChild(card(s)); });
+
+    var elsewhere = (d.surfaces || []).filter(function (s) {
+      return s.where !== 'this server';
+    });
+    if (elsewhere.length) {
+      $('footnote-text').textContent =
+        'Not everything here comes from this server. ' + elsewhere.length +
+        ' of these ' + (elsewhere.length === 1 ? 'is' : 'are') +
+        ' served elsewhere, and each was checked just now rather than assumed.';
+      $('footnote').hidden = false;
+    }
+    stats();
+  }).catch(function () {
+    $('cards').textContent = 'Could not ask the server what is running.';
+  });
+
+  /* The cards say what is actually there. A front door that claims four tools
+     and cannot tell you whether any has been used is a menu, not a console. */
+  function stats() {
+    fetch('/api/questions').then(function (r) { return r.json(); }).then(function (d) {
+      var s = d.summary || {}, n = $('stat-Openquestions');
+      if (n) n.textContent = s.open + ' open — ' + s.blocking + ' blocking, ' +
+                             s.soon + ' needed soon';
+      var h = $('health');
+      if (s.blocking) tag(h, s.blocking + ' blocking', 'danger');
+      if (s.answered_waiting) tag(h, s.answered_waiting + ' answered, not filed', 'success');
+    }).catch(function () {});
+
+    fetch('/api/state').then(function (r) { return r.json(); }).then(function (d) {
+      var n = $('stat-TheDocket');
+      if (n && d.built) n.textContent = d.built;
+    }).catch(function () {});
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+  "_comment": [
+    "Copy to .docket-surfaces.json and describe what THIS project is building.",
+    "The console adds the Docket viewer, the questions page and the capture",
+    "dashboard by itself — every Docket project has those. This file is only for",
+    "the project's own surfaces: the website, the app, the tool, the thing.",
+    "",
+    "Each surface is probed before it is shown, in this order: this server, then",
+    "each also_local base in turn, then live. Whichever answers first is where",
+    "the link goes, and the card says which one that was. A surface nothing is",
+    "carrying shows its start command rather than a link that fails.",
+    "",
+    "tone: blue | purple | cyan | green | amber | gray  — a reader finds a card",
+    "by colour before reading its title, so keep them stable once chosen."
+  ],
+
+  "project": "{{PROJECT}}",
+  "lede": "These run on this machine. They reach services with this machine's own login and read files that exist nowhere else, so none of them is on the live site.",
+
+  "live": "",
+  "also_local": ["http://127.0.0.1:8000"],
+
+  "surfaces": [
+    {
+      "label": "The thing itself",
+      "path": "/",
+      "group": "Look at it",
+      "tone": "green",
+      "note": "What this project actually builds. Replace this entry.",
+      "start": "./run-local.sh"
+    }
+  ]
+}

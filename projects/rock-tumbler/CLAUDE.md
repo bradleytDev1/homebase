@@ -3,12 +3,93 @@
 A two-roller rotary rock tumbler driven by a NEMA 17. Design is derived from
 mill physics rather than rules of thumb; see `README.md` for the full rationale.
 
+---
+
+## The Docket
+
+**The planning documents are called the Docket** (adopted 2026-09-22, framework
+4.2.0). Eight documents plus [`chapters/`](chapters/README.md), bound by one set
+of permanent section codes: domains **M** mechanical, **B** barrel,
+**E** electronics, **F** firmware, **T** tools, **P** process, **X** experiments.
+
+| The Docket | Holds |
+|---|---|
+| [`Gameplan.md`](Gameplan.md) | why — intention, platform, standing decisions (**K** rows) |
+| [`features_and_functions.md`](features_and_functions.md) | what — the canonical list |
+| [`development_plan.md`](development_plan.md) | how — the map and technical reasoning |
+| [`CHANGELOG.md`](CHANGELOG.md) | when — every version |
+| [`lessons_learned.md`](lessons_learned.md) | what broke (`LE-nn`) |
+| [`open_questions.md`](open_questions.md) | what is unsettled (`Q-nn`) |
+| [`answered_questions.md`](answered_questions.md) | what was settled |
+| [`critical_path.md`](critical_path.md) | what order — **start here** |
+| [`chapters/`](chapters/README.md) | the long form |
+
+`README.md` stays the long-form design argument; the Docket links into it.
+
+**`./scripts/check-docs.sh` is the Docket check. Run it before finishing
+anything.** It runs the framework's gates and this project's own: the four
+Python self-tests, `tools/render.sh` when OpenSCAD is installed, and the
+Arduino compile check when `avr-gcc` is.
+
+### Every change gets a version
+
+The owner's standing rule: **one version per change, never batched, never
+unversioned.** Bump [`VERSION`](VERSION) (the single constant) and add a
+section to `CHANGELOG.md` in the same turn. `README.md` must name the current
+version; `check_status.py` fails if it disagrees with the changelog.
+
+### Capture decisions and raise questions in the same turn
+
+- The owner decides, chooses, corrects or rejects something → a **K** row in
+  `Gameplan.md` with the reasoning and date, in that turn. Never delete a
+  superseded row; strike it and say what replaced it.
+- Something needs the owner's judgement → a `Q-nn` in `open_questions.md`
+  **with a working assumption**, in plain English, and **❓Q-nn** on every code
+  it affects. The ❓ marker exists if and only if the question is open;
+  `check-docs.sh` enforces it.
+- Something broke → an `LE-nn`, and ask whether a gate could catch it.
+- Something shipped or changed → `CHANGELOG.md` and `VERSION`.
+
+### Answers arrive in the inbox, too
+
+Questions can be answered in the console at `/questions`
+(`./scripts/docket-server.py`, `http://127.0.0.1:7373`). Answers land in
+`inbox/answers.jsonl`; `scripts/check_answer_inbox.py` **fails the check** until
+each is filed: marked ✅, recorded, ❓ markers cleared, moved to
+`answered_questions.md`. Run it first thing in a session.
+
+### Which Docket this is
+
+`.docket-version` records the framework version this project received.
+`./scripts/docket.sh --update` reports what is newer; `--update --apply` takes
+it. The eight documents and `check-docs.sh` are never overwritten.
+
+### Closing a session: sweep
+
+On *"wrap up"*, *"done for today"* or a coming context reset: record unwritten
+decisions (**K**), unanswered points (`Q-nn`), anything that changed
+(`CHANGELOG.md`), anything that broke (`LE-nn`); run `./scripts/check-docs.sh`;
+then report what was written and what deliberately was not. **Never invent a
+decision to fill a gap**; file it as a question instead.
+
+### When the flaw is in the Docket framework itself
+
+Report it with `python3 scripts/docket-report.py "what is wrong" --detail "…"
+--where "…"`, and keep going with the task unless it blocks.
+
+---
+
+## Working notes (kept from before the Docket)
+
 ## Where things stand
 
-Designed and verified in software; **nothing physical exists yet**. Read
+Designed and verified in software; **nothing physical exists yet**. ~~Read
 `WHATS_NEXT.md` before starting work — it carries the prioritised plan, the
-four open decisions, and the risk list. `LESSONS_LEARNED.md` records the
-verification failures that shaped how this repo checks itself.
+four open decisions, and the risk list.~~ *(2026-09-22: `WHATS_NEXT.md` was
+redistributed into the Docket and archived. Read `critical_path.md` for the
+plan and `open_questions.md` for the decisions.)* ~~`LESSONS_LEARNED.md`~~
+`lessons_learned.md` records the verification failures that shaped how this
+repo checks itself.
 
 Build log, newest first:
 

@@ -21,8 +21,24 @@ make it *count*.
 Every clearance in this document is nominal, with no allowance for printer
 tolerance. The step rate has never been measured on a scope.
 
-📄 **[WHATS_NEXT.md](WHATS_NEXT.md)** — the path from here to tumbling rock
-📄 **[LESSONS_LEARNED.md](LESSONS_LEARNED.md)** — what this cost to find out
+~~📄 WHATS_NEXT.md — the path from here to tumbling rock~~ *archived 2026-09-22;
+now* 📄 **[critical_path.md](critical_path.md)**
+📄 **[lessons_learned.md](lessons_learned.md)** — what this cost to find out
+
+### Version and the Docket
+
+**0.6.0** · designed, computed and verified in software; nothing printed, wired
+or measured yet. History in [`CHANGELOG.md`](CHANGELOG.md).
+
+The planning documents are the **Docket**: [`Gameplan.md`](Gameplan.md) (why and
+the standing decisions), [`features_and_functions.md`](features_and_functions.md)
+(what), [`development_plan.md`](development_plan.md) (how),
+[`critical_path.md`](critical_path.md) (what order),
+[`open_questions.md`](open_questions.md) (what needs deciding), and
+[`answered_questions.md`](answered_questions.md). This README remains the long
+form; `./scripts/check-docs.sh` is the check. The protocol is in
+[`CLAUDE.md`](CLAUDE.md). This README was deliberately left as the long form rather than split
+into chapters (❓**Q-06**).
 
 ## The short version
 
@@ -64,8 +80,9 @@ parameters and re-cuts the end plates to match.
 
 ```
 README.md                   this file — the design and its reasoning
-WHATS_NEXT.md               prioritised build plan, decisions, risks
-LESSONS_LEARNED.md          what went wrong and what it taught
+critical_path.md            the build plan, in order (was WHATS_NEXT.md)
+lessons_learned.md          what went wrong and what it taught (LE-nn)
+Gameplan.md, features_and_functions.md, open_questions.md, …  the Docket
 CLAUDE.md                   working notes: invariants, verification, open items
 
 tools/tumbler_calc.py       design calculator — speeds, spacing, torque, VACTUAL

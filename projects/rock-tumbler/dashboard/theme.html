@@ -1,0 +1,357 @@
+<!-- The Docket theme. One file; every Docket surface starts here.
+
+     Each page carries the WA_HEAD placeholder comment in its <head> and the
+     server replaces that comment with this file, so re-theming the console, the
+     capture dashboard and the questions page is one edit rather than three that
+     drift.
+
+     NOTE: do not write the placeholder itself inside this comment. Its closing
+     `-- >` would end this comment three lines early, and everything below would
+     render as text at the top of the page. It did, once.
+
+     The kit URL is resolved per project — DOCKET_WA_KIT, then
+     `.docket-webawesome`, then the default in `docket_theme.py`. A Pro kit id
+     belongs to whoever bought it, so it cannot be hardcoded here.
+
+     The classes go on <html> from script rather than from the markup: the
+     palette is a class (`.wa-palette-natural`), a page that forgets it renders
+     in the default palette with no error anywhere, and one source of truth is
+     worth more than three correct copies. -->
+
+<link rel="stylesheet" href="{{WA_KIT}}/styles/themes/default.css">
+<link rel="stylesheet" href="{{WA_KIT}}/styles/color/palettes/natural.css">
+<!-- The other looks the picker offers. Each theme ships its own palette —
+     mellow brings natural, playful brings rudimentary — so linking the theme is
+     enough; only the Docket look, which pairs the *default* theme with the
+     *natural* palette, needs its palette linked separately above. -->
+<link rel="stylesheet" href="{{WA_KIT}}/styles/themes/mellow.css">
+<link rel="stylesheet" href="{{WA_KIT}}/styles/themes/playful.css">
+<link rel="stylesheet" href="{{WA_KIT}}/styles/utilities.css">
+<link rel="stylesheet" href="{{WA_KIT}}/styles/native.css">
+
+<link rel="preconnect" href="https://fonts.bunny.net">
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=ibm-plex-sans-condensed:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i&display=swap">
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=space-grotesk:300,400,500,600,700&display=swap">
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=space-mono:400,400i,700,700i&display=swap">
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=podkova:400,500,600,700,800&display=swap">
+
+<script type="module" src="{{WA_KIT}}/webawesome.loader.js"></script>
+
+<style>
+  :root {
+    --wa-font-family-body: "Space Grotesk", sans-serif;
+    --wa-font-family-heading: "IBM Plex Sans Condensed", sans-serif;
+    --wa-font-family-code: "Space Mono", monospace;
+    --wa-font-family-longform: Podkova, serif;
+    --wa-font-weight-body: 400;
+    --wa-font-weight-heading: 500;
+    --wa-font-weight-code: 400;
+    --wa-font-weight-longform: 400;
+    --wa-border-radius-scale: 0.75;
+    --wa-border-width-scale: 1;
+    --wa-space-scale: 0.625;
+  }
+
+  /* **Border-box, everywhere.** A toned card is a ground *plus* a border *plus*
+     padding, so under content-box every one of them is wider than the column it
+     was given and the whole page runs off the right edge. Nothing in Web
+     Awesome's reset covers the page's own elements, so it is set here — the one
+     place every Docket surface reads. */
+  *, *::before, *::after { box-sizing: border-box; }
+
+  /* ── The masthead ────────────────────────────────────────────────────────
+     **The project's name is the first thing, and it is large on purpose.**
+     One person runs this framework across a dozen projects, and every one of
+     them serves a console on 127.0.0.1 that looks exactly like the others. A
+     name set at heading size is something you have to stop and read; a name set
+     at display size tells you which project this is from across the room, which
+     is the actual question being asked of the page. */
+  .docket-masthead {
+    padding-block: var(--wa-space-xl) var(--wa-space-l);
+    border-block-end: var(--wa-border-width-s) solid var(--wa-color-surface-border);
+    margin-block-end: var(--wa-space-l);
+  }
+  .docket-project {
+    font-family: var(--wa-font-family-heading);
+    font-weight: 600;
+    font-size: clamp(2.75rem, 7.5vw, 5rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin: 0;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+  /* The surface — "console", "capture", "open questions" — is the small half of
+     the pair. It sits above the name because the name is what you are looking
+     for and nothing should push it down the page. */
+  .docket-eyebrow {
+    font-family: var(--wa-font-family-code);
+    font-size: var(--wa-font-size-xs);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--wa-color-neutral-on-quiet);
+    margin: 0 0 var(--wa-space-xs);
+  }
+  .docket-tagline {
+    color: var(--wa-color-neutral-on-quiet);
+    max-width: 62ch;
+    margin: var(--wa-space-s) 0 0;
+  }
+  /* ── The master designation ──────────────────────────────────────────────
+     **The master must not be mistaken for one of the projects it governs.**
+     Its console looks exactly like theirs, and a change made on the wrong one
+     is either a release nobody meant to cut or an edit that the next update
+     silently overwrites. So it is stated, above the name, in the framework's
+     own ink. */
+  .docket-master-mark {
+    display: inline-flex; align-items: center; gap: var(--wa-space-2xs);
+    margin: 0 0 var(--wa-space-2xs);
+    padding: var(--wa-space-3xs) var(--wa-space-xs);
+    border: var(--wa-border-width-s) solid var(--wa-color-indigo-70, #a3a7cd);
+    border-radius: var(--wa-border-radius-pill, 999px);
+    background: var(--wa-color-indigo-90, #e2e3f0);
+    color: var(--wa-color-indigo-40, #474c85);
+    font-family: var(--wa-font-family-code);
+    font-size: var(--wa-font-size-xs);
+    font-weight: var(--wa-font-weight-bold);
+    letter-spacing: .14em; text-transform: uppercase;
+  }
+  :root[data-theme="dark"] .docket-master-mark {
+    background: var(--wa-color-indigo-20, #17181f);
+    border-color: var(--wa-color-indigo-30, #2c2e3f);
+    color: var(--wa-color-indigo-70, #a3a7cd);
+  }
+  /* A hairline down the left of the whole masthead, so the designation is
+     visible even when the pill has scrolled out of view. */
+  .docket-masthead.is-master {
+    border-inline-start: var(--wa-border-width-l, 3px) solid var(--wa-color-indigo-70, #a3a7cd);
+    padding-inline-start: var(--wa-space-m);
+  }
+
+  .docket-mast-row {
+    display: flex; flex-wrap: wrap; gap: var(--wa-space-m);
+    align-items: flex-end; justify-content: space-between;
+  }
+  /* The version cluster sits at the far right of the row; without this it ends
+     hard against the gutter with nothing between it and the window edge. */
+  .docket-mast-row > :last-child { padding-inline-end: var(--wa-space-3xs); }
+
+  /* ── The navigation rail ─────────────────────────────────────────────────
+     **Written once, in `slot="navigation"`.** `wa-page` renders that slot as
+     the desktop sidebar *and* the mobile drawer, and supplies the drawer's own
+     hamburger — so duplicating the links into the header is the classic
+     mistake, and the header keeps only what the rail is not: the theme switch
+     and the page's own title. */
+  .rail { display: flex; flex-direction: column; gap: var(--wa-space-3xs);
+          padding: var(--wa-space-s) var(--wa-space-xs); }
+  .rail-group { margin: var(--wa-space-s) 0 var(--wa-space-3xs);
+                padding-inline: var(--wa-space-2xs);
+                font-family: var(--wa-font-family-code);
+                font-size: var(--wa-font-size-xs); letter-spacing: .12em;
+                text-transform: uppercase;
+                color: var(--wa-color-neutral-on-quiet); }
+  .rail-group:first-child { margin-block-start: 0; }
+  .rail a {
+    display: flex; align-items: center; gap: var(--wa-space-xs);
+    padding: var(--wa-space-2xs) var(--wa-space-xs);
+    border-radius: var(--wa-border-radius-m);
+    border-inline-start: var(--wa-border-width-l, 3px) solid transparent;
+    color: var(--wa-color-text-normal); text-decoration: none;
+    font-size: var(--wa-font-size-s);
+  }
+  .rail a:hover { background: var(--wa-color-neutral-fill-quiet); }
+  /* **The current entry has to carry the whole job of saying where you are.**
+     With a breadcrumb above the page title there were two answers to the same
+     question and the name appeared three times on one screen. There is one
+     answer now, so it is unmistakable rather than tasteful: the hue's ground,
+     a bar in the hue's *ink* rather than its border colour, the label in that
+     ink and bold, and the tab running into the content it opens. */
+  .rail a[aria-current="page"] {
+    background: var(--c-bg);
+    border-inline-start: var(--wa-border-width-l, 3px) solid var(--c-ink);
+    border-start-end-radius: 0; border-end-end-radius: 0;
+    margin-inline-end: calc(-1 * var(--wa-space-xs));
+    padding-inline-end: var(--wa-space-m);
+    color: var(--c-ink);
+    font-weight: var(--wa-font-weight-bold);
+  }
+  .rail a[aria-current="page"]::after {
+    content: "";
+    width: .38rem; height: .38rem; flex: 0 0 auto;
+    border-block-start: 2px solid var(--c-ink);
+    border-inline-end: 2px solid var(--c-ink);
+    transform: rotate(45deg);
+    margin-inline-start: var(--wa-space-2xs);
+  }
+  /* A badge on the current row would otherwise sit against the caret. */
+  .rail a[aria-current="page"] wa-badge { margin-inline-start: auto; }
+  .rail a wa-icon { color: var(--c-ink, var(--wa-color-neutral-on-quiet));
+                    flex: 0 0 auto; }
+  .rail .grow { flex: 1 1 auto; }
+  .rail-foot { padding: var(--wa-space-s) var(--wa-space-m);
+               border-block-start: var(--wa-border-width-s) solid var(--wa-color-surface-border);
+               /* The drawer centres its footer slot; the sidebar does not. Say
+                  it once so the two read the same. */
+               text-align: start; }
+  .rail-head { padding: var(--wa-space-m) var(--wa-space-m) var(--wa-space-xs); }
+  /* **Furniture, not a second title.** This was set at heading size and weight,
+     a hand's width from the masthead carrying the same word — two titles, and
+     the eye has to work out which one it is being asked to read. The rail says
+     *which project you are in*; the masthead says *what this page is about*.
+     Only one of those is a headline. */
+  .rail-head .name { font-family: var(--wa-font-family-code);
+                     font-size: var(--wa-font-size-xs);
+                     letter-spacing: .12em; text-transform: uppercase;
+                     color: var(--wa-color-neutral-on-quiet);
+                     line-height: 1.3; overflow-wrap: anywhere; }
+
+  /* **The name appears once per screen, not three times.** The rail carries it
+     on desktop, where the rail is always there; the masthead carries it big,
+     which is the whole point of the masthead; and the header carried it a third
+     time. So the header's copy is for the view where the rail is a closed
+     drawer and neither of the others is visible — and nowhere else. */
+  wa-page[view="desktop"] .docket-headname { display: none; }
+
+  /* ── The banner ──────────────────────────────────────────────────────────
+     `wa-page`'s banner slot spans everything, above the header and the rail
+     both. The master designation belongs there and nowhere else: it is a fact
+     about the whole window, not about one panel in it. */
+  /* **`hidden` is not enough here.** `wa-page` sets a display on whatever is
+     slotted into `banner`, and a `display` from the component beats the UA's
+     `[hidden]` rule — so the master banner appeared on every project's
+     dashboard, which is the one thing it exists to prevent. */
+  .docket-banner[hidden] { display: none !important; }
+  .docket-banner {
+    display: flex; align-items: center; gap: var(--wa-space-xs);
+    padding: var(--wa-space-2xs) var(--wa-space-l);
+    background: var(--wa-color-indigo-90, #e2e3f0);
+    border-block-end: var(--wa-border-width-s) solid var(--wa-color-indigo-70, #a3a7cd);
+    color: var(--wa-color-indigo-40, #474c85);
+    font-family: var(--wa-font-family-code);
+    font-size: var(--wa-font-size-xs); letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  :root[data-theme="dark"] .docket-banner {
+    background: var(--wa-color-indigo-20, #17181f);
+    border-block-end-color: var(--wa-color-indigo-30, #2c2e3f);
+    color: var(--wa-color-indigo-70, #a3a7cd);
+  }
+  .docket-banner .said { text-transform: none; letter-spacing: normal;
+                        font-family: var(--wa-font-family-body);
+                        color: var(--wa-color-neutral-on-quiet); }
+
+  /* ── Tones ───────────────────────────────────────────────────────────────
+     **A tone is one hue at three tints: a ground, a border, and an ink for the
+     heading.** Lifted from the Rain Tripwire settings drawer, where twelve
+     groups of controls are told apart by colour before a single label is read.
+     That is the whole point of it: a reader finds "the open questions" or "the
+     inbox" by colour, and reads the heading only to confirm.
+
+     **The tint depends on the palette, and getting this wrong is why a page
+     looks grey.** Rudimentary is bright, so its 95 tint already reads as a
+     pastel ground. Natural is muted — at 95 it is indistinguishable from white,
+     which is exactly the complaint that produced this block. So natural goes one
+     tint deeper: 90 for the ground, 70 for the border. Dark is 20/30/70 in both.
+
+     The hex values are the offline fallback only; the token wins when the kit
+     has loaded. */
+  .t-blue   { --c-bg: var(--wa-color-blue-90,   #e0e5ef); --c-line: var(--wa-color-blue-70,   #9fb0ca); --c-ink: var(--wa-color-blue-40,   #425981) }
+  .t-green  { --c-bg: var(--wa-color-green-90,  #dde8df); --c-line: var(--wa-color-green-70,  #98b79e); --c-ink: var(--wa-color-green-40,  #366241) }
+  .t-cyan   { --c-bg: var(--wa-color-cyan-90,   #dee7e9); --c-line: var(--wa-color-cyan-70,   #96b4ba); --c-ink: var(--wa-color-cyan-40,   #2f6067) }
+  .t-purple { --c-bg: var(--wa-color-purple-90, #eae4ef); --c-line: var(--wa-color-purple-70, #bca8ca); --c-ink: var(--wa-color-purple-40, #694f7a) }
+  .t-indigo { --c-bg: var(--wa-color-indigo-90, #e2e3f0); --c-line: var(--wa-color-indigo-70, #a3a7cd); --c-ink: var(--wa-color-indigo-40, #474c85) }
+  .t-red    { --c-bg: var(--wa-color-red-90,    #f5e1dc); --c-line: var(--wa-color-red-70,    #daa193); --c-ink: var(--wa-color-red-40,    #864839) }
+  .t-orange { --c-bg: var(--wa-color-orange-90, #f3e4d5); --c-line: var(--wa-color-orange-70, #d3a97e); --c-ink: var(--wa-color-orange-40, #7d5423) }
+  .t-yellow,
+  .t-amber  { --c-bg: var(--wa-color-yellow-90, #eee5d7); --c-line: var(--wa-color-yellow-70, #c7ab7b); --c-ink: var(--wa-color-yellow-40, #71541d) }
+  .t-pink   { --c-bg: var(--wa-color-pink-90,   #f4e0e6); --c-line: var(--wa-color-pink-70,   #d5a0b0); --c-ink: var(--wa-color-pink-40,   #80445a) }
+  .t-gray   { --c-bg: var(--wa-color-gray-90,   #e4e4e2); --c-line: var(--wa-color-gray-70,   #a9a9a4); --c-ink: var(--wa-color-gray-40,   #55554f) }
+
+  /* A bright palette does not need the extra depth, and at 90 it shouts. */
+  :root.wa-palette-rudimentary .t-blue   { --c-bg: var(--wa-color-blue-95);   --c-line: var(--wa-color-blue-80) }
+  :root.wa-palette-rudimentary .t-green  { --c-bg: var(--wa-color-green-95);  --c-line: var(--wa-color-green-80) }
+  :root.wa-palette-rudimentary .t-cyan   { --c-bg: var(--wa-color-cyan-95);   --c-line: var(--wa-color-cyan-80) }
+  :root.wa-palette-rudimentary .t-purple { --c-bg: var(--wa-color-purple-95); --c-line: var(--wa-color-purple-80) }
+  :root.wa-palette-rudimentary .t-indigo { --c-bg: var(--wa-color-indigo-95); --c-line: var(--wa-color-indigo-80) }
+  :root.wa-palette-rudimentary .t-red    { --c-bg: var(--wa-color-red-95);    --c-line: var(--wa-color-red-80) }
+  :root.wa-palette-rudimentary .t-orange { --c-bg: var(--wa-color-orange-95); --c-line: var(--wa-color-orange-80) }
+  :root.wa-palette-rudimentary :is(.t-yellow, .t-amber) { --c-bg: var(--wa-color-yellow-95); --c-line: var(--wa-color-yellow-80) }
+  :root.wa-palette-rudimentary .t-pink   { --c-bg: var(--wa-color-pink-95);   --c-line: var(--wa-color-pink-80) }
+  :root.wa-palette-rudimentary .t-gray   { --c-bg: var(--wa-color-gray-95);   --c-line: var(--wa-color-gray-80) }
+
+  :root[data-theme="dark"] .t-blue   { --c-bg: var(--wa-color-blue-20,   #161b24); --c-line: var(--wa-color-blue-30,   #2b3547); --c-ink: var(--wa-color-blue-70,   #9fb0ca) }
+  :root[data-theme="dark"] .t-green  { --c-bg: var(--wa-color-green-20,  #141c17); --c-line: var(--wa-color-green-30,  #27392c); --c-ink: var(--wa-color-green-70,  #98b79e) }
+  :root[data-theme="dark"] .t-cyan   { --c-bg: var(--wa-color-cyan-20,   #131d1f); --c-line: var(--wa-color-cyan-30,   #253a3e); --c-ink: var(--wa-color-cyan-70,   #96b4ba) }
+  :root[data-theme="dark"] .t-purple { --c-bg: var(--wa-color-purple-20, #1c1720); --c-line: var(--wa-color-purple-30, #352c3d); --c-ink: var(--wa-color-purple-70, #bca8ca) }
+  :root[data-theme="dark"] .t-indigo { --c-bg: var(--wa-color-indigo-20, #17181f); --c-line: var(--wa-color-indigo-30, #2c2e3f); --c-ink: var(--wa-color-indigo-70, #a3a7cd) }
+  :root[data-theme="dark"] .t-red    { --c-bg: var(--wa-color-red-20,    #241612); --c-line: var(--wa-color-red-30,    #432720); --c-ink: var(--wa-color-red-70,    #daa193) }
+  :root[data-theme="dark"] .t-orange { --c-bg: var(--wa-color-orange-20, #221a11); --c-line: var(--wa-color-orange-30, #3f2f1d); --c-ink: var(--wa-color-orange-70, #d3a97e) }
+  :root[data-theme="dark"] :is(.t-yellow, .t-amber) { --c-bg: var(--wa-color-yellow-20, #201c13); --c-line: var(--wa-color-yellow-30, #3b3421); --c-ink: var(--wa-color-yellow-70, #c7ab7b) }
+  :root[data-theme="dark"] .t-pink   { --c-bg: var(--wa-color-pink-20,   #241419); --c-line: var(--wa-color-pink-30,   #43262e); --c-ink: var(--wa-color-pink-70,   #d5a0b0) }
+  :root[data-theme="dark"] .t-gray   { --c-bg: var(--wa-color-gray-20,   #1a1a19); --c-line: var(--wa-color-gray-30,   #2e2e2c); --c-ink: var(--wa-color-gray-70,   #a9a9a4) }
+
+  /* ── What a tone is worn by ──────────────────────────────────────────────
+     `.toned` is the filled card: the ground, the matching border, and a heading
+     in the ink. A thin coloured line on a white card was the previous
+     arrangement, and three pixels of colour on a page of white is not a page
+     that uses colour. */
+  .toned {
+    background: var(--c-bg);
+    border: var(--wa-border-width-s) solid var(--c-line);
+    border-radius: var(--wa-border-radius-l);
+    padding: var(--wa-space-m) var(--wa-space-m) var(--wa-space-s);
+  }
+  .toned > .grp, .grp {
+    margin: 0 0 var(--wa-space-s);
+    padding-block-end: var(--wa-space-3xs);
+    border-block-end: var(--wa-border-width-s) solid var(--c-line);
+    color: var(--c-ink);
+    font-family: var(--wa-font-family-code);
+    font-size: var(--wa-font-size-xs);
+    font-weight: var(--wa-font-weight-bold);
+    letter-spacing: .09em;
+    text-transform: uppercase;
+  }
+  /* Through the documented part: a background on the <wa-card> host lands on an
+     invisible wrapper and nothing changes colour. */
+  wa-card.toned { background: none; border: none; padding: 0; border-radius: 0 }
+  wa-card.toned::part(body) {
+    background: var(--c-bg);
+    border: var(--wa-border-width-s) solid var(--c-line);
+    border-radius: var(--wa-border-radius-l);
+  }
+</style>
+
+<script>
+  /* In <head>, before anything paints. Applied later, the page renders once in
+     the wrong theme and then flips — which reads as a bug in the page. */
+  /* **The same look table as the viewer, reading the same key.** A look chosen
+     in the Docket viewer applies here and the other way round; they were separate
+     until 2.8.0 and the disagreement was the bug. `docket` is the default theme
+     with the natural palette — the framework's own. */
+  (function () {
+    try {
+      var LOOKS = { docket:   ['default', 'natural'],
+                    mellow:  ['mellow',  'natural'],
+                    playful: ['playful', 'rudimentary'] };
+      var h = document.documentElement;
+      var l = localStorage.getItem('docket.look') ||
+              localStorage.getItem('tripwire.look') || 'docket';
+      var q = LOOKS[l] || LOOKS.docket;
+      h.className = (h.className.replace(/wa-theme-\S+|wa-palette-\S+/g, '') +
+                     ' wa-theme-' + q[0] + ' wa-palette-' + q[1]).trim();
+
+      var t = localStorage.getItem('docket.theme') ||
+              localStorage.getItem('tripwire.theme');
+      if (t !== 'light' && t !== 'dark') {
+        t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      /* Copy an old choice across once, so the viewer and these pages agree on
+         the next load rather than only after something is changed. */
+      if (!localStorage.getItem('docket.theme')) localStorage.setItem('docket.theme', t);
+      if (!localStorage.getItem('docket.look')) localStorage.setItem('docket.look', l);
+      h.setAttribute('data-theme', t);
+      h.classList.toggle('wa-dark', t === 'dark');
+    } catch (e) {}
+  })();
+</script>

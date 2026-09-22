@@ -1,0 +1,2341 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.bunny.net"><link rel="stylesheet" href="https://fonts.bunny.net/css?family=ibm-plex-sans-condensed:300,400,500,600,700&display=swap"><link rel="stylesheet" href="https://fonts.bunny.net/css?family=space-grotesk:300,400,500,600,700&display=swap"><link rel="stylesheet" href="https://fonts.bunny.net/css?family=space-mono:400,400i,700,700i&display=swap"><link rel="stylesheet" href="https://fonts.bunny.net/css?family=podkova:400,500,600,700,800&display=swap"><link rel="stylesheet" href="https://ka-p.webawesome.com/kit/b967d23bcd1f4d2a/webawesome@3.13.0/styles/themes/default.css"><link rel="stylesheet" href="https://ka-p.webawesome.com/kit/b967d23bcd1f4d2a/webawesome@3.13.0/styles/color/palettes/natural.css"><link rel="stylesheet" href="https://ka-p.webawesome.com/kit/b967d23bcd1f4d2a/webawesome@3.13.0/styles/themes/mellow.css"><link rel="stylesheet" href="https://ka-p.webawesome.com/kit/b967d23bcd1f4d2a/webawesome@3.13.0/styles/themes/playful.css"><script type="module" src="https://ka-p.webawesome.com/kit/b967d23bcd1f4d2a/webawesome@3.13.0/webawesome.loader.js"></script><style>:root{--wa-font-family-body:"Space Grotesk",sans-serif;--wa-font-family-heading:"IBM Plex Sans Condensed",sans-serif;--wa-font-family-code:"Space Mono",monospace;--wa-font-family-longform:Podkova,serif;--wa-font-weight-body:400;--wa-font-weight-heading:500;--wa-font-weight-code:400;--wa-font-weight-longform:400;--wa-border-radius-scale:.75;--wa-border-width-scale:1;--wa-space-scale:.625;}</style><script>(function(){try{var h=document.documentElement,l=localStorage.getItem('docket.look')||localStorage.getItem('tripwire.look')||'docket',t=localStorage.getItem('docket.theme')||localStorage.getItem('tripwire.theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');h.className=h.className.replace(/wa-theme-\S+|wa-palette-\S+/g,'').trim();if(l==='classic'){h.setAttribute('data-look','classic');}else{var P={docket:['default','natural'],mellow:['mellow','natural'],playful:['playful','rudimentary']},q=P[l]||P.docket;h.className=(h.className+' wa-theme-'+q[0]+' wa-palette-'+q[1]).trim();}if(t!=='light'&&t!=='dark')t='light';if(!localStorage.getItem('docket.theme'))localStorage.setItem('docket.theme',t);if(!localStorage.getItem('docket.look'))localStorage.setItem('docket.look',l);h.setAttribute('data-theme',t);if(t==='dark')h.classList.add('wa-dark');}catch(e){}})();</script><title>The Docket — A stepper-driven rock tumbler</title></head><body>
+<!-- generated 2026-09-22 by scripts/build_docket.py — do not edit -->
+<style>
+/* ── Light is the bare :root, dark is the override, and the toggle wins over
+      both. Three blocks, in this order, because a token defined only inside a
+      media query has no value when the reader has chosen the other way. ── */
+:root{
+  --c-ground:#faf7ef; --c-raised:#f1ead8; --c-nav-bg:#f4eee0; --c-sunken:#efe7d4;
+  --c-ink:#2a2318; --c-accent:#7a5c18; --c-bright:#63490f; --c-hard:#8f3a19;
+  --c-soft:#53624f;
+  /* Same 3:1 floor as the dark palette, re-measured against parchment rather
+     than assumed: gold at .58 over a light ground lands near 1.9:1, so the
+     structural edge is a darker brown at a higher alpha instead. */
+  --c-edge:rgba(74,54,14,.62); --c-edge-soft:rgba(74,54,14,.30);
+  --c-wash:rgba(122,92,24,.08); --c-hero-wash:rgba(122,92,24,.11);
+  /* Typography is a property of the LOOK, not of light/dark, so it is
+     declared once here and overridden once in the themed block below. */
+  --c-f-body:Spectral,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --f-head:var(--f-body);
+  --c-f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --f-body:var(--c-f-body);
+  --f-mono:var(--c-f-mono);
+  color-scheme:light;
+  --ground:var(--c-ground);
+  --raised:var(--c-raised);
+  --nav-bg:var(--c-nav-bg);
+  --sunken:var(--c-sunken);
+  --card:var(--c-raised);
+  --card-edge:var(--c-edge);
+  --ink:var(--c-ink);
+  --accent:var(--c-accent);
+  --bright:var(--c-bright);
+  --hard:var(--c-hard);
+  --soft:var(--c-soft);
+  --edge:var(--c-edge);
+  --edge-soft:var(--c-edge-soft);
+  --wash:var(--c-wash);
+  --hero-wash:var(--c-hero-wash);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --c-ground:#0f0d09; --c-raised:#1f1b13; --c-nav-bg:#0c0a07; --c-sunken:#0a0906;
+  --c-ink:#ece3cd; --c-accent:#c9a35c; --c-bright:#e9cd8b; --c-hard:#bd6743;
+  --c-soft:#8ca58e;
+  /* Structural edges sit at >=0.55 alpha on purpose: below that gold on this
+     ground falls under the 3:1 floor for non-text UI. See critical_path.md
+     Column 0 — that measurement is why this file does not repeat the mistake. */
+  --c-edge:rgba(201,163,92,.58); --c-edge-soft:rgba(201,163,92,.34);
+  --c-wash:rgba(201,163,92,.07); --c-hero-wash:rgba(201,163,92,.09);
+  color-scheme:dark;
+  --ground:var(--c-ground);
+  --raised:var(--c-raised);
+  --nav-bg:var(--c-nav-bg);
+  --sunken:var(--c-sunken);
+  --card:var(--c-raised);
+  --card-edge:var(--c-edge);
+  --ink:var(--c-ink);
+  --accent:var(--c-accent);
+  --bright:var(--c-bright);
+  --hard:var(--c-hard);
+  --soft:var(--c-soft);
+  --edge:var(--c-edge);
+  --edge-soft:var(--c-edge-soft);
+  --wash:var(--c-wash);
+  --hero-wash:var(--c-hero-wash);
+} }
+:root[data-theme="dark"]{
+  --c-ground:#0f0d09; --c-raised:#1f1b13; --c-nav-bg:#0c0a07; --c-sunken:#0a0906;
+  --c-ink:#ece3cd; --c-accent:#c9a35c; --c-bright:#e9cd8b; --c-hard:#bd6743;
+  --c-soft:#8ca58e;
+  /* Structural edges sit at >=0.55 alpha on purpose: below that gold on this
+     ground falls under the 3:1 floor for non-text UI. See critical_path.md
+     Column 0 — that measurement is why this file does not repeat the mistake. */
+  --c-edge:rgba(201,163,92,.58); --c-edge-soft:rgba(201,163,92,.34);
+  --c-wash:rgba(201,163,92,.07); --c-hero-wash:rgba(201,163,92,.09);
+  color-scheme:dark;
+  --ground:var(--c-ground);
+  --raised:var(--c-raised);
+  --nav-bg:var(--c-nav-bg);
+  --sunken:var(--c-sunken);
+  --card:var(--c-raised);
+  --card-edge:var(--c-edge);
+  --ink:var(--c-ink);
+  --accent:var(--c-accent);
+  --bright:var(--c-bright);
+  --hard:var(--c-hard);
+  --soft:var(--c-soft);
+  --edge:var(--c-edge);
+  --edge-soft:var(--c-edge-soft);
+  --wash:var(--c-wash);
+  --hero-wash:var(--c-hero-wash);
+}
+
+/* ── The themed looks. Last, so they win the equal-specificity tie against the
+      classic blocks above; scoped off [data-look="classic"], which is set only
+      when Classic is chosen. The wa-* surface and text tokens already resolve
+      light or dark from the `wa-dark` class, so this block needs no theme
+      variants of its own. ── */
+:root:not([data-look="classic"]){
+  --ground:var(--wa-color-surface-default,var(--c-ground));
+  --raised:var(--wa-color-surface-raised,var(--c-raised));
+  /* **A card fill that actually steps, in both themes.** `--raised` is a step up
+     from the ground in dark and is *identical to it* in light, so anything drawn
+     with it is invisible on exactly one of the two — which is how the hero's
+     count tiles came to be six rectangles nobody could see. The neutral fills
+     step in both directions, so a card built on them has contrast either way. */
+  --card:var(--wa-color-neutral-fill-quiet,var(--c-raised));
+  /* **Derived from the text colour, because that is the one thing guaranteed to
+     contrast with the ground in every theme.** The border token was
+     `--wa-color-neutral-fill-normal`: 231 on a 255 ground in light, which is a
+     24/255 step — and the fill beside it was 241, so the border was 10 from its
+     own fill. Numerically a border; visually nothing. Mixing the ink in gives a
+     ~49/255 step in both directions, and cannot be light-on-light or
+     dark-on-dark by construction. */
+  --card-edge:color-mix(in srgb,var(--ink,var(--c-ink)) 22%,transparent);
+  --nav-bg:var(--wa-color-surface-lowered,var(--c-nav-bg));
+  --sunken:var(--wa-color-surface-lowered,var(--c-sunken));
+  --ink:var(--wa-color-text-normal,var(--c-ink));
+  --soft:var(--wa-color-text-quiet,var(--c-soft));
+  --accent:var(--wa-color-brand,var(--c-accent));
+  --bright:var(--wa-color-text-link,var(--c-bright));
+  --hard:var(--wa-color-danger,var(--c-hard));
+  --edge:var(--wa-color-surface-border,var(--c-edge));
+  --edge-soft:color-mix(in srgb,var(--wa-color-surface-border,var(--c-edge)) 55%,transparent);
+  --wash:color-mix(in srgb,var(--wa-color-brand,var(--c-accent)) 7%,transparent);
+  --hero-wash:color-mix(in srgb,var(--wa-color-brand,var(--c-accent)) 11%,transparent);
+  --f-body:var(--wa-font-family-body,var(--c-f-body));
+  --f-head:var(--wa-font-family-heading,var(--c-f-body));
+  --f-mono:var(--wa-font-family-code,var(--c-f-mono));
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font:16px/1.65 var(--f-body);
+  -webkit-text-size-adjust:100%}
+a{color:var(--bright);text-decoration-color:var(--edge-soft);text-underline-offset:2px}
+a:hover{text-decoration-color:var(--bright)}
+code,pre,kbd{font-family:var(--f-mono)}
+code{font-size:.86em;background:var(--wash);border:1px solid var(--edge-soft);
+  border-radius:3px;padding:.08em .34em}
+pre{background:var(--sunken);border:1px solid var(--edge);border-radius:8px;padding:14px;
+  overflow-x:auto}
+pre code{background:none;border:0;padding:0;font-size:.8rem;line-height:1.5}
+
+/* `wa-page` owns the grid now, so the old two-column layout is gone. It gives
+   the sticky header, the sidebar, and the mobile drawer with its own hamburger
+   — none of which is worth hand-rolling, and the drawer is the reason the rail
+   can afford to be long. */
+html,body{min-height:100%;padding:0;margin:0}
+wa-page{--menu-width:320px}
+wa-page[view='mobile']{--menu-width:auto}
+nav[slot='navigation']{padding:16px 14px 60px;background:var(--nav-bg);
+  border-right:1px solid var(--edge)}
+main{padding:36px 40px 140px;min-width:0;max-width:1100px}
+
+/* The bar must always paint above the document labels. It is `static` with
+   `z-index:auto` by default, which creates no stacking context, so a sticky
+   label — which does — painted straight over "Expand all". Offsetting the
+   labels was not enough on its own: a label whose article is scrolling out
+   slides up THROUGH this band on its way off screen, and on a project with
+   long document names it covered the controls the whole way. */
+.topbar{display:flex;align-items:baseline;gap:10px;padding:10px 18px;
+  background:var(--nav-bg);border-bottom:1px solid var(--edge);
+  position:relative;z-index:10}
+.topbar .grow{flex:1 1 auto}
+.brand{font-family:var(--f-head);font-size:1.25rem;letter-spacing:.02em}
+.brand span{color:var(--accent)}
+.sub{font-size:.74rem;color:var(--soft);letter-spacing:.06em;
+  text-transform:uppercase}
+
+/* ── the accordion rail ──────────────────────────────────────────────────
+   Fourteen documents and several hundred headings used to render as one flat
+   list that had to be scrolled past to reach anything. Each document is now a
+   `wa-details`, shut by default, so the rail opens at fourteen lines and the
+   reader expands the one they want. */
+.docd::part(base){border:0;background:none}
+.docd::part(header){padding:7px 4px;border-radius:6px}
+.docd::part(header):hover{background:var(--wash)}
+.docd::part(content){padding:2px 0 8px 10px;border:0}
+.dsum{display:flex;align-items:center;gap:8px;width:100%}
+.dsum .dlab{display:flex;flex-direction:column;min-width:0;flex:1 1 auto}
+.dsum small{font-size:.66rem;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--soft)}
+.dsum b{font-size:.85rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap}
+.jump{display:block;font-size:.74rem;color:var(--soft);text-decoration:none;
+  margin:0 0 6px 2px}
+.jump:hover{color:var(--accent);text-decoration:underline}
+
+/* Circular counters. Only drawn where there is something to count. */
+.chips{display:inline-flex;gap:4px;flex:0 0 auto;margin-left:6px}
+.chip::part(base){min-width:1.35em;height:1.35em;padding:0 .35em;
+  border-radius:999px;font-size:.66rem;font-weight:700;
+  display:inline-flex;align-items:center;justify-content:center}
+.heads .chips{margin-left:5px;vertical-align:middle}
+#filter{width:100%;padding:8px 10px;background:var(--ground);color:var(--ink);
+  border:1px solid var(--edge);border-radius:6px;font:inherit;font-size:.84rem;
+  margin-bottom:14px}
+#filter:focus{outline:2px solid var(--bright);outline-offset:1px}
+/* ── the tree: every nesting level draws its own rail, every item an elbow ── */
+.tree,.tree ul{list-style:none;margin:0;padding:0}
+.tree ul{margin-left:9px;padding-left:11px;border-left:1px solid var(--edge-soft)}
+.tree li{position:relative}
+.tree ul>li::before{content:"";position:absolute;left:-11px;top:.92em;width:8px;
+  height:1px;background:var(--edge-soft)}
+/* cap the rail at the last child so it stops at the elbow */
+.tree ul>li:last-child::after{content:"";position:absolute;left:-12px;top:calc(.92em + 1px);
+  bottom:-2px;width:3px;background:var(--nav-bg)}
+.tree a{display:block;padding:3px 6px;border-radius:4px;text-decoration:none;
+  color:var(--soft);font-size:.83rem;line-height:1.45}
+.tree a:hover{color:var(--bright);background:var(--wash)}
+.tree a.on{color:var(--bright);background:var(--wash);box-shadow:inset 2px 0 0 var(--accent)}
+.tree .doc>a{color:var(--ink);font-size:.92rem;padding:6px 8px;margin-top:5px;
+  border-left:3px solid var(--edge);border-radius:0 5px 5px 0}
+.tree .doc>a:hover,.tree .doc>a.on{border-left-color:var(--bright);background:var(--wash)}
+.tree .doc>a small{display:block;color:var(--accent);font-size:.63rem;
+  letter-spacing:.09em;text-transform:uppercase;font-family:var(--f-mono)}
+.tree .doc>a b{font-weight:600;font-family:var(--f-mono);font-size:.79rem}
+.tree .g{color:var(--soft);font-size:.9em;margin-right:3px}
+.tree li.hide{display:none}
+.built #diag{display:block;margin-top:2px}
+.built #diag b{color:var(--bright);font-weight:600}
+.built #diag .bad{color:var(--hard);font-weight:600}
+.built{margin:-12px 0 12px;font-size:.62rem;color:var(--soft);letter-spacing:.07em;
+  font-family:var(--f-mono)}
+.look{display:flex;align-items:center;gap:6px;margin:0 0 14px}
+.look wa-select{flex:1;min-width:0}
+.look wa-select::part(combobox){background:var(--ground);border-color:var(--edge);
+  color:var(--ink);font-size:.78rem}
+.look wa-button::part(base){color:var(--soft);border-color:var(--edge)}
+.look wa-button::part(base):hover{color:var(--bright)}
+.railkey{margin:16px 0 6px;color:var(--soft);font-size:.63rem;letter-spacing:.1em;
+  text-transform:uppercase;font-family:var(--f-mono);
+  border-top:1px solid var(--edge-soft);padding-top:11px}
+
+.hero{border:1px solid var(--card-edge);border-radius:12px;padding:26px 28px;
+  background:linear-gradient(180deg,var(--hero-wash),transparent 70%);
+  margin-bottom:30px}
+/* **The project's name is the headline.** This said "The Docket" at 2.1rem with
+   the project's name beneath it in 0.8rem uppercase — which is exactly backwards
+   for somebody who runs this framework across a dozen projects and has four of
+   their viewers open. Every one of those pages is titled "The Docket". Only one
+   of them is titled what you are looking for. */
+.hero h1{font-family:var(--f-head);margin:0 0 8px;font-weight:600;
+  font-size:clamp(2.5rem,6.5vw,4.25rem);line-height:.96;letter-spacing:-.02em;
+  text-wrap:balance;overflow-wrap:anywhere}
+.hero .tag{color:var(--soft);font-size:.72rem;letter-spacing:.16em;
+  text-transform:uppercase;font-family:var(--f-mono);margin:0 0 6px}
+.hero .made{color:var(--soft);font-size:.78rem;font-family:var(--f-mono);
+  margin:0 0 14px}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 0;padding:0;list-style:none}
+.stats li{border:1px solid var(--card-edge);border-radius:8px;padding:8px 14px;
+  background:var(--card);min-width:96px}
+.stats b{display:block;font-size:1.5rem;color:var(--bright);line-height:1.15}
+.stats span{font-size:.68rem;color:var(--soft);letter-spacing:.07em;
+  text-transform:uppercase;font-family:var(--f-mono)}
+
+h2.section{font-family:var(--f-head);font-size:1.45rem;margin:44px 0 14px;padding-bottom:7px;
+  border-bottom:1px solid var(--edge)}
+.practice{border-left:3px solid var(--edge);padding:2px 0 2px 15px;margin:0 0 17px}
+.practice b{color:var(--bright)}
+.markers{list-style:none;padding:0;margin:0;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:7px}
+.markers li{border:1px solid var(--edge-soft);border-radius:6px;padding:6px 11px;
+  font-size:.87rem}
+
+/* ── Rail groups, and the two anchors that are not documents ─────────────
+   Bradley, 2026-09-17: *"could MAIN sections be bolded and have no extraneous
+   items at the root?"* Front matter and the code index are page anchors; they
+   wore the same two-line shape as a document, so the rail read as ten Docket
+   documents where there are eight. And the eight ran straight into twenty-five
+   chapters with no boundary, so the chapters looked like more of the same. */
+.jumps{ display:flex; gap:14px; margin:0 0 12px; padding:0 4px }
+.jumps a{ font-size:.76rem; color:var(--soft); text-decoration:none;
+  letter-spacing:.04em; text-transform:uppercase }
+.jumps a:hover{ color:var(--accent) }
+.tree li.grouphead{
+  font-family:var(--f-head); font-weight:700; font-size:.82rem;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--ink);
+  margin:16px 0 6px; padding:0 0 5px;
+  border-bottom:1px solid var(--edge); list-style:none }
+.tree li.grouphead:first-child{ margin-top:2px }
+
+/* ── Feature entries as cards ────────────────────────────────────────────
+   Three built features used to run together as one paragraph with literal
+   hyphens between them (the list never parsed — see `_open_lists`), and even
+   parsed they were three bullets in a wall. Each is a self-contained unit with
+   its own code, status, date and file, so each gets a card and the boundary is
+   structural rather than typographic.
+
+   Styled through `wa-card`'s documented parts — `header` and `body` — never the
+   host. */
+wa-card.feat{ --spacing: .7rem; display:block; margin:0 0 12px }
+wa-card.feat::part(header){
+  background:var(--wash); border-bottom:1px solid var(--edge-soft);
+  padding:.45rem .8rem }
+wa-card.feat::part(body){ padding:.7rem .8rem .8rem }
+.feathead{ display:flex; align-items:baseline; gap:.5rem; flex-wrap:wrap }
+.featcode{ font-family:var(--f-mono,ui-monospace,SFMono-Regular,Menlo,monospace);
+  font-weight:700; color:var(--accent); letter-spacing:.02em }
+.feattitle{ font-weight:600; flex:1 1 auto; min-width:0 }
+.featq{ color:var(--hard) }
+.featq strong{ font-weight:600 }
+.featbody{ font-size:.94rem; line-height:1.62 }
+.featbody > :first-child{ margin-top:0 }
+.featbody > :last-child{ margin-bottom:0 }
+@media print{
+  wa-card.feat{ break-inside:avoid }
+}
+
+.toc{border:1px solid var(--edge);border-radius:10px;overflow:hidden;margin:0 0 22px}
+.toc>summary{padding:13px 18px;cursor:pointer;background:var(--card);
+  font-size:1rem;letter-spacing:.01em}
+.toc>summary::marker{color:var(--accent)}
+.toc .body{padding:6px 18px 16px}
+.toc .d{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--edge-soft)}
+.toc .d:first-child{border-top:0;padding-top:2px}
+.toc .d>a{font-size:1.02rem;font-weight:600;text-decoration:none}
+.toc .d p{margin:3px 0 8px;color:var(--soft);font-size:.85rem}
+.toc ul{list-style:none;margin:0;padding:0}
+.toc ul li{margin:0 0 5px;padding-left:13px;border-left:1px solid var(--edge-soft);
+  font-size:.87rem}
+.toc ul li.l3{margin-left:19px}
+.toc ul li em{color:var(--soft);font-style:normal;font-size:.93em}
+.toc ul li em::before{content:" — "}
+
+.codes{width:100%;border-collapse:collapse;font-size:.87rem}
+.codes th{text-align:left;border-bottom:1px solid var(--edge);padding:7px 9px;
+  color:var(--soft);font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;
+  font-family:var(--f-mono);position:sticky;top:0;background:var(--ground)}
+.codes td{border-bottom:1px solid var(--edge-soft);padding:7px 9px;vertical-align:top}
+.codes td:first-child{font-family:var(--f-mono);color:var(--bright);
+  white-space:nowrap;font-size:.84rem}
+.codes .kind{font-size:.67rem;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--soft);font-family:var(--f-mono);white-space:nowrap}
+.codes .where a{margin-right:7px;font-size:.76rem;white-space:nowrap}
+.codes tr.hide{display:none}
+
+.ctree,.ctree ul{list-style:none;margin:0;padding:0}
+.ctree ul{margin-left:10px;padding-left:14px;border-left:1px solid var(--edge-soft)}
+.ctree li{position:relative;margin:1px 0}
+.ctree ul>li::before{content:"";position:absolute;left:-14px;top:.82em;width:11px;
+  height:1px;background:var(--edge-soft)}
+.ctree ul>li:last-child::after{content:"";position:absolute;left:-15px;
+  top:calc(.82em + 1px);bottom:-2px;width:3px;background:var(--ground)}
+.ctree .row{display:flex;gap:9px;align-items:baseline;padding:2px 5px;border-radius:4px}
+.ctree .row:hover{background:var(--wash)}
+.ctree .c{font-family:var(--f-mono);color:var(--bright);font-size:.83rem;
+  min-width:52px;font-weight:600}
+.ctree .m{font-size:.86rem;flex:1;min-width:0}
+.ctree .w a{font-size:.7rem;margin-left:6px;white-space:nowrap;opacity:.8}
+.ctree .root>.row{border-bottom:1px solid var(--edge-soft);margin-bottom:3px;
+  padding-bottom:4px}
+.ctree .root>.row .c{color:var(--accent);font-size:.95rem}
+.ctree .root>.row .m{color:var(--ink)}
+.ctree li.hide{display:none}
+article{border-top:1px solid var(--edge);margin-top:52px;padding-top:8px}
+/* The document label and the page's own header are both sticky. Pinned at
+   top:0 they occupy the same band, and this one — opaque, z-index 5 — painted
+   straight over "Expand all" on any project whose document names are long
+   enough to reach them. It sticks BELOW the header instead. The offset is
+   measured from the real bar at runtime rather than guessed, because the bar's
+   height moves with the theme's font. */
+article>.head{position:sticky;top:var(--topbar-h,46px);background:var(--ground);
+  padding:12px 0 9px;border-bottom:1px solid var(--edge-soft);z-index:4;
+  margin-bottom:16px}
+/* And it must not grow into the controls even while scrolling past them. */
+article>.head{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+article>.head b{font-size:1.3rem}
+article>.head span{color:var(--soft);font-size:.72rem;letter-spacing:.08em;
+  text-transform:uppercase;font-family:var(--f-mono);margin-left:9px}
+article h1{font-family:var(--f-head);font-size:1.75rem;margin:.5em 0 .4em}
+article h2{font-family:var(--f-head);font-size:1.32rem;margin:1.5em 0 .4em;padding-bottom:5px;
+  border-bottom:1px solid var(--edge-soft)}
+article h3{font-family:var(--f-head);font-size:1.08rem;margin:1.35em 0 .35em;color:var(--bright)}
+article table{border-collapse:collapse;width:100%;margin:1em 0;font-size:.9rem;
+  display:block;overflow-x:auto}
+article th{text-align:left;background:var(--card);border:1px solid var(--card-edge);
+  padding:7px 10px}
+article td{border:1px solid var(--edge-soft);padding:7px 10px;vertical-align:top}
+article blockquote{margin:1em 0;padding:2px 0 2px 16px;border-left:3px solid var(--edge);
+  color:var(--soft)}
+article hr{border:0;border-top:1px solid var(--edge-soft);margin:2em 0}
+article del{color:var(--soft)}
+.mermaid-wrap{border:1px solid var(--edge);border-radius:10px;padding:14px;
+  margin:1em 0;background:var(--sunken);overflow-x:auto}
+.msrc summary{cursor:pointer;color:var(--soft);font-size:.78rem;margin-top:9px}
+
+.top{position:fixed;right:20px;bottom:20px;background:var(--card);
+  border:1px solid var(--edge);color:var(--bright);border-radius:8px;
+  padding:9px 13px;text-decoration:none;font-size:.82rem}
+@media(max-width:900px){ main{padding:22px 18px 100px} }
+/* Print wants everything open and nothing chrome. `wa-details` keeps its
+   content in the light DOM, so forcing the part visible is enough. */
+@media print{
+  nav,.top,.topbar{display:none}
+  article{break-before:page}
+  .docd::part(content){display:block!important}
+}
+</style>
+<wa-page mobile-breakpoint="900">
+<div slot="header" class="topbar"><!--{{DOCKET_NAV}}--><span class="brand">The <span>Docket</span></span><span class="sub">A stepper-driven rock tumbler</span><span class="grow"></span><wa-button id="expandall" size="s" appearance="plain"><wa-icon slot="start" name="chevron-down"></wa-icon>Expand all</wa-button><wa-button id="collapseall" size="s" appearance="plain"><wa-icon slot="start" name="chevron-right"></wa-icon>Collapse all</wa-button></div>
+<nav slot="navigation">
+<p class="built">built 2026-09-22 16:53<span id="diag"></span></p>
+<div class="look"><wa-select id="look" size="s" value="docket" aria-label="Look"><wa-option value="docket">Docket</wa-option><wa-option value="mellow">Mellow</wa-option><wa-option value="playful">Playful</wa-option><wa-option value="classic">Classic</wa-option></wa-select><wa-button id="themebtn" size="s" appearance="outlined"><wa-icon name="circle-half-stroke" label="Light or dark (or press t)"></wa-icon></wa-button></div>
+<input id="filter" placeholder="Filter  (press /)" autocomplete="off">
+<div class="jumps"><a href="#top">Front matter</a><a href="#index">Code index</a></div>
+<ul class="tree">
+<li class="grouphead">The Docket</li>
+<li class="doc"><wa-details class="docd" summary=""><span slot="summary" class="dsum"><span class="dlab"><small>Why</small><b>Gameplan.md</b></span></span>
+<a class="jump" href="#gameplan">Open this document</a>
+<ul class="heads">
+<li><a href="#gameplan-g-intention">G — Intention</a></li>
+<ul>
+<li><a href="#gameplan-ga-what-this-is">GA — What this is</a></li>
+<li><a href="#gameplan-gb-what-this-is-not">GB — What this is not</a></li>
+<li><a href="#gameplan-gc-who-it-is-for">GC — Who it is for</a></li>
+</ul>
+<li><a href="#gameplan-gd-platform">GD — Platform</a></li>
+<ul>
+<li><a href="#gameplan-the-questions-to-ask">The questions to ask</a></li>
+</ul>
+<li><a href="#gameplan-h-principles">H — Principles</a></li>
+<ul>
+<li><a href="#gameplan-ha-measure-before-asserting">HA — Measure before asserting</a></li>
+<li><a href="#gameplan-hb-verify-the-artefact-not-the-source">HB — Verify the artefact, not the source</a></li>
+<li><a href="#gameplan-hc-honest-surfaces">HC — Honest surfaces</a></li>
+</ul>
+<li><a href="#gameplan-k-standing-decisions">K — Standing decisions</a></li>
+</ul>
+</wa-details></li>
+<li class="doc"><wa-details class="docd" summary=""><span slot="summary" class="dsum"><span class="dlab"><small>What</small><b>features_and_functions.md</b></span></span>
+<a class="jump" href="#features">Open this document</a>
+<ul class="heads">
+<li><a href="#features-the-code-system">The code system</a></li>
+<li><a href="#features-m-mechanical">M — Mechanical</a></li>
+<ul>
+<li><a href="#features-ma-cradle-and-rollers">MA — Cradle and rollers</a></li>
+<li><a href="#features-mb-frame-and-drive">MB — Frame and drive</a></li>
+</ul>
+<li><a href="#features-b-barrel">B — Barrel</a></li>
+<ul>
+<li><a href="#features-ba-barrel-body">BA — Barrel body</a></li>
+<li><a href="#features-bb-liner">BB — Liner</a></li>
+<li><a href="#features-bc-lid">BC — Lid</a></li>
+</ul>
+<li><a href="#features-e-electronics">E — Electronics</a></li>
+<ul>
+<li><a href="#features-ea-motor-driver-and-supply">EA — Motor, driver and supply</a></li>
+<li><a href="#features-eb-sensing">EB — Sensing</a></li>
+</ul>
+<li><a href="#features-f-firmware">F — Firmware</a></li>
+<ul>
+<li><a href="#features-fa-pico-route-raspberry-pi-pico-tmc2209">FA — Pico route (Raspberry Pi Pico + TMC2209)</a></li>
+<li><a href="#features-fb-arduino-route-unonano-any-stepdir-driver">FB — Arduino route (Uno/Nano + any STEP/DIR driver)</a></li>
+<li><a href="#features-fc-behaviour-both-routes-share">FC — Behaviour both routes share</a></li>
+<li><a href="#features-fd-calibration">FD — Calibration</a></li>
+</ul>
+<li><a href="#features-t-tools-and-verification">T — Tools and verification</a></li>
+<ul>
+<li><a href="#features-ta-calculators">TA — Calculators</a></li>
+<li><a href="#features-tb-verification">TB — Verification</a></li>
+</ul>
+<li><a href="#features-p-process">P — Process</a></li>
+<ul>
+<li><a href="#features-pa-running-a-batch">PA — Running a batch</a></li>
+</ul>
+<li><a href="#features-x-experiments">X — Experiments</a></li>
+<ul>
+<li><a href="#features-xa-simulation">XA — Simulation</a></li>
+<li><a href="#features-xb-measurement">XB — Measurement</a></li>
+<li><a href="#features-xc-other-machines">XC — Other machines</a></li>
+</ul>
+</ul>
+</wa-details></li>
+<li class="doc"><wa-details class="docd" summary=""><span slot="summary" class="dsum"><span class="dlab"><small>What order</small><b>critical_path.md</b></span><span class="chips"><wa-badge class="chip amber" variant="warning" pill title="1 needed soon">1</wa-badge></span></span>
+<a class="jump" href="#path">Open this document</a>
+<ul class="heads">
+<li><a href="#path-the-chart">The chart<span class="chips"><wa-badge class="chip amber" variant="warning" pill title="1 needed soon">1</wa-badge></span></a></li>
+<li><a href="#path-decisions-answer-before-or-alongside-column-1">Decisions — answer before or alongside column 1</a></li>
+<li><a href="#path-column-1-startable-today">Column 1 — startable today</a></li>
+<li><a href="#path-column-2-the-print-set">Column 2 — the print set</a></li>
+<li><a href="#path-column-3-mechanical">Column 3 — mechanical</a></li>
+<li><a href="#path-column-4-drive">Column 4 — drive</a></li>
+<li><a href="#path-column-5-instrumentation">Column 5 — instrumentation</a></li>
+<li><a href="#path-column-6-first-batch">Column 6 — first batch</a></li>
+<li><a href="#path-risks-worth-watching">Risks worth watching</a></li>
+<li><a href="#path-reading-the-chart">Reading the chart</a></li>
+</ul>
+</wa-details></li>
+<li class="doc"><wa-details class="docd" open summary=""><span slot="summary" class="dsum"><span class="dlab"><small>Unsettled</small><b>open_questions.md</b></span><span class="chips"><wa-badge class="chip red" variant="danger" pill title="2 blocking">2</wa-badge><wa-badge class="chip amber" variant="warning" pill title="2 needed soon">2</wa-badge></span></span>
+<a class="jump" href="#questions">Open this document</a>
+<ul class="heads">
+<li><a href="#questions-how-this-works">How this works<span class="chips"><wa-badge class="chip red" variant="danger" pill title="1 blocking">1</wa-badge><wa-badge class="chip amber" variant="warning" pill title="1 needed soon">1</wa-badge></span></a></li>
+<li><a href="#questions-blocking"><span class="g">🔴</span>Blocking<span class="chips"><wa-badge class="chip red" variant="danger" pill title="1 blocking">1</wa-badge></span></a></li>
+<li><a href="#questions-needed-soon"><span class="g">🟡</span>Needed soon<span class="chips"><wa-badge class="chip amber" variant="warning" pill title="1 needed soon">1</wa-badge></span></a></li>
+<ul>
+<li><a href="#questions-q-01-which-barrel">Q-01 — Which barrel?</a></li>
+<li><a href="#questions-q-02-which-stepper-driver-board-will-you-use">Q-02 — Which stepper driver board will you use?</a></li>
+<li><a href="#questions-q-04-pico-or-arduino">Q-04 — Pico or Arduino?</a></li>
+</ul>
+<li><a href="#questions-whenever"><span class="g">⚪</span>Whenever</a></li>
+<ul>
+<li><a href="#questions-q-03-12-v-or-24-v-supply">Q-03 — 12 V or 24 V supply?</a></li>
+<li><a href="#questions-q-05-should-the-tumbler-stay-in-homebase">Q-05 — Should the tumbler stay in homebase?</a></li>
+<li><a href="#questions-q-06-three-files-were-left-outside-the-docket">Q-06 — Three files were left outside the Docket</a></li>
+<li><a href="#questions-q-07-should-the-console-show-anything-of-the-tumblers-own">Q-07 — Should the console show anything of the tumbler&#x27;s own?</a></li>
+</ul>
+<li><a href="#questions-answered">Answered</a></li>
+</ul>
+</wa-details></li>
+<li class="doc"><wa-details class="docd" summary=""><span slot="summary" class="dsum"><span class="dlab"><small>How</small><b>development_plan.md</b></span></span>
+<a class="jump" href="#devplan">Open this document</a>
+<ul class="heads">
+<li><a href="#devplan-layout">Layout</a></li>
+<li><a href="#devplan-one-model-computed-twice">One model, computed twice</a></li>
+<li><a href="#devplan-decisions-with-a-technical-shape">Decisions with a technical shape</a></li>
+<ul>
+<li><a href="#devplan-fa1-why-the-pico-route-uses-vactual">FA1 — Why the Pico route uses VACTUAL</a></li>
+<li><a href="#devplan-fb1-why-the-arduino-route-uses-timer1-on-d9">FB1 — Why the Arduino route uses Timer1 on D9</a></li>
+<li><a href="#devplan-fb2-why-the-odometer-is-a-ring-in-eeprom">FB2 — Why the odometer is a ring in EEPROM</a></li>
+<li><a href="#devplan-fb3-why-integer-arithmetic-and-wrap-safe-timing">FB3 — Why integer arithmetic and wrap-safe timing</a></li>
+<li><a href="#devplan-fc3-how-slip-is-measured">FC3 — How slip is measured</a></li>
+<li><a href="#devplan-bb3-how-the-rubber-sheet-is-held-without-adhesive">BB3 — How the rubber sheet is held without adhesive</a></li>
+</ul>
+<li><a href="#devplan-verification">Verification</a></li>
+</ul>
+</wa-details></li>
+<li class="doc"><wa-details class="docd" summary=""><span slot="summary" class="dsum"><span class="dlab"><small>When</small><b>CHANGELOG.md</b></span></span>
+<a class="jump" href="#changelog">Open this document</a>
+<ul class="heads">
+<li><a href="#changelog-060-2026-09-22-the-docket-adopted">0.6.0 — 2026-09-22 — The Docket adopted</a></li>
+<li><a href="#changelog-051-2026-09-21-project-state-documented-0ec8a74">0.5.1 — 2026-09-21 — Project state documented · 0ec8a74</a></li>
+<li><a href="#changelog-050-2026-09-21-cad-rendered-for-the-first-time-63577c9">0.5.0 — 2026-09-21 — CAD rendered for the first time · 63577c9</a></li>
+<li><a href="#changelog-040-2026-09-21-rubber-sheet-option-327b8ec">0.4.0 — 2026-09-21 — Rubber sheet option · 327b8ec</a></li>
+<li><a href="#changelog-030-2026-09-20-lifter-bar-liner-2e2ef5f">0.3.0 — 2026-09-20 — Lifter-bar liner · 2e2ef5f</a></li>
+<li><a href="#changelog-022-2026-09-20-build-or-buy-analysis-980e4a3">0.2.2 — 2026-09-20 — Build-or-buy analysis · 980e4a3</a></li>
+<li><a href="#changelog-021-2026-09-19-working-notes-8b99e5e">0.2.1 — 2026-09-19 — Working notes · 8b99e5e</a></li>
+<li><a href="#changelog-020-2026-09-19-arduino-route-ec40f3b">0.2.0 — 2026-09-19 — Arduino route · ec40f3b</a></li>
+<li><a href="#changelog-010-2026-09-19-first-design-45a32a1">0.1.0 — 2026-09-19 — First design · 45a32a1</a></li>
+</ul>
+</wa-details></li>
+<li class="doc"><wa-details class="docd" summary=""><span slot="summary" class="dsum"><span class="dlab"><small>What broke</small><b>lessons_learned.md</b></span></span>
+<a class="jump" href="#lessons">Open this document</a>
+<ul class="heads">
+<li><a href="#lessons-verification">Verification</a></li>
+<li><a href="#lessons-le-01-a-structural-check-is-not-a-syntax-check">LE-01 — A structural check is not a syntax check</a></li>
+<li><a href="#lessons-le-02-cross-language-muscle-memory-is-the-dangerous-kind">LE-02 — Cross-language muscle memory is the dangerous kind</a></li>
+<li><a href="#lessons-le-03-a-test-that-can-only-report-success-is-not-a-test">LE-03 — A test that can only report success is not a test</a></li>
+<li><a href="#lessons-le-04-identical-results-from-different-tests-are-a-smell">LE-04 — Identical results from different tests are a smell</a></li>
+<li><a href="#lessons-le-05-grep--i-error-matches-noerror">LE-05 — grep -i error matches NoError</a></li>
+<li><a href="#lessons-le-06-empty-output-is-not-the-same-as-no-output">LE-06 — Empty output is not the same as no output</a></li>
+<li><a href="#lessons-le-07-two-independent-implementations-agreeing-is-real-evidence">LE-07 — Two independent implementations agreeing is real evidence</a></li>
+<li><a href="#lessons-le-08-validate-the-model-against-something-real-before-writing-any-code">LE-08 — Validate the model against something real before writing any code</a></li>
+<li><a href="#lessons-designing-for-the-long-run">Designing for the long run</a></li>
+<li><a href="#lessons-le-09-systems-that-run-for-weeks-have-their-own-bug-class">LE-09 — Systems that run for weeks have their own bug class</a></li>
+<li><a href="#lessons-le-10-choose-the-dose-variable-the-physics-cares-about">LE-10 — Choose the dose variable the physics cares about</a></li>
+<li><a href="#lessons-le-11-features-couple-across-subsystems-in-ways-you-cannot-anticipate">LE-11 — Features couple across subsystems in ways you cannot anticipate</a></li>
+<li><a href="#lessons-materials-and-sourcing">Materials and sourcing</a></li>
+<li><a href="#lessons-le-12-match-the-material-property-to-the-job-not-to-convenience">LE-12 — Match the material property to the job, not to convenience</a></li>
+<li><a href="#lessons-le-13-dont-print-what-you-should-buy">LE-13 — Don&#x27;t print what you should buy</a></li>
+<li><a href="#lessons-le-14-read-the-commercial-product-as-a-design-document">LE-14 — Read the commercial product as a design document</a></li>
+<li><a href="#lessons-le-15-check-marketing-numbers-for-internal-consistency">LE-15 — Check marketing numbers for internal consistency</a></li>
+<li><a href="#lessons-honesty">Honesty</a></li>
+<li><a href="#lessons-le-16-say-plainly-when-the-economics-dont-work">LE-16 — Say plainly when the economics don&#x27;t work</a></li>
+<li><a href="#lessons-le-17-distinguish-committed-from-confirmed">LE-17 — Distinguish &quot;committed&quot; from &quot;confirmed&quot;</a></li>
+<li><a href="#lessons-found-while-adopting-the-docket">Found while adopting the Docket</a></li>
+<li><a href="#lessons-le-18-a-fix-applied-to-one-loop-is-not-a-fix-applied-to-the-harness">LE-18 — A fix applied to one loop is not a fix applied to the harness</a></li>
+</ul>
+</wa-details></li>
+<li class="doc"><wa-details class="docd" summary=""><span slot="summary" class="dsum"><span class="dlab"><small>Settled</small><b>answered_questions.md</b></span></span>
+<a class="jump" href="#answered">Open this document</a>
+</wa-details></li>
+</ul>
+<p class="railkey">A red chip is blocking work now; amber is needed soon. The number is how many sit under that heading.</p>
+</nav><main id='top'>
+<div class="hero"><p class="tag">The Docket &middot; the planning documents</p><h1>A stepper-driven rock tumbler</h1><p class="made">Docket framework 4.2.0 &middot; generated 2026-09-22</p>
+<p>The reasoning behind the code is worth more than the code, and it evaporates
+when a session ends. The Docket exists so that a decision made in conversation —
+in an answer, an aside, a correction, a choice between options — is written down
+in the same turn it is made, in the document that owns it.</p><p>It is built to be read by someone arriving cold: a person, or a fresh Claude
+session with no memory of how any of this came to be.</p>
+<ul class="stats"><li><b>8</b><span>documents</span></li><li><b>38</b><span>codes</span></li><li><b>13</b><span>decisions</span></li><li><b>7</b><span>open questions</span></li><li><b>0</b><span>answered</span></li><li><b>18</b><span>lessons</span></li></ul></div>
+<h2 class="section">How it is kept</h2>
+<p>Loosely after the TASB policy manuals — coded sections, a permanent numbering, and an index that makes a topic followable across every volume that touches it.</p>
+<div class="practice"><b>Codes are permanent.</b> A letter is a domain; each added letter is a level down: <code>C</code> a domain, <code>CA</code> an area within it, <code>CAA</code> a feature, <code>CAAA</code> a detail. A retired feature keeps its code and a new sibling never renumbers its neighbours, so a reference written a year ago still resolves. When a sequence is exhausted it rolls over — <code>KZ</code> is followed by <code>KAA</code>, not by a renumbering.</div>
+<div class="practice"><b>One vocabulary across every document.</b> The same code means the same thing in all eight documents. That is what lets a topic be followed from the decision that created it, through the feature entry, the technical plan, the build it shipped in, and the lesson learned when it broke.</div>
+<div class="practice"><b>Supersede, never delete.</b> A decision that changes keeps its row, struck through, pointing at the one that replaced it and saying what changed. <b>KR</b> and <b>KAA</b> are the worked example: the superseded row is where the reasoning lives, and deleting it would erase the most useful thing in the file.</div>
+<div class="practice"><b>Record the reasoning, not just the outcome.</b> &ldquo;Fluency&rdquo; alone is useless. &ldquo;Fluency, because it names the reader rather than implying the app is hard&rdquo; is the thing worth keeping. Use Bradley's own words where the phrasing itself is the decision, and date everything.</div>
+<div class="practice"><b>Nothing blocks on an unanswered question.</b> Every open question carries a working assumption, so work proceeds while it waits. A question is only genuinely blocking when proceeding on <em>any</em> assumption would waste the work.</div>
+<div class="practice"><b>The cross-reference runs both ways, and is enforced.</b> A question names every code it affects, and each of those codes carries a ❓ marker until it is settled. The invariant — a marker exists if and only if the matching question is unanswered — is checked by <code>scripts/check-docs.sh</code>, the Docket check, rather than by remembering.</div>
+<div class="practice"><b>Separate what is authoritative from what is derived.</b> The feature list says what exists; the critical path says what order to do it in; a chapter gathers reasoning in one place. Only the first is authoritative. When two disagree, the feature list wins — which is stated in both of the others.</div>
+<div class="practice"><b>Mark inference as inference.</b> A decision Bradley stated and a conclusion Claude drew are different kinds of thing, and the difference has to survive the session that made it. If it is unclear whether something was decided, it is filed as a question with a working assumption, never recorded as a decision.</div>
+<h2 class="section">Markers</h2><ul class="markers">
+<li>✅ &nbsp;built</li>
+<li>🔨 &nbsp;in progress</li>
+<li>⬜ &nbsp;planned</li>
+<li>💡 &nbsp;idea, not approved</li>
+<li>❌ &nbsp;decided against</li>
+<li>⚠️ &nbsp;beta-blocking — impedes testing at all</li>
+<li>❓ &nbsp;has an unanswered question attached</li>
+<li>🔴 &nbsp;question: blocking work now</li>
+<li>🟡 &nbsp;question: needed soon</li>
+<li>⚪ &nbsp;question: whenever</li>
+</ul>
+<h2 class="section">Contents</h2>
+<details class="toc" open><summary>Every heading, with what it holds</summary><div class="body">
+<div class="d"><a href="#gameplan">Gameplan.md</a> <span class="codes"><span class="kind">Why</span></span><p>Philosophy, intention and the standing decisions (K) that should not be relitigated without a reason. Bradley&#x27;s document — Claude drafts into it, never over it.</p><ul>
+<li class=""><a href="#gameplan-g-intention">G — Intention</a><em>A two-roller rotary rock tumbler driven by a NEMA 17 stepper motor, plus the toolkit that designs it: a calculator that derives every dimension from tumbling-mill physics, a parametric OpenSCAD model, and two f…</em></li>
+<li class="l3"><a href="#gameplan-ga-what-this-is">GA — What this is</a><em>A two-roller rotary rock tumbler driven by a NEMA 17 stepper motor, plus the toolkit that designs it: a calculator that derives every dimension from tumbling-mill physics, a parametric OpenSCAD model, and two f…</em></li>
+<li class="l3"><a href="#gameplan-gb-what-this-is-not">GB — What this is not</a><em>Not a product. One machine, for the owner&#x27;s bench.</em></li>
+<li class="l3"><a href="#gameplan-gc-who-it-is-for">GC — Who it is for</a><em>The owner, who designs on the Mac and runs the machine in the workshop.</em></li>
+<li class=""><a href="#gameplan-gd-platform">GD — Platform</a><em>What shape this thing is, who can reach it, and where it runs.</em></li>
+<li class="l3"><a href="#gameplan-the-questions-to-ask">The questions to ask</a><em>Ask these at install, and again whenever someone says &quot;can you put this somewhere I can use it?&quot;.</em></li>
+<li class=""><a href="#gameplan-h-principles">H — Principles</a><em>Every number in these documents was checked.</em></li>
+<li class="l3"><a href="#gameplan-ha-measure-before-asserting">HA — Measure before asserting</a><em>Every number in these documents was checked.</em></li>
+<li class="l3"><a href="#gameplan-hb-verify-the-artefact-not-the-source">HB — Verify the artefact, not the source</a><em>Confirm the CAD by running OpenSCAD against it, not by reading it (LE-01).</em></li>
+<li class="l3"><a href="#gameplan-hc-honest-surfaces">HC — Honest surfaces</a><em>Never offer something the system cannot actually do, and never imply a guarantee it cannot keep.</em></li>
+<li class=""><a href="#gameplan-k-standing-decisions">K — Standing decisions</a><em>Decisions that should not be relitigated without a reason.</em></li>
+</ul></div>
+<div class="d"><a href="#features">features_and_functions.md</a> <span class="codes"><span class="kind">What</span></span><p>The canonical list of everything the app does or might do, and the definition of the code system every other document borrows. If this disagrees with another document, this one wins.</p><ul>
+<li class=""><a href="#features-the-code-system">The code system</a><em>A single letter is a domain, a second letter an area within it, and a number the feature.</em></li>
+<li class=""><a href="#features-m-mechanical">M — Mechanical</a><em>🔨 MA1 Cradle geometry: 40° contact angle, 97.7 mm shaft spacing, 58.2 mm barrel ride height for a 112 mm OD barrel on 40 mm rollers.</em></li>
+<li class="l3"><a href="#features-ma-cradle-and-rollers">MA — Cradle and rollers</a><em>🔨 MA1 Cradle geometry: 40° contact angle, 97.7 mm shaft spacing, 58.2 mm barrel ride height for a 112 mm OD barrel on 40 mm rollers.</em></li>
+<li class="l3"><a href="#features-mb-frame-and-drive">MB — Frame and drive</a><em>🔨 MB1 End plates with bearing pockets cut at the computed spacing (BRG_POCKET_FIT 0.15 mm, never tested against a real printer).</em></li>
+<li class=""><a href="#features-b-barrel">B — Barrel</a><em>⬜ BA1 4-inch PVC DWV pipe with a threaded cleanout plug, lined per BB.</em></li>
+<li class="l3"><a href="#features-ba-barrel-body">BA — Barrel body</a><em>⬜ BA1 4-inch PVC DWV pipe with a threaded cleanout plug, lined per BB.</em></li>
+<li class="l3"><a href="#features-bb-liner">BB — Liner</a><em>🔨 BB1 Hexagonal TPU liner, about 6.1 mm of gradual lift.</em></li>
+<li class="l3"><a href="#features-bc-lid">BC — Lid</a><em>💡 BC1 Compression lid: a disc drawn onto a rubber flange by a central wing nut, keeping threads out of the grit path</em></li>
+<li class=""><a href="#features-e-electronics">E — Electronics</a><em>🔨 EA1 NEMA 17 at ~169 rpm, ~11 N·cm demand against 40–50 available.</em></li>
+<li class="l3"><a href="#features-ea-motor-driver-and-supply">EA — Motor, driver and supply</a><em>🔨 EA1 NEMA 17 at ~169 rpm, ~11 N·cm demand against 40–50 available.</em></li>
+<li class="l3"><a href="#features-eb-sensing">EB — Sensing</a><em>⬜ EB1 Hall sensor (A3144) on the frame, magnet on the barrel end cap: exactly one pulse per revolution.</em></li>
+<li class=""><a href="#features-f-firmware">F — Firmware</a><em>🔨 FA1 TMC2209 single-wire UART driver using VACTUAL, the chip&#x27;s internal step generator.</em></li>
+<li class="l3"><a href="#features-fa-pico-route-raspberry-pi-pico-tmc2209">FA — Pico route (Raspberry Pi Pico + TMC2209)</a><em>🔨 FA1 TMC2209 single-wire UART driver using VACTUAL, the chip&#x27;s internal step generator.</em></li>
+<li class="l3"><a href="#features-fb-arduino-route-unonano-any-stepdir-driver">FB — Arduino route (Uno/Nano + any STEP/DIR driver)</a><em>🔨 FB1 Timer1 CTC hardware step generation on D9 (KI).</em></li>
+<li class="l3"><a href="#features-fc-behaviour-both-routes-share">FC — Behaviour both routes share</a><em>🔨 FC1 Stage targets measured in barrel revolutions (KA) - 🔨 FC2 Direction reversal every six hours through a controlled stop - 🔨 FC3 Slip detection: commanded against measured revolutions, with a warning at 15%…</em></li>
+<li class="l3"><a href="#features-fd-calibration">FD — Calibration</a><em>⬜ FD1 Trim f_clk (Pico) or TARGET_RPM_X10 (Arduino) against a stopwatch count of barrel revolutions</em></li>
+<li class=""><a href="#features-t-tools-and-verification">T — Tools and verification</a><em>✅ TA1 tools/tumbler_calc.py: barrel speed from critical speed, cradle geometry, torque, step rate, VACTUAL.</em></li>
+<li class="l3"><a href="#features-ta-calculators">TA — Calculators</a><em>✅ TA1 tools/tumbler_calc.py: barrel speed from critical speed, cradle geometry, torque, step rate, VACTUAL.</em></li>
+<li class="l3"><a href="#features-tb-verification">TB — Verification</a><em>✅ TB1 tools/render.sh: parses the CAD with OpenSCAD, exports every part as a manifold STL, runs interference tests with a control, and writes renders.</em></li>
+<li class=""><a href="#features-p-process">P — Process</a><em>⬜ PA1 Four grit stages, 600,000 revolutions each: 60/90 SiC, 120/220 SiC, 500 pre-polish, cerium oxide - ⬜ PA2 Loading rules: barrel ⅔–¾ full, one rock hardness per batch, water just below the top of the load,…</em></li>
+<li class="l3"><a href="#features-pa-running-a-batch">PA — Running a batch</a><em>⬜ PA1 Four grit stages, 600,000 revolutions each: 60/90 SiC, 120/220 SiC, 500 pre-polish, cerium oxide - ⬜ PA2 Loading rules: barrel ⅔–¾ full, one rock hardness per batch, water just below the top of the load,…</em></li>
+<li class=""><a href="#features-x-experiments">X — Experiments</a><em>💡 XA1 Blender rigid-body simulation of the charge.</em></li>
+<li class="l3"><a href="#features-xa-simulation">XA — Simulation</a><em>💡 XA1 Blender rigid-body simulation of the charge.</em></li>
+<li class="l3"><a href="#features-xb-measurement">XB — Measurement</a><em>💡 XB1 Dose–finish curves: stop batches at 300, 450, 600 and 750 thousand revolutions and measure the finish - 💡 XB2 Acoustic monitoring: tune the speed until an FFT of the barrel&#x27;s sound says &quot;cascading&quot;</em></li>
+<li class="l3"><a href="#features-xc-other-machines">XC — Other machines</a><em>💡 XC1 Direct barrel drive: the stepper coupled straight to a barrel shaft, which eliminates slip - 💡 XC2 Vibratory conversion: off-centre masses on the steppers already owned</em></li>
+</ul></div>
+<div class="d"><a href="#path">critical_path.md</a> <span class="codes"><span class="kind">What order</span></span><p>What can be started today and what is waiting on what. Derived from the feature list, never authoritative over it.</p><ul>
+<li class=""><a href="#path-the-chart">The chart</a><em>graph LR subgraph DECIDE[&quot;🟡 Decisions — one sentence each&quot;] Q01[Q-01 barrel route] Q02[Q-02 driver board] Q03[Q-03 supply voltage] Q04[Q-04 Pico or Arduino] end subgraph C1[&quot;Column 1 — startable today&quot;] TEST[To…</em></li>
+<li class=""><a href="#path-decisions-answer-before-or-alongside-column-1">Decisions — answer before or alongside column 1</a><em>Each carries a working assumption in open_questions.md, so none of them stops column 1.</em></li>
+<li class=""><a href="#path-column-1-startable-today">Column 1 — startable today</a><em>Needs the test print and Q-01.</em></li>
+<li class=""><a href="#path-column-2-the-print-set">Column 2 — the print set</a><em>Needs the test print and Q-01.</em></li>
+<li class=""><a href="#path-column-3-mechanical">Column 3 — mechanical</a><em>Needs Q-02 and Q-04.</em></li>
+<li class=""><a href="#path-column-4-drive">Column 4 — drive</a><em>Needs Q-02 and Q-04.</em></li>
+<li class=""><a href="#path-column-5-instrumentation">Column 5 — instrumentation</a><em>This is the part that makes it worth building rather than buying.</em></li>
+<li class=""><a href="#path-column-6-first-batch">Column 6 — first batch</a><em>A column is a to-do list, not a sprint. - A decision node is the cheapest thing on the chart.</em></li>
+<li class=""><a href="#path-risks-worth-watching">Risks worth watching</a><em>A column is a to-do list, not a sprint. - A decision node is the cheapest thing on the chart.</em></li>
+<li class=""><a href="#path-reading-the-chart">Reading the chart</a><em>A column is a to-do list, not a sprint. - A decision node is the cheapest thing on the chart.</em></li>
+</ul></div>
+<div class="d"><a href="#questions">open_questions.md</a> <span class="codes"><span class="kind">Unsettled</span></span><p>Everything waiting on Bradley, each with a working assumption so nothing blocks while it waits. Answered entries stay, with the answer.</p><ul>
+<li class=""><a href="#questions-how-this-works">How this works</a><em>The agent files here without being asked.</em></li>
+<li class=""><a href="#questions-blocking">🔴 Blocking</a><em>None open. The first physical step, a single test print of one roller hub and one end plate, needs none of the answers below.</em></li>
+<li class=""><a href="#questions-needed-soon">🟡 Needed soon</a><em>Raised: 2026-09-21 (in WHATS_NEXT.md), filed 2026-09-22 · Affects: BA1, BA2, BB2, BB3 · Status: open</em></li>
+<li class="l3"><a href="#questions-q-01-which-barrel">Q-01 — Which barrel?</a><em>Raised: 2026-09-21 (in WHATS_NEXT.md), filed 2026-09-22 · Affects: BA1, BA2, BB2, BB3 · Status: open</em></li>
+<li class="l3"><a href="#questions-q-02-which-stepper-driver-board-will-you-use">Q-02 — Which stepper driver board will you use?</a><em>Raised: 2026-09-21 (in WHATS_NEXT.md), filed 2026-09-22 · Affects: EA2 · Status: open</em></li>
+<li class="l3"><a href="#questions-q-04-pico-or-arduino">Q-04 — Pico or Arduino?</a><em>Raised: 2026-09-21 (in WHATS_NEXT.md), filed 2026-09-22 · Affects: FA1, FA2, FB1, FB2 · Status: open</em></li>
+<li class=""><a href="#questions-whenever">⚪ Whenever</a><em>Raised: 2026-09-21 (in WHATS_NEXT.md), filed 2026-09-22 · Affects: EA4 · Status: open</em></li>
+<li class="l3"><a href="#questions-q-03-12-v-or-24-v-supply">Q-03 — 12 V or 24 V supply?</a><em>Raised: 2026-09-21 (in WHATS_NEXT.md), filed 2026-09-22 · Affects: EA4 · Status: open</em></li>
+<li class="l3"><a href="#questions-q-05-should-the-tumbler-stay-in-homebase">Q-05 — Should the tumbler stay in homebase?</a><em>Raised: 2026-09-21, filed 2026-09-22 · Affects: where the project lives · Status: open</em></li>
+<li class="l3"><a href="#questions-q-06-three-files-were-left-outside-the-docket">Q-06 — Three files were left outside the Docket</a><em>Raised: 2026-09-22 · Affects: adoption · Status: open</em></li>
+<li class="l3"><a href="#questions-q-07-should-the-console-show-anything-of-the-tumblers-own">Q-07 — Should the console show anything of the tumbler&#x27;s own?</a><em>Raised: 2026-09-22 · Affects: the Docket console · Status: open</em></li>
+<li class=""><a href="#questions-answered">Answered</a><em>Settled questions move to answered_questions.md.</em></li>
+</ul></div>
+<div class="d"><a href="#devplan">development_plan.md</a> <span class="codes"><span class="kind">How</span></span><p>The technical record — architecture, file map, and the reasoning behind specific implementation choices.</p><ul>
+<li class=""><a href="#devplan-layout">Layout</a><em>VERSION the project version: the one constant (TB4) tools/tumbler_calc.py barrel speed, cradle geometry, torque, VACTUAL TA1 tools/timer1_calc.py AVR Timer1 arithmetic and failure demos TA2</em></li>
+<li class=""><a href="#devplan-one-model-computed-twice">One model, computed twice</a><em>The physical model lives in two places on purpose: tools/tumbler_calc.py computes the build sheet, and cad/tumbler.scad computes the same geometry to cut the parts.</em></li>
+<li class=""><a href="#devplan-decisions-with-a-technical-shape">Decisions with a technical shape</a><em>The TMC2209 has an internal step generator: write a velocity to register 0x22 and it spins indefinitely with no step pulses from the controller.</em></li>
+<li class="l3"><a href="#devplan-fa1-why-the-pico-route-uses-vactual">FA1 — Why the Pico route uses VACTUAL</a><em>The TMC2209 has an internal step generator: write a velocity to register 0x22 and it spins indefinitely with no step pulses from the controller.</em></li>
+<li class="l3"><a href="#devplan-fb1-why-the-arduino-route-uses-timer1-on-d9">FB1 — Why the Arduino route uses Timer1 on D9</a><em>See KI. Timer1 in CTC mode toggles OC1A in hardware: f = F_CPU / (2·N·(1 + OCR1A)).</em></li>
+<li class="l3"><a href="#devplan-fb2-why-the-odometer-is-a-ring-in-eeprom">FB2 — Why the odometer is a ring in EEPROM</a><em>EEPROM endures ~100,000 writes per cell. Saving every 500 revolutions is ~4,800 writes a campaign, which would wear out a fixed cell in about twenty campaigns.</em></li>
+<li class="l3"><a href="#devplan-fb3-why-integer-arithmetic-and-wrap-safe-timing">FB3 — Why integer arithmetic and wrap-safe timing</a><em>See KJ and LE-09. Dose is runSec × rpm_x10 / 600, peaking near 3.6 × 10⁸, inside a uint32_t.</em></li>
+<li class="l3"><a href="#devplan-fc3-how-slip-is-measured">FC3 — How slip is measured</a><em>Expected revolutions come from commanded motion; measured revolutions come from the hall sensor (EB1).</em></li>
+<li class="l3"><a href="#devplan-bb3-how-the-rubber-sheet-is-held-without-adhesive">BB3 — How the rubber sheet is held without adhesive</a><em>RUBBER_T shrinks both liners&#x27; outer radius by the sheet thickness, so the printed sleeve&#x27;s own springiness clamps the rubber against the barrel wall.</em></li>
+<li class=""><a href="#devplan-verification">Verification</a><em>Every check runs without hardware. ./scripts/check-docs.sh runs the ones this Mac can run, and says which it skipped and why.</em></li>
+</ul></div>
+<div class="d"><a href="#changelog">CHANGELOG.md</a> <span class="codes"><span class="kind">When</span></span><p>What shipped, in which build, and what it fixed.</p><ul>
+<li class=""><a href="#changelog-060-2026-09-22-the-docket-adopted">0.6.0 — 2026-09-22 — The Docket adopted</a><em>Adopted the Docket documentation framework (4.2.0) in place: Gameplan.md, features_and_functions.md, development_plan.md, critical_path.md, open_questions.md, answered_questions.md, chapters/, this changelog,</em></li>
+<li class=""><a href="#changelog-051-2026-09-21-project-state-documented-0ec8a74">0.5.1 — 2026-09-21 — Project state documented · 0ec8a74</a><em>WHATS_NEXT.md (the phased plan, four decisions, risks) and LESSONS_LEARNED.md (seventeen lessons) written.</em></li>
+<li class=""><a href="#changelog-050-2026-09-21-cad-rendered-for-the-first-time-63577c9">0.5.0 — 2026-09-21 — CAD rendered for the first time · 63577c9</a><em>OpenSCAD run against cad/tumbler.scad for the first time.</em></li>
+<li class=""><a href="#changelog-040-2026-09-21-rubber-sheet-option-327b8ec">0.4.0 — 2026-09-21 — Rubber sheet option · 327b8ec</a><em>RUBBER_T: a rubber sheet sits behind either printed liner, held without adhesive (BB3).</em></li>
+<li class=""><a href="#changelog-030-2026-09-20-lifter-bar-liner-2e2ef5f">0.3.0 — 2026-09-20 — Lifter-bar liner · 2e2ef5f</a><em>Symmetric lifter-bar liner alongside the hexagonal one (BB2, KG).</em></li>
+<li class=""><a href="#changelog-022-2026-09-20-build-or-buy-analysis-980e4a3">0.2.2 — 2026-09-20 — Build-or-buy analysis · 980e4a3</a><em>Honest cost comparison against commercial machines; recommendation to buy the barrel (KH, KK).</em></li>
+<li class=""><a href="#changelog-021-2026-09-19-working-notes-8b99e5e">0.2.1 — 2026-09-19 — Working notes · 8b99e5e</a><em>CLAUDE.md added so a fresh session inherits the project&#x27;s context.</em></li>
+<li class=""><a href="#changelog-020-2026-09-19-arduino-route-ec40f3b">0.2.0 — 2026-09-19 — Arduino route · ec40f3b</a><em>Arduino firmware for any STEP/DIR driver: Timer1 hardware stepping on D9 (FB1, KI), EEPROM ring odometer (FB2), wrap-safe timing and integer dose arithmetic (FB3, KJ).</em></li>
+<li class=""><a href="#changelog-010-2026-09-19-first-design-45a32a1">0.1.0 — 2026-09-19 — First design · 45a32a1</a><em>Design calculator (TA1), parametric OpenSCAD model, and the Pico + TMC2209 firmware (FA1, FA2) with revolution dosing, reversal and slip detection.</em></li>
+</ul></div>
+<div class="d"><a href="#lessons">lessons_learned.md</a> <span class="codes"><span class="kind">What broke</span></span><p>Traps already hit (LE-nn), and how each one hid. The ones worth reading twice produced *plausible wrong output* rather than a crash.</p><ul>
+<li class=""><a href="#lessons-verification">Verification</a><em>Gate: tools/render.sh parses the file with OpenSCAD itself; check-docs.sh runs it whenever OpenSCAD is installed.</em></li>
+<li class=""><a href="#lessons-le-01-a-structural-check-is-not-a-syntax-check">LE-01 — A structural check is not a syntax check</a><em>Gate: tools/render.sh parses the file with OpenSCAD itself; check-docs.sh runs it whenever OpenSCAD is installed.</em></li>
+<li class=""><a href="#lessons-le-02-cross-language-muscle-memory-is-the-dangerous-kind">LE-02 — Cross-language muscle memory is the dangerous kind</a><em>The parse failure was this:</em></li>
+<li class=""><a href="#lessons-le-03-a-test-that-can-only-report-success-is-not-a-test">LE-03 — A test that can only report success is not a test</a><em>Gate: the self-intersection control in tools/render.sh, which must come back non-empty or the whole run fails.</em></li>
+<li class=""><a href="#lessons-le-04-identical-results-from-different-tests-are-a-smell">LE-04 — Identical results from different tests are a smell</a><em>The first broken harness reported 16280 facets for two completely different intersections.</em></li>
+<li class=""><a href="#lessons-le-05-grep--i-error-matches-noerror">LE-05 — grep -i error matches NoError</a><em>The validation script marked all six parts as FAILED because OpenSCAD&#x27;s success line is:</em></li>
+<li class=""><a href="#lessons-le-06-empty-output-is-not-the-same-as-no-output">LE-06 — Empty output is not the same as no output</a><em>Gate: partial. tools/render.sh deletes the interference-test target before each run, but its part-export loop does not — a part that rendered empty would be reported ok from the previous run&#x27;s STL.</em></li>
+<li class=""><a href="#lessons-le-07-two-independent-implementations-agreeing-is-real-evidence">LE-07 — Two independent implementations agreeing is real evidence</a><em>Gate: none yet — the agreement was checked by eye.</em></li>
+<li class=""><a href="#lessons-le-08-validate-the-model-against-something-real-before-writing-any-code">LE-08 — Validate the model against something real before writing any code</a><em>Gate: tools/tumbler_calc.py --selftest asserts the 4.5-inch barrel lands at 48–62 rpm; check-docs.sh runs it.</em></li>
+<li class=""><a href="#lessons-designing-for-the-long-run">Designing for the long run</a><em>Gate: tools/timer1_calc.py --selftest demonstrates both failures numerically on every run of check-docs.sh.</em></li>
+<li class=""><a href="#lessons-le-09-systems-that-run-for-weeks-have-their-own-bug-class">LE-09 — Systems that run for weeks have their own bug class</a><em>Gate: tools/timer1_calc.py --selftest demonstrates both failures numerically on every run of check-docs.sh.</em></li>
+<li class=""><a href="#lessons-le-10-choose-the-dose-variable-the-physics-cares-about">LE-10 — Choose the dose variable the physics cares about</a><em>Every tumbling instruction says &quot;run seven days.&quot; Abrasive wear follows Archard&#x27;s law — volume removed is proportional to load × sliding distance — and sliding distance is revolutions, not hours.</em></li>
+<li class=""><a href="#lessons-le-11-features-couple-across-subsystems-in-ways-you-cannot-anticipate">LE-11 — Features couple across subsystems in ways you cannot anticipate</a><em>Direction reversal was added for load packing and even tyre wear — a control decision, in firmware.</em></li>
+<li class=""><a href="#lessons-materials-and-sourcing">Materials and sourcing</a><em>TPU was the obvious liner material: printable, tough, wonderfully abrasion resistant.</em></li>
+<li class=""><a href="#lessons-le-12-match-the-material-property-to-the-job-not-to-convenience">LE-12 — Match the material property to the job, not to convenience</a><em>TPU was the obvious liner material: printable, tough, wonderfully abrasion resistant.</em></li>
+<li class=""><a href="#lessons-le-13-dont-print-what-you-should-buy">LE-13 — Don&#x27;t print what you should buy</a><em>Three reasons not to print the barrel, each sufficient: layer lines leak over a six-week wet run, silicon carbide excavates layer boundaries, and a leaking barrel redistributes abrasive slurry across everything…</em></li>
+<li class=""><a href="#lessons-le-14-read-the-commercial-product-as-a-design-document">LE-14 — Read the commercial product as a design document</a><em>Two Amazon listing images were worth more than an hour of thinking:</em></li>
+<li class=""><a href="#lessons-le-15-check-marketing-numbers-for-internal-consistency">LE-15 — Check marketing numbers for internal consistency</a><em>The barrel claims &quot;up to 75% quieter&quot; and &quot;70 dB → 40 dB&quot; on the same image.</em></li>
+<li class=""><a href="#lessons-honesty">Honesty</a><em>~$60 of parts against a $170–200 finished machine, for fifteen to twenty-five hours of work.</em></li>
+<li class=""><a href="#lessons-le-16-say-plainly-when-the-economics-dont-work">LE-16 — Say plainly when the economics don&#x27;t work</a><em>~$60 of parts against a $170–200 finished machine, for fifteen to twenty-five hours of work.</em></li>
+<li class=""><a href="#lessons-le-17-distinguish-committed-from-confirmed">LE-17 — Distinguish &quot;committed&quot; from &quot;confirmed&quot;</a><em>For four rounds, the CAD was described as verified when it had only been checked.</em></li>
+<li class=""><a href="#lessons-found-while-adopting-the-docket">Found while adopting the Docket</a><em>Found 2026-09-22, reading tools/render.sh to verify a claim about it.</em></li>
+<li class=""><a href="#lessons-le-18-a-fix-applied-to-one-loop-is-not-a-fix-applied-to-the-harness">LE-18 — A fix applied to one loop is not a fix applied to the harness</a><em>Found 2026-09-22, reading tools/render.sh to verify a claim about it.</em></li>
+</ul></div>
+<div class="d"><a href="#answered">answered_questions.md</a> <span class="codes"><span class="kind">Settled</span></span><p>Questions asked and answered, with the answer and a pointer to where the decision was recorded. Nothing is ever deleted.</p><ul>
+</ul></div>
+</div></details>
+<h2 class="section" id="index">The code index</h2>
+<p>Every code the Docket defines, and every document that mentions it. This is what the shared vocabulary buys: a topic followed across all eight documents.</p>
+<ul class="ctree">
+<li class="root"><div class="row"><span class="c">K</span><span class="m">Standing decisions — Gameplan K</span><span class="w"></span></div>
+<ul>
+<li class=""><div class="row"><span class="c">KA</span><span class="m">Barrel revolutions are the dose, not elapsed days. Grit stages are specified as revolution targets (600,000 each).</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#changelog">When</a><a href="#answered">Settled</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">KB</span><span class="m">Barrel speed is 35–50% of critical speed; 45% by default. N_crit = 42.3/√D, D in metres.</span><span class="w"><a href="#gameplan">Why</a><a href="#devplan">How</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">KC</span><span class="m">Structural prints are PETG or ASA, never PLA.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">KD</span><span class="m">Rollers are 40 mm in diameter.</span><span class="w"><a href="#gameplan">Why</a><a href="#devplan">How</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">KE</span><span class="m">Driver current runs low, about 0.4–0.6 A per phase, set by winding down until a full barrel fails to start and adding 30% back.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">KF</span><span class="m">The firmware never auto-advances between grit stages. It stops at the target and waits.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">KG</span><span class="m">Lifter bars are symmetric trapezoids, not the asymmetric scoop commercial barrels use.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#changelog">When</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">KH</span><span class="m">Do not print the barrel. Buy one, or use PVC or HDPE with a printed liner.</span><span class="w"><a href="#gameplan">Why</a><a href="#changelog">When</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">KI</span><span class="m">On Arduino, steps come from Timer1 in CTC mode toggling OC1A, which is pin D9. Not AccelStepper; and D9 cannot be reassigned.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#devplan">How</a><a href="#changelog">When</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">KJ</span><span class="m">All AVR dose arithmetic is integer, and all timing uses (uint32_t)(now - then) &gt;= gap.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#devplan">How</a><a href="#changelog">When</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">KK</span><span class="m">Built for fun and for the instrumentation, not to save money.</span><span class="w"><a href="#gameplan">Why</a><a href="#changelog">When</a><a href="#answered">Settled</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">KL</span><span class="m">Local only. Nothing is hosted. Design on the Mac; the machine runs on a microcontroller on the bench.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#changelog">When</a><a href="#answered">Settled</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">KM</span><span class="m">The Docket&#x27;s seven domains are M Mechanical, B Barrel, E Electronics, F Firmware, T Tools &amp; verification, P Process, X Experiments.</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#changelog">When</a><a href="#answered">Settled</a></span></div>
+</li>
+</ul>
+</li>
+<li class="root"><div class="row"><span class="c">Q</span><span class="m">Open questions — waiting on Bradley</span><span class="w"></span></div>
+<ul>
+<li class=""><div class="row"><span class="c">Q-01</span><span class="m">Which barrel?</span><span class="w"><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a><a href="#changelog">When</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">Q-02</span><span class="m">Which stepper driver board will you use?</span><span class="w"><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">Q-03</span><span class="m">12 V or 24 V supply?</span><span class="w"><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">Q-04</span><span class="m">Pico or Arduino?</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#path">What order</a><a href="#questions">Unsettled</a><a href="#changelog">When</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">Q-05</span><span class="m">Should the tumbler stay in homebase?</span><span class="w"><a href="#questions">Unsettled</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">Q-06</span><span class="m">Three files were left outside the Docket</span><span class="w"><a href="#questions">Unsettled</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">Q-07</span><span class="m">Should the console show anything of the tumbler&#x27;s own?</span><span class="w"><a href="#questions">Unsettled</a></span></div>
+</li>
+</ul>
+</li>
+<li class="root"><div class="row"><span class="c">LE</span><span class="m">Lessons learned — traps already hit</span><span class="w"></span></div>
+<ul>
+<li class=""><div class="row"><span class="c">LE-01</span><span class="m">A structural check is not a syntax check</span><span class="w"><a href="#gameplan">Why</a><a href="#changelog">When</a><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-02</span><span class="m">Cross-language muscle memory is the dangerous kind</span><span class="w"><a href="#changelog">When</a><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-03</span><span class="m">A test that can only report success is not a test</span><span class="w"><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-04</span><span class="m">Identical results from different tests are a smell</span><span class="w"><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-05</span><span class="m">grep -i error matches NoError</span><span class="w"><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-06</span><span class="m">Empty output is not the same as no output</span><span class="w"><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-07</span><span class="m">Two independent implementations agreeing is real evidence</span><span class="w"><a href="#features">What</a><a href="#path">What order</a><a href="#devplan">How</a><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-08</span><span class="m">Validate the model against something real before writing any code</span><span class="w"><a href="#gameplan">Why</a><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-09</span><span class="m">Systems that run for weeks have their own bug class</span><span class="w"><a href="#gameplan">Why</a><a href="#devplan">How</a><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-10</span><span class="m">Choose the dose variable the physics cares about</span><span class="w"><a href="#gameplan">Why</a><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-11</span><span class="m">Features couple across subsystems in ways you cannot anticipate</span><span class="w"><a href="#gameplan">Why</a><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-12</span><span class="m">Match the material property to the job, not to convenience</span><span class="w"><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-13</span><span class="m">Don&#x27;t print what you should buy</span><span class="w"><a href="#gameplan">Why</a><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-14</span><span class="m">Read the commercial product as a design document</span><span class="w"><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-15</span><span class="m">Check marketing numbers for internal consistency</span><span class="w"><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-16</span><span class="m">Say plainly when the economics don&#x27;t work</span><span class="w"><a href="#gameplan">Why</a><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-17</span><span class="m">Distinguish &quot;committed&quot; from &quot;confirmed&quot;</span><span class="w"><a href="#gameplan">Why</a><a href="#features">What</a><a href="#changelog">When</a><a href="#lessons">What broke</a></span></div>
+</li>
+<li class=""><div class="row"><span class="c">LE-18</span><span class="m">A fix applied to one loop is not a fix applied to the harness</span><span class="w"><a href="#features">What</a><a href="#changelog">When</a><a href="#lessons">What broke</a></span></div>
+</li>
+</ul>
+</li>
+</ul>
+<article id="gameplan"><div class="head"><b>Gameplan.md</b><span>Why</span></div>
+<h1>Rock tumbler — Gameplan</h1>
+<p><strong>Why this exists, and what has been settled.</strong> This document belongs to the
+owner. The agent drafts into it and proposes rows; it never rewrites the prose
+or resolves the open questions.</p>
+<hr />
+<h2 id="gameplan-g-intention">G — Intention</h2>
+<h3 id="gameplan-ga-what-this-is">GA — What this is</h3>
+<p>A two-roller rotary rock tumbler driven by a NEMA 17 stepper motor, plus the
+toolkit that designs it: a calculator that derives every dimension from
+tumbling-mill physics, a parametric OpenSCAD model, and two firmware routes
+(Raspberry Pi Pico with a TMC2209 driver, or Arduino with any STEP/DIR driver).</p>
+<p>Its distinguishing idea is <strong>instrumentation</strong>: it counts barrel revolutions
+as the abrasive dose, detects slip, reverses on a schedule, and survives power
+cuts. It was begun on 2026-09-19 with the owner's words <em>"I have a quantity of
+high quality stepper motors, and a 3d printer. Plus other junk. I'd like to
+build my own rock tumbler. For fun."</em></p>
+<p><em>Owner confirmed this reading 2026-09-22.</em></p>
+<h3 id="gameplan-gb-what-this-is-not">GB — What this is not</h3>
+<ul>
+<li><strong>Not a product.</strong> One machine, for the owner's bench.</li>
+<li><strong>Not a money-saver.</strong> Roughly $70–110 of new parts against a $170–200
+  finished machine, for fifteen to twenty-five hours of work
+  (<a href="README.md"><code>README.md</code></a> § <em>Build or buy?</em>). Building it is justified by the
+  instrumentation and by the building, never by the price (<strong>KK</strong>).</li>
+<li><strong>Not hosted.</strong> Nothing about it runs anywhere but the Mac and the bench
+  (<strong>KL</strong>).</li>
+</ul>
+<h3 id="gameplan-gc-who-it-is-for">GC — Who it is for</h3>
+<p>The owner, who designs on the Mac and runs the machine in the workshop.</p>
+<hr />
+<h2 id="gameplan-gd-platform">GD — Platform</h2>
+<p><strong>What shape this thing is, who can reach it, and where it runs.</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Shape</strong></td>
+<td>A physical bench machine with embedded firmware, plus local command-line design tools (Python calculators, an OpenSCAD model, a render/verification script). No web interface of any kind</td>
+</tr>
+<tr>
+<td><strong>Runs on</strong></td>
+<td>Design tools: the owner's Mac. Machine: a Raspberry Pi Pico or an Arduino Uno/Nano in the workshop (❓ which one is open as <strong>Q-04</strong>)</td>
+</tr>
+<tr>
+<td><strong>Reached by</strong></td>
+<td>The owner only</td>
+</tr>
+<tr>
+<td><strong>Holds</strong></td>
+<td>Nothing sensitive: no credentials, keys or personal data</td>
+</tr>
+<tr>
+<td><strong>Today</strong></td>
+<td>Software only. Designed, computed and verified in software; <strong>nothing printed, wired or measured</strong></td>
+</tr>
+<tr>
+<td><strong>Intended</strong></td>
+<td>A running bench machine. Still local-only</td>
+</tr>
+<tr>
+<td><strong>Deploy</strong></td>
+<td>Flash the firmware. Arduino: <code>arduino-cli compile</code> / <code>upload</code> from <code>firmware/arduino/tumbler_uno/</code>. Pico: copy <code>firmware/tmc2209.py</code> and <code>firmware/main.py</code> to the board. <em>Neither has been run yet; write the exact command here the first time it is.</em></td>
+</tr>
+</tbody>
+</table>
+<h3 id="gameplan-the-questions-to-ask">The questions to ask</h3>
+<p>Ask these at install, and again whenever someone says <em>"can you put this
+somewhere I can use it?"</em>. That sentence is a platform change, not a feature.</p>
+<ol>
+<li><strong>What shape is it?</strong> A CLI · a library · a desktop program · a web app · a
+   mobile app · a background service with no interface · a scheduled job · a
+   document generator. Be precise, because the words mislead: <strong>a program that
+   serves <code>127.0.0.1</code> is a local tool wearing a web coat, not a website.</strong></li>
+<li><strong>Who can reach it, and from where?</strong> Only the person who runs it · anyone on
+   the home or office network · a named handful of people over the internet ·
+   the public. Each step outward is a different security problem, not a bigger
+   version of the same one.</li>
+<li><strong>Where does it run today, and where is it meant to run?</strong> Keep these
+   separate.</li>
+<li><strong>What does it hold?</strong> <strong>Anything holding a credential must never be exposed
+   without auth in front of it.</strong></li>
+<li><strong>What happens when it is not running?</strong> Here: nothing. A stage is
+   measured in revolutions, so a stopped machine simply resumes the dose where
+   it left off.</li>
+<li><strong>Who operates it?</strong> The owner.</li>
+</ol>
+<p><strong>The one foreseeable platform change</strong> is remote monitoring: an ESP32
+dashboard for watching a six-week run from a phone (<strong>XB3</strong>). That would move
+<em>Reached by</em> to the home network and is a <strong>K</strong> row and a <strong>GD</strong> edit when it
+happens, not a feature toggle.</p>
+<hr />
+<h2 id="gameplan-h-principles">H — Principles</h2>
+<h3 id="gameplan-ha-measure-before-asserting">HA — Measure before asserting</h3>
+<p>Every number in these documents was checked. The physical model was anchored
+against a real machine before a part was drawn: the critical-speed formula
+predicts 56 rpm for a 4.5-inch barrel, and a Lortone 3A runs 55–60
+(<strong>LE-08</strong>).</p>
+<h3 id="gameplan-hb-verify-the-artefact-not-the-source">HB — Verify the artefact, not the source</h3>
+<p>Confirm the CAD by running OpenSCAD against it, not by reading it (<strong>LE-01</strong>).
+Confirm the step rate on D9 with a scope, not from the arithmetic.</p>
+<h3 id="gameplan-hc-honest-surfaces">HC — Honest surfaces</h3>
+<p>Never offer something the system cannot actually do, and never imply a guarantee
+it cannot keep. Here that means keeping <em>committed</em> and <em>confirmed</em> apart
+(<strong>LE-17</strong>): nothing is called working until it has run.</p>
+<hr />
+<h2 id="gameplan-k-standing-decisions">K — Standing decisions</h2>
+<p>Decisions that should not be relitigated without a reason. <strong>A superseded
+decision keeps its row</strong>; the replacement says what changed.</p>
+<p><em><code>KA</code>–<code>KZ</code>, then <code>KAA</code>, <code>KAB</code>, … Codes are never renumbered.</em></p>
+<p><strong>Provenance.</strong> Rows <strong>KA</strong>–<strong>KK</strong> were made across the sessions of 2026-09-19
+to 2026-09-21 and are <strong>reconstructed</strong> from that history and the commit
+record. The owner confirmed all of them as standing on 2026-09-22.</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Decision</th>
+<th>Date</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KA</td>
+<td><strong>Barrel revolutions are the dose, not elapsed days.</strong> Grit stages are specified as revolution targets (600,000 each).</td>
+<td>2026-09-19 · confirmed 2026-09-22</td>
+<td>Abrasive wear follows Archard's law: volume removed ∝ load × <em>sliding distance</em>, and sliding distance is revolutions. "Seven days" silently assumes the barrel speed, charge and uptime of whoever wrote the instructions; a revolution count survives changing the barrel, the speed, or a power cut. Commercial machines persist elapsed days, which is the same storage problem solved for the weaker variable (<strong>LE-10</strong>)</td>
+</tr>
+<tr>
+<td>KB</td>
+<td><strong>Barrel speed is 35–50% of critical speed; 45% by default.</strong> <code>N_crit = 42.3/√D</code>, D in metres.</td>
+<td>2026-09-19 · confirmed 2026-09-22</td>
+<td>Above ~50% the load starts cataracting and chips stones; near 100% it centrifuges. Below ~35% it slides as a lump instead of cascading. The formula at 45% reproduces a Lortone 3A's 55–60 rpm, which anchors the whole model (<strong>LE-08</strong>)</td>
+</tr>
+<tr>
+<td>KC</td>
+<td><strong>Structural prints are PETG or ASA, never PLA.</strong></td>
+<td>2026-09-19 · confirmed 2026-09-22</td>
+<td>A stepper energised 24/7 runs at 60–80 °C; PLA's glass transition is ~60 °C. A PLA motor mount sags over a six-week run, pulls the rollers out of parallel, and the barrel walks off</td>
+</tr>
+<tr>
+<td>KD</td>
+<td><strong>Rollers are 40 mm in diameter.</strong></td>
+<td>2026-09-19 · confirmed 2026-09-22</td>
+<td>The roller diameter is the gearbox. 40 mm puts the motor at ~169 rpm, inside a NEMA 17's flat-torque region, at ~11 N·cm demand against 40–50 available, and a step rate any driver handles</td>
+</tr>
+<tr>
+<td>KE</td>
+<td><strong>Driver current runs low, about 0.4–0.6 A per phase</strong>, set by winding down until a full barrel fails to start and adding 30% back.</td>
+<td>2026-09-19 · confirmed 2026-09-22</td>
+<td>The load needs ~11 N·cm. A stepper draws full current whether loaded or not, so surplus current is only heat, for a thousand hours, next to a printed bracket (see <strong>KC</strong>)</td>
+</tr>
+<tr>
+<td>KF</td>
+<td><strong>The firmware never auto-advances between grit stages.</strong> It stops at the target and waits.</td>
+<td>2026-09-19 · confirmed 2026-09-22</td>
+<td>Between stages every grain of the previous grit must be washed off by hand. One grain of 60 grit in the polish stage ruins the batch, and the machine cannot verify the washing happened</td>
+</tr>
+<tr>
+<td>KG</td>
+<td><strong>Lifter bars are symmetric trapezoids</strong>, not the asymmetric scoop commercial barrels use.</td>
+<td>2026-09-20 · confirmed 2026-09-22</td>
+<td>This machine reverses direction every six hours. An asymmetric scoop lifts well one way and drags backwards through the charge the other. A feature in the firmware constrains a rubber profile three subsystems away (<strong>LE-11</strong>)</td>
+</tr>
+<tr>
+<td>KH</td>
+<td><strong>Do not print the barrel.</strong> Buy one, or use PVC or HDPE with a printed liner.</td>
+<td>2026-09-20 · confirmed 2026-09-22</td>
+<td>Layer lines leak over a six-week wet run, silicon carbide excavates layer boundaries, and a leak spreads abrasive slurry everywhere. It is the one part where the commercial product is genuinely better engineering (<strong>LE-13</strong>)</td>
+</tr>
+<tr>
+<td>KI</td>
+<td><strong>On Arduino, steps come from Timer1 in CTC mode toggling OC1A, which is pin D9.</strong> Not AccelStepper; and D9 cannot be reassigned.</td>
+<td>2026-09-19 · confirmed 2026-09-22</td>
+<td>AccelStepper tops out near 4,000 steps/s on a 16 MHz AVR; this machine needs ~8,990. Timer1 generates the pulse train in hardware with the CPU uninvolved, which is the ATmega's equivalent of the TMC2209's internal step generator. OC1A is fixed to D9 by the silicon</td>
+</tr>
+<tr>
+<td>KJ</td>
+<td><strong>All AVR dose arithmetic is integer, and all timing uses <code>(uint32_t)(now - then) &gt;= gap</code>.</strong></td>
+<td>2026-09-19 · confirmed 2026-09-22</td>
+<td>AVR <code>float</code> is 32-bit: a fractional accumulator drifts 4% in fifty minutes. <code>millis()</code> wraps at 49.7 days, and a campaign runs months. Both are invisible in bench tests and fatal in week four (<strong>LE-09</strong>)</td>
+</tr>
+<tr>
+<td>KK</td>
+<td><strong>Built for fun and for the instrumentation, not to save money.</strong></td>
+<td>2026-09-19 · confirmed 2026-09-22</td>
+<td>The owner's opening words were <em>"For fun."</em> The arithmetic confirms it: the build costs well under minimum wage against buying one. A design document that implied otherwise would be misleading its reader (<strong>LE-16</strong>)</td>
+</tr>
+<tr>
+<td>KL</td>
+<td><strong>Local only. Nothing is hosted.</strong> Design on the Mac; the machine runs on a microcontroller on the bench.</td>
+<td>2026-09-22</td>
+<td>Owner confirmed at Docket adoption. It holds no credentials and has one user. Remote monitoring (<strong>XB3</strong>) would be a platform change requiring a new row here and an edit to <strong>GD</strong></td>
+</tr>
+<tr>
+<td>KM</td>
+<td><strong>The Docket's seven domains are M Mechanical, B Barrel, E Electronics, F Firmware, T Tools &amp; verification, P Process, X Experiments.</strong></td>
+<td>2026-09-22</td>
+<td>Owner accepted the proposed set at adoption. They follow how the files and the README already divide the work. Codes hung on them are permanent</td>
+</tr>
+</tbody>
+</table>
+</article>
+<article id="features"><div class="head"><b>features_and_functions.md</b><span>What</span></div>
+<h1>Rock tumbler — Features and Functions</h1>
+<p><strong>What it does.</strong> The canonical list. Every other document refers to these codes.</p>
+<p><strong>Status:</strong> ✅ <strong>usable now</strong> · 🔨 built, not yet proven · ⬜ planned ·
+💡 idea, not approved · ❌ decided against</p>
+<p><strong>✅ means the owner can use it today</strong>, not that the code exists. In this
+project that bar is high on purpose: firmware that has only run in a
+simulation, and parts that have only been rendered, are 🔨 — because nothing
+has been printed, wired or measured yet (<strong>LE-17</strong>).</p>
+<p><strong>❓Q-nn</strong> marks an entry with an unanswered question attached. The link is
+maintained both ways and checked.</p>
+<hr />
+<h2 id="features-the-code-system">The code system</h2>
+<p>A single letter is a domain, a second letter an area within it, and a number
+the feature. Codes are <strong>permanent</strong>: a retired feature keeps its code, and a
+new sibling never renumbers its neighbours.</p>
+<pre><code>M        Domain
+MA       Area
+MA1      Feature
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Domain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>M</strong></td>
+<td>Mechanical: frame, rollers, plates, mount</td>
+</tr>
+<tr>
+<td><strong>B</strong></td>
+<td>Barrel: barrel, liner, lifters, rubber, lid</td>
+</tr>
+<tr>
+<td><strong>E</strong></td>
+<td>Electronics: motor, driver, supply, sensing</td>
+</tr>
+<tr>
+<td><strong>F</strong></td>
+<td>Firmware: the Pico route and the Arduino route</td>
+</tr>
+<tr>
+<td><strong>T</strong></td>
+<td>Tools and verification: calculators, render check, test harnesses</td>
+</tr>
+<tr>
+<td><strong>P</strong></td>
+<td>Process: actually tumbling rock</td>
+</tr>
+<tr>
+<td><strong>X</strong></td>
+<td>Experiments: research that follows once it runs</td>
+</tr>
+</tbody>
+</table>
+<p><em>Domains settled 2026-09-22 (</em><em>KM</em><em>).</em></p>
+<hr />
+<h2 id="features-m-mechanical">M — Mechanical</h2>
+<h3 id="features-ma-cradle-and-rollers">MA — Cradle and rollers</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Cradle geometry: 40° contact angle, 97.7 mm shaft spacing, 58.2 mm barrel ride height for a 112 mm OD barrel on 40 mm rollers. Computed twice, in <code>tools/tumbler_calc.py</code> and in <code>cad/tumbler.scad</code>, agreeing to four figures. Rendered; not built</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Roller hub: PETG/ASA, 8 mm bore, grub-screwed to the shaft, with end flanges that keep the barrel from walking. Exports as a manifold STL; not printed. <em>Risk: the flange lip is only 5 mm proud of the tyre</em></div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">TPU tyre, a 0.4 mm interference fit over the hub. Not printed</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MA4</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Two 8 mm shafts in four 608-2RS sealed bearings. Specified; not bought</div></wa-card>
+</ul>
+<h3 id="features-mb-frame-and-drive">MB — Frame and drive</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MB1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">End plates with bearing pockets cut at the computed spacing (<code>BRG_POCKET_FIT</code> 0.15 mm, never tested against a real printer). Not printed</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MB2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">NEMA 17 motor mount with slotted holes for belt tension, PETG/ASA only (<strong>KC</strong>). Not printed</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MB3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Baseboard: plywood or 2020 extrusion. Not modelled</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MB4</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Drip tray. <em>Risk: only 20 mm of clearance under the barrel</em></div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">MB5</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">GT2 belt drive, 20T pulleys, motor outboard of the drip zone. Described in the README; not modelled</div></wa-card>
+</ul>
+<hr />
+<h2 id="features-b-barrel">B — Barrel</h2>
+<h3 id="features-ba-barrel-body">BA — Barrel body</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BA1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">4-inch PVC DWV pipe with a threaded cleanout plug, lined per <strong>BB</strong>. ❓Q-01</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BA2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Bought rubber barrel, a Lortone or Thumler's spare part. ❓Q-01</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BA3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">Wide-mouth HDPE jar with a gasketed lid</div></wa-card>
+</ul>
+<h3 id="features-bb-liner">BB — Liner</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BB1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Hexagonal TPU liner, about 6.1 mm of gradual lift. Exports manifold; not printed</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BB2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Lifter-bar liner: six symmetric trapezoidal bars, 6 mm high (<strong>KG</strong>). Rendered; not printed. ❓Q-01</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BB3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Rubber sheet behind the printed liner: set <code>RUBBER_T</code> and both liners shrink, so the sleeve clamps the rubber with no adhesive. Parametric; no rubber sourced yet. ❓Q-01</div></wa-card>
+</ul>
+<h3 id="features-bc-lid">BC — Lid</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">BC1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">Compression lid: a disc drawn onto a rubber flange by a central wing nut, keeping threads out of the grit path</div></wa-card>
+</ul>
+<hr />
+<h2 id="features-e-electronics">E — Electronics</h2>
+<h3 id="features-ea-motor-driver-and-supply">EA — Motor, driver and supply</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">EA1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">NEMA 17 at ~169 rpm, ~11 N·cm demand against 40–50 available. The owner has the motors; not wired</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">EA2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Stepper driver. A4988, DRV8825, TB6600 or TMC2209; all speak STEP/DIR. ❓Q-02</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">EA3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Driver current procedure: Vref formulas by sense-resistor value, start at 0.6 A, wind down, add 30% (<strong>KE</strong>). Written in the README; never performed</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">EA4</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Supply: 12 V or 24 V. ❓Q-03</div></wa-card>
+</ul>
+<h3 id="features-eb-sensing">EB — Sensing</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">EB1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Hall sensor (A3144) on the frame, magnet on the barrel end cap: exactly one pulse per revolution. Not fitted</div></wa-card>
+</ul>
+<hr />
+<h2 id="features-f-firmware">F — Firmware</h2>
+<h3 id="features-fa-pico-route-raspberry-pi-pico-tmc2209">FA — Pico route (Raspberry Pi Pico + TMC2209)</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FA1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">TMC2209 single-wire UART driver using <code>VACTUAL</code>, the chip's internal step generator. CRC cross-checked two ways; the read datagram matches the published example. Never on hardware. ❓Q-04</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FA2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Pico control loop: soft start, reversal, odometer in a flash file, slip detection. A simulated six-week campaign passes. Never on hardware. ❓Q-04</div></wa-card>
+</ul>
+<h3 id="features-fb-arduino-route-unonano-any-stepdir-driver">FB — Arduino route (Uno/Nano + any STEP/DIR driver)</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FB1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Timer1 CTC hardware step generation on D9 (<strong>KI</strong>). Compiles clean for the ATmega328P; the step rate has never been measured. ❓Q-04</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FB2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">EEPROM odometer: a 32-slot checksummed ring for wear levelling and power-cut safety. Compiles; never run. ❓Q-04</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FB3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Wrap-safe timing and integer-only dose arithmetic (<strong>KJ</strong>). Compiles; never run</div></wa-card>
+</ul>
+<h3 id="features-fc-behaviour-both-routes-share">FC — Behaviour both routes share</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FC1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Stage targets measured in barrel revolutions (<strong>KA</strong>)</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FC2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Direction reversal every six hours through a controlled stop</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FC3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Slip detection: commanded against measured revolutions, with a warning at 15% and a fault latch at 40%</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FC4</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Stop and wait at the end of each stage; never auto-advance (<strong>KF</strong>)</div></wa-card>
+</ul>
+<h3 id="features-fd-calibration">FD — Calibration</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">FD1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Trim <code>f_clk</code> (Pico) or <code>TARGET_RPM_X10</code> (Arduino) against a stopwatch count of barrel revolutions</div></wa-card>
+</ul>
+<hr />
+<h2 id="features-t-tools-and-verification">T — Tools and verification</h2>
+<h3 id="features-ta-calculators">TA — Calculators</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">TA1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="success">built</wa-tag></div><div class="featbody"><code>tools/tumbler_calc.py</code>: barrel speed from critical speed, cradle geometry, torque, step rate, <code>VACTUAL</code>. Self-test anchored against a real Lortone 3A</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">TA2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="success">built</wa-tag></div><div class="featbody"><code>tools/timer1_calc.py</code>: AVR Timer1 arithmetic with its quantisation bound, and numerical demonstrations of the two long-run AVR bugs</div></wa-card>
+</ul>
+<h3 id="features-tb-verification">TB — Verification</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">TB1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="success">built</wa-tag></div><div class="featbody"><code>tools/render.sh</code>: parses the CAD with OpenSCAD, exports every part as a manifold STL, runs interference tests with a control, and writes renders. <em>Its part-export loop does not delete stale STLs first (</em><em>LE-18</em><em>)</em></div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">TB2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="warning">in progress</wa-tag></div><div class="featbody">Arduino compile check (<code>firmware/arduino/test/</code>): real ATmega328P headers through a minimal Arduino shim. Passed in the cloud container; <strong>cannot run on this Mac until <code>avr-gcc</code> is installed</strong></div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">TB3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="success">built</wa-tag></div><div class="featbody">Firmware self-tests: <code>firmware/tmc2209.py</code> and <code>firmware/main.py --selftest</code>, the latter a simulated six-week campaign</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">TB4</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">The project version shown in the upper-right corner of every interface: both calculators' output, <code>render.sh</code>'s output, and each firmware's serial banner. Wired to the single <code>VERSION</code> file. Required by the owner's standing rule for all projects</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">TB5</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">A gate that compares the OpenSCAD geometry echo against <code>tumbler_calc.py</code>, so the four-figure agreement in <strong>LE-07</strong> stops being checked by eye</div></wa-card>
+</ul>
+<hr />
+<h2 id="features-p-process">P — Process</h2>
+<h3 id="features-pa-running-a-batch">PA — Running a batch</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">PA1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Four grit stages, 600,000 revolutions each: 60/90 SiC, 120/220 SiC, 500 pre-polish, cerium oxide</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">PA2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Loading rules: barrel ⅔–¾ full, one rock hardness per batch, water just below the top of the load, ceramic media as filler</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">PA3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="neutral">planned</wa-tag></div><div class="featbody">Record actual revolutions and the finish at each stage</div></wa-card>
+</ul>
+<hr />
+<h2 id="features-x-experiments">X — Experiments</h2>
+<h3 id="features-xa-simulation">XA — Simulation</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">XA1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">Blender rigid-body simulation of the charge. It would settle hex-versus-lifter-bars and 35%-versus-50% of critical before committing TPU. Highest value of the experiments; about an afternoon</div></wa-card>
+</ul>
+<h3 id="features-xb-measurement">XB — Measurement</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">XB1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">Dose–finish curves: stop batches at 300, 450, 600 and 750 thousand revolutions and measure the finish</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">XB2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">Acoustic monitoring: tune the speed until an FFT of the barrel's sound says "cascading"</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">XB3</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">ESP32 with a phone dashboard for watching a run remotely. A platform change if built (<strong>KL</strong>)</div></wa-card>
+</ul>
+<h3 id="features-xc-other-machines">XC — Other machines</h3>
+<ul>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">XC1</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">Direct barrel drive: the stepper coupled straight to a barrel shaft, which eliminates slip</div></wa-card>
+<wa-card class="feat" with-header><div slot="header" class="feathead"><span class="featcode">XC2</span><span class="feattitle"></span><span class="featq"></span><wa-tag size="s" variant="brand">idea</wa-tag></div><div class="featbody">Vibratory conversion: off-centre masses on the steppers already owned</div></wa-card>
+</ul>
+</article>
+<article id="path"><div class="head"><b>critical_path.md</b><span>What order</span></div>
+<h1>Rock tumbler — Critical Path</h1>
+<p><strong>What can start now, and what waits for what.</strong> Left to right: everything in a
+column can be worked in parallel; nothing can start until its dependencies to
+the left are done.</p>
+<blockquote>
+<p><strong>This document is checked, not merely derived.</strong> <code>check_status.py</code> asserts
+that anything marked ✅ here is ✅ in <code>features_and_functions.md</code>.</p>
+</blockquote>
+<p><em>Updated 2026-09-22. Redistributed from the archived <code>WHATS_NEXT.md</code> (see
+<a href="docket-archive/MANIFEST.md"><code>docket-archive/MANIFEST.md</code></a>); its phases 0–4
+are columns 1–6 here. The cheap checks come before the expensive
+commitments.</em></p>
+<hr />
+<h2 id="path-the-chart">The chart</h2>
+<div class="mermaid-wrap"><pre class="mermaid">graph LR
+  subgraph DECIDE[&quot;🟡 Decisions — one sentence each&quot;]
+    Q01[Q-01 barrel route]
+    Q02[Q-02 driver board]
+    Q03[Q-03 supply voltage]
+    Q04[Q-04 Pico or Arduino]
+  end
+  subgraph C1[&quot;Column 1 — startable today&quot;]
+    TEST[Tolerance test print&lt;br/&gt;MB1 + MA2]
+    AVR[Install avr-gcc&lt;br/&gt;TB2]
+    VER[Version in the corner&lt;br/&gt;TB4]
+  end
+  subgraph C2[&quot;Column 2 — the print set&quot;]
+    OD[Measure the real barrel OD]
+    PRINT[Print plates, hubs, mount,&lt;br/&gt;tyres, liner]
+  end
+  subgraph C3[&quot;Column 3 — mechanical&quot;]
+    ASM[Assemble, spin by hand&lt;br/&gt;MA1]
+  end
+  subgraph C4[&quot;Column 4 — drive&quot;]
+    VREF[Set the driver current&lt;br/&gt;EA3]
+    SCOPE[Scope D9, run unloaded&lt;br/&gt;FB1]
+    CAL[Calibrate&lt;br/&gt;FD1]
+  end
+  subgraph C5[&quot;Column 5 — instrumentation&quot;]
+    HALL[Hall sensor, power-cut,&lt;br/&gt;slip, reversal proofs]
+  end
+  subgraph C6[&quot;Column 6 — first batch&quot;]
+    BATCH[PA1 + PA2 + PA3]
+  end
+  TEST --&gt; PRINT
+  Q01 --&gt; OD --&gt; PRINT --&gt; ASM --&gt; VREF
+  Q02 --&gt; VREF
+  Q04 --&gt; SCOPE
+  Q03 -.-&gt; VREF
+  VREF --&gt; SCOPE --&gt; CAL --&gt; HALL --&gt; BATCH
+</pre><details class="msrc"><summary>diagram source</summary><pre><code>graph LR
+  subgraph DECIDE[&quot;🟡 Decisions — one sentence each&quot;]
+    Q01[Q-01 barrel route]
+    Q02[Q-02 driver board]
+    Q03[Q-03 supply voltage]
+    Q04[Q-04 Pico or Arduino]
+  end
+  subgraph C1[&quot;Column 1 — startable today&quot;]
+    TEST[Tolerance test print&lt;br/&gt;MB1 + MA2]
+    AVR[Install avr-gcc&lt;br/&gt;TB2]
+    VER[Version in the corner&lt;br/&gt;TB4]
+  end
+  subgraph C2[&quot;Column 2 — the print set&quot;]
+    OD[Measure the real barrel OD]
+    PRINT[Print plates, hubs, mount,&lt;br/&gt;tyres, liner]
+  end
+  subgraph C3[&quot;Column 3 — mechanical&quot;]
+    ASM[Assemble, spin by hand&lt;br/&gt;MA1]
+  end
+  subgraph C4[&quot;Column 4 — drive&quot;]
+    VREF[Set the driver current&lt;br/&gt;EA3]
+    SCOPE[Scope D9, run unloaded&lt;br/&gt;FB1]
+    CAL[Calibrate&lt;br/&gt;FD1]
+  end
+  subgraph C5[&quot;Column 5 — instrumentation&quot;]
+    HALL[Hall sensor, power-cut,&lt;br/&gt;slip, reversal proofs]
+  end
+  subgraph C6[&quot;Column 6 — first batch&quot;]
+    BATCH[PA1 + PA2 + PA3]
+  end
+  TEST --&gt; PRINT
+  Q01 --&gt; OD --&gt; PRINT --&gt; ASM --&gt; VREF
+  Q02 --&gt; VREF
+  Q04 --&gt; SCOPE
+  Q03 -.-&gt; VREF
+  VREF --&gt; SCOPE --&gt; CAL --&gt; HALL --&gt; BATCH
+</code></pre></details></div>
+<hr />
+<h2 id="path-decisions-answer-before-or-alongside-column-1">Decisions — answer before or alongside column 1</h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Question</th>
+<th>Unblocks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⬜ <strong>Q-01</strong></td>
+<td>Which barrel?</td>
+<td>The liner print and the barrel OD measurement (column 2)</td>
+</tr>
+<tr>
+<td>⬜ <strong>Q-02</strong></td>
+<td>Which driver board?</td>
+<td>The current-setting procedure (column 4)</td>
+</tr>
+<tr>
+<td>⬜ <strong>Q-03</strong></td>
+<td>12 V or 24 V?</td>
+<td>Nothing in the design; the supply to buy or use</td>
+</tr>
+<tr>
+<td>⬜ <strong>Q-04</strong></td>
+<td>Pico or Arduino?</td>
+<td>What gets wired and flashed (column 4)</td>
+</tr>
+</tbody>
+</table>
+<p>Each carries a working assumption in <a href="open_questions.md"><code>open_questions.md</code></a>,
+so none of them stops column 1.</p>
+<h2 id="path-column-1-startable-today">Column 1 — startable today</h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Task</th>
+<th>Effort</th>
+<th>Why now</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⬜ <strong>MB1</strong> · <strong>MA2</strong></td>
+<td><strong>Tolerance test print.</strong> One <code>end_plate</code> and one <code>roller_hub</code> in PETG/ASA. Check the 608 bearing is a firm press fit (adjust <code>BRG_POCKET_FIT</code>, 0.15 mm now), the 8 mm rod slides through the hub with slight resistance (adjust the <code>ROD_D + 0.25</code> clearance), and measure the printed hub OD against <code>HUB_OD</code> to learn the printer's real offset</td>
+<td>~1 hour</td>
+<td><strong>Do not skip.</strong> Every clearance in the CAD is nominal. Every other part inherits these two fits, and getting them wrong wastes the whole print set</td>
+</tr>
+<tr>
+<td>⬜ <strong>TB2</strong></td>
+<td>Install the AVR toolchain: <code>brew tap osx-cross/avr &amp;&amp; brew install avr-gcc</code></td>
+<td>5 min</td>
+<td>The only check in the sweep that cannot run on this Mac</td>
+</tr>
+<tr>
+<td>⬜ <strong>TB4</strong></td>
+<td>Show the project version in the upper-right of every interface, from <code>VERSION</code></td>
+<td>~1 hour</td>
+<td>The owner's standing rule for all projects; nothing displays it yet</td>
+</tr>
+<tr>
+<td>⬜ <strong>TB5</strong></td>
+<td>Gate the CAD-against-calculator geometry agreement</td>
+<td>~30 min</td>
+<td>Turns <strong>LE-07</strong> from a check by eye into a check</td>
+</tr>
+</tbody>
+</table>
+<h2 id="path-column-2-the-print-set">Column 2 — the print set</h2>
+<p><em>Needs the test print and </em><em>Q-01</em><em>.</em></p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Task</th>
+<th>Effort</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⬜ <strong>MA1</strong></td>
+<td><strong>Measure the real barrel's outside diameter</strong> with calipers and set <code>BARREL_OD_MM</code> in <code>cad/tumbler.scad</code>, <code>firmware/main.py</code> and <code>firmware/arduino/tumbler_uno/tumbler_uno.ino</code>. The cradle spacing and the step rate both depend on it. Then run <code>tools/render.sh</code> at the real dimensions</td>
+<td>20 min</td>
+</tr>
+<tr>
+<td>⬜ <strong>MB1</strong> · <strong>MB2</strong> · <strong>MA2</strong> · <strong>MA3</strong> · <strong>BB2</strong></td>
+<td>Print the set: 2 × end plate, 2 × roller hub, 1 × motor mount in PETG/ASA (4 perimeters, 30% infill); 2 × tyre and 1 × liner in TPU 95A. For route A, set <code>RUBBER_T</code> to the <strong>measured</strong> sheet thickness and re-render first</td>
+<td>a day of printing</td>
+</tr>
+</tbody>
+</table>
+<h2 id="path-column-3-mechanical">Column 3 — mechanical</h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Task</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⬜ <strong>MA1</strong></td>
+<td>Assemble on a plywood or 2020 base (<strong>MB3</strong>) and <strong>spin the barrel by hand</strong>. It should roll freely, stay centred and not climb. This is where the 40° contact angle works or doesn't. If it walks, raise <code>FLANGE_H</code> before motorising</td>
+</tr>
+</tbody>
+</table>
+<h2 id="path-column-4-drive">Column 4 — drive</h2>
+<p><em>Needs </em><em>Q-02</em><em> and </em><em>Q-04</em><em>.</em></p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Task</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⬜ <strong>EA3</strong></td>
+<td><strong>Set the driver current before connecting the motor.</strong> Read the board's own sense resistors; start at 0.6 A (<strong>KE</strong>)</td>
+</tr>
+<tr>
+<td>⬜ <strong>FB1</strong></td>
+<td>Wire with a <strong>common ground</strong> between controller and driver. Measure the step rate on D9 with a scope or frequency counter: expect ~8,989 Hz. This is the one hardware claim in the project never measured. Then run unloaded and confirm the soft start holds traction</td>
+</tr>
+<tr>
+<td>⬜ <strong>FD1</strong></td>
+<td>Calibrate: count barrel revolutions against a stopwatch for 10 minutes and trim until commanded and measured agree. Then run loaded, winding the current down to the failure point and adding 30% back</td>
+</tr>
+</tbody>
+</table>
+<h2 id="path-column-5-instrumentation">Column 5 — instrumentation</h2>
+<p>This is the part that makes it worth building rather than buying.</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Task</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⬜ <strong>EB1</strong></td>
+<td>Fit the magnet and hall sensor; confirm <strong>exactly one pulse per revolution</strong>. A miscount corrupts the dose silently</td>
+</tr>
+<tr>
+<td>⬜ <strong>FB2</strong></td>
+<td><strong>Pull the plug mid-run</strong>, power back up, and confirm it resumes at the right count</td>
+</tr>
+<tr>
+<td>⬜ <strong>FC3</strong></td>
+<td><strong>Induce slip</strong> with a little water or soap on a tyre; confirm the percentage climbs and the fault trips</td>
+</tr>
+<tr>
+<td>⬜ <strong>FC2</strong></td>
+<td>Confirm reversal fires on schedule and restarts cleanly</td>
+</tr>
+<tr>
+<td>⬜ <strong>MB2</strong></td>
+<td>Run 24 hours unattended. <strong>Feel the motor and the printed mount</strong>: if the mount is soft, the current is still too high</td>
+</tr>
+</tbody>
+</table>
+<h2 id="path-column-6-first-batch">Column 6 — first batch</h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Task</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⬜ <strong>PA1</strong> · <strong>PA2</strong> · <strong>PA3</strong></td>
+<td>Source a four-stage grit kit and ceramic media, load per the rules, run stage 1 to 600,000 revolutions (~7 days at 60 rpm), <strong>wash everything</strong> between stages, and record revolutions and finish</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="path-risks-worth-watching">Risks worth watching</h2>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Signal</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bearing pocket wrong for this printer</td>
+<td>Bearing loose or won't seat</td>
+<td>Column 1 test print</td>
+</tr>
+<tr>
+<td>Barrel walks off the rollers</td>
+<td>Drifts along the rollers on the hand test</td>
+<td>Taller flanges before motorising</td>
+</tr>
+<tr>
+<td>Drip tray won't fit (<strong>MB4</strong>)</td>
+<td>Only <strong>20 mm</strong> under the barrel</td>
+<td>Raise <code>FOOT_W</code>, or a shallow tray</td>
+</tr>
+<tr>
+<td>Grit seizes the cleanout threads</td>
+<td>Plug stiffens each time</td>
+<td>Clean the threads every opening, or a compression lid (<strong>BC1</strong>)</td>
+</tr>
+<tr>
+<td>Printed mount softens</td>
+<td>Motor mount warm or deformed</td>
+<td>Lower the current; ASA over PETG</td>
+</tr>
+<tr>
+<td>Hall sensor miscounts</td>
+<td>Dose advances at the wrong rate</td>
+<td>Verify pulses per revolution in column 5</td>
+</tr>
+<tr>
+<td>Step rate wrong</td>
+<td>Barrel speed differs from the calculation</td>
+<td>Scope D9 in column 4</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="path-reading-the-chart">Reading the chart</h2>
+<ul>
+<li><strong>A column is a to-do list</strong>, not a sprint.</li>
+<li><strong>A decision node is the cheapest thing on the chart.</strong> Answering a question
+  is usually higher leverage than any work.</li>
+<li><strong>Dotted lines</strong> are consequences rather than blockers.</li>
+</ul>
+</article>
+<article id="questions"><div class="head"><b>open_questions.md</b><span>Unsettled</span></div>
+<h1>Rock tumbler — Open Questions</h1>
+<p><strong>The inbox for things needing the owner, that the owner has not answered yet.</strong></p>
+<p>Anything the agent raises lands here the moment it is raised, not only in the
+conversation. Chat scrolls away; this does not.</p>
+<h2 id="questions-how-this-works">How this works</h2>
+<p>The agent files here without being asked. The owner answers when they have time,
+in a sentence, in any session — or at <code>/questions</code> in the console.</p>
+<p><strong>Every entry carries a working assumption</strong> so nothing is blocked while it
+waits. If the answer differs from the assumption, the assumption says exactly
+what has to be revisited.</p>
+<p><strong>Every entry is written in plain English.</strong> It explains what the thing is
+before asking about it, expands every code and filename the first time, and
+says what changes depending on the answer.</p>
+<p><strong>When answered:</strong> mark it ✅ <strong>in the <code>###</code> heading itself</strong>, record the
+answer and where the decision went, remove the ❓ markers from every code it
+touched, and move the entry to <a href="answered_questions.md"><code>answered_questions.md</code></a>.
+<strong>Nothing is deleted.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🔴</td>
+<td>Blocking work now</td>
+</tr>
+<tr>
+<td>🟡</td>
+<td>Needed before a specific thing can ship</td>
+</tr>
+<tr>
+<td>⚪</td>
+<td>Whenever — a direction question, not a blocker</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="questions-blocking">🔴 Blocking</h2>
+<p><em>None open.</em> The first physical step, a single test print of one roller hub
+and one end plate, needs none of the answers below.</p>
+<hr />
+<h2 id="questions-needed-soon">🟡 Needed soon</h2>
+<h3 id="questions-q-01-which-barrel">Q-01 — Which barrel?</h3>
+<p><strong>Raised:</strong> 2026-09-21 (in <code>WHATS_NEXT.md</code>), filed 2026-09-22 · <strong>Affects:</strong> <strong>BA1</strong>, <strong>BA2</strong>, <strong>BB2</strong>, <strong>BB3</strong> · <strong>Status:</strong> open</p>
+<p>The barrel is the part that holds the rock, grit and water for six weeks. It
+carries the project's biggest failure risk, a leak, and it decides which
+printed liner (the sleeve inside the barrel that lifts the rocks) gets made.
+Three routes are costed in the README's <em>Build or buy?</em> section:</p>
+<ul>
+<li><strong>A.</strong> 4-inch PVC drain pipe with a screw-in cleanout plug, a sheet of
+  rubber (truck mudflap or inner tube) inside it, and the printed lifter-bar
+  liner pressed in over the rubber. About $26. Best value, quietest DIY option.</li>
+<li><strong>B.</strong> The same pipe with only a printed liner, no rubber. About $20.
+  Simpler; louder and harder on the stone.</li>
+<li><strong>C.</strong> Buy a Lortone or Thumler's rubber barrel as a spare part. $40–60.
+  Removes the leak risk entirely.</li>
+</ul>
+<p><strong>Why now:</strong> the liner can't be printed until this is settled, and route A
+needs the rubber sheet's real thickness measured first.</p>
+<p><strong>Working assumption:</strong> <strong>route A.</strong> I will treat the lifter-bar liner as the
+one to print, with <code>RUBBER_T</code> set once a sheet is in hand. If you choose C,
+the printed liner isn't needed at all and the cradle must be re-computed from
+that barrel's measured outside diameter. If B, <code>RUBBER_T</code> stays 0.</p>
+<h3 id="questions-q-02-which-stepper-driver-board-will-you-use">Q-02 — Which stepper driver board will you use?</h3>
+<p><strong>Raised:</strong> 2026-09-21 (in <code>WHATS_NEXT.md</code>), filed 2026-09-22 · <strong>Affects:</strong> <strong>EA2</strong> · <strong>Status:</strong> open</p>
+<p>A driver board sits between the controller and the motor and sets how much
+current the motor gets. You mentioned having stepper controllers in the
+drawer. The common ones are the A4988, DRV8825, TB6600 and TMC2209. All of
+them take the same two-wire step and direction signal, so the Arduino firmware
+works with any of them. What differs is <strong>how you set the current</strong> (a
+different formula per board, and it depends on tiny resistors printed on the
+board) and <strong>how loud it is</strong> (the TMC2209 is near-silent; the others whine).</p>
+<p><strong>Why now:</strong> the current has to be set before the motor is first connected,
+and the procedure depends on the board.</p>
+<p><strong>Working assumption:</strong> <strong>an A4988 or DRV8825 on the Arduino</strong>, since those
+are the commonest boards in a drawer. The README's table covers both. If it
+is a TMC2209, the Pico route (<strong>Q-04</strong>) becomes the more natural choice.</p>
+<h3 id="questions-q-04-pico-or-arduino">Q-04 — Pico or Arduino?</h3>
+<p><strong>Raised:</strong> 2026-09-21 (in <code>WHATS_NEXT.md</code>), filed 2026-09-22 · <strong>Affects:</strong> <strong>FA1</strong>, <strong>FA2</strong>, <strong>FB1</strong>, <strong>FB2</strong> · <strong>Status:</strong> open</p>
+<p>Two complete sets of firmware exist, and only one will run the machine.</p>
+<ul>
+<li><strong>Pico + TMC2209.</strong> The driver generates its own steps, so speed is one
+  setting, and it reports faults such as overheating or a loose wire. Needs
+  a TMC2209 specifically.</li>
+<li><strong>Arduino + any driver.</strong> The Arduino's own hardware timer generates the
+  steps. Works with whatever driver board you already have.</li>
+</ul>
+<p>Both do the revolution counting, slip detection and reversal.</p>
+<p><strong>Why now:</strong> it decides what gets wired and flashed first, and which of the
+two firmwares gets tested on real hardware.</p>
+<p><strong>Working assumption:</strong> <strong>Arduino</strong>, because it works with whichever driver is
+in the drawer (<strong>Q-02</strong>). If you choose the Pico, the Arduino route stays in
+the repo untested and the TMC2209 becomes a purchase.</p>
+<hr />
+<h2 id="questions-whenever">⚪ Whenever</h2>
+<h3 id="questions-q-03-12-v-or-24-v-supply">Q-03 — 12 V or 24 V supply?</h3>
+<p><strong>Raised:</strong> 2026-09-21 (in <code>WHATS_NEXT.md</code>), filed 2026-09-22 · <strong>Affects:</strong> <strong>EA4</strong> · <strong>Status:</strong> open</p>
+<p>The motor supply voltage. At this machine's speed (about 169 rpm at the
+motor) 12 V is enough. 24 V roughly doubles the speed a stepper can reach
+before its torque falls away, so it is free headroom if you already own one.</p>
+<p><strong>Working assumption:</strong> <strong>whichever you already have; 12 V if both.</strong> Nothing
+in the design changes either way. The driver's current setting (<strong>KE</strong>) is
+independent of supply voltage.</p>
+<h3 id="questions-q-05-should-the-tumbler-stay-in-homebase">Q-05 — Should the tumbler stay in <code>homebase</code>?</h3>
+<p><strong>Raised:</strong> 2026-09-21, filed 2026-09-22 · <strong>Affects:</strong> where the project lives · <strong>Status:</strong> open</p>
+<p>The project lives in <code>projects/rock-tumbler/</code> inside your GitHub repository
+<code>homebase</code>. It landed there because the first cloud session was attached to
+that repo, not because anyone chose it. <code>homebase</code> otherwise holds only an
+old fast.ai notebook from 2021. All the tumbler work is on the branch
+<code>claude/diy-rock-tumbler-6qi824</code>, with pull request #1 open and unmerged.</p>
+<p>Moving it to its own repository is cheap now and gets more tedious the more
+history it gathers. It would also make this folder the repository root, which
+suits the Docket's own tools better.</p>
+<p><strong>Working assumption:</strong> <strong>it stays where it is, on the branch, with the pull
+request unmerged,</strong> until you say otherwise. If you want it moved, I'll create
+a <code>rock-tumbler</code> repository carrying the full history, and <code>homebase</code> goes
+back to how it was.</p>
+<h3 id="questions-q-06-three-files-were-left-outside-the-docket">Q-06 — Three files were left outside the Docket</h3>
+<p><strong>Raised:</strong> 2026-09-22 · <strong>Affects:</strong> adoption · <strong>Status:</strong> open</p>
+<p>When the Docket was adopted, most of the existing documentation was kept in
+place or redistributed (see <a href="docket-archive/MANIFEST.md"><code>docket-archive/MANIFEST.md</code></a>).
+I read these and deliberately left them alone:</p>
+<ul>
+<li><strong><code>README.md</code></strong>, 700 lines. The full design narrative: the physics, the
+  build-or-buy analysis, the parts list, the barrel and material reasoning,
+  failure modes and sources. It is the project's long form, and the Docket
+  documents now link into it rather than repeat it. I only added a short
+  Docket section and the version line near the top. <strong>Suggest:</strong> leave it as
+  the long form. Splitting it into chapters would scatter an argument that
+  currently reads in order. One small wrinkle: its <em>Project status</em> table uses
+  ✅ to mean "verified", while the Docket uses ✅ to mean "usable now". The
+  two don't conflict, but they are different claims.</li>
+<li><strong><code>CLAUDE.md</code></strong>. Your earlier working notes, kept in full. I added the
+  Docket protocol above them and struck through the lines that pointed at the
+  now-archived <code>WHATS_NEXT.md</code>, without deleting them. Its <em>Build log</em> table
+  overlaps the new <code>CHANGELOG.md</code>. <strong>Suggest:</strong> let the changelog own the
+  history going forward and freeze the build log.</li>
+<li><strong><code>cad/renders/</code>, <code>build/</code></strong>. Generated output, not documentation.
+  <strong>Suggest:</strong> leave them.</li>
+</ul>
+<p><strong>Working assumption:</strong> all three stay as they are. Say which to fold in, and
+where, and I'll do it.</p>
+<h3 id="questions-q-07-should-the-console-show-anything-of-the-tumblers-own">Q-07 — Should the console show anything of the tumbler's own?</h3>
+<p><strong>Raised:</strong> 2026-09-22 · <strong>Affects:</strong> the Docket console · <strong>Status:</strong> open</p>
+<p>The Docket comes with a small local web page, the "console", at
+<code>http://127.0.0.1:7373</code>, which opens with one card per thing the project
+builds, alongside cards for the Docket itself and these questions. The
+tumbler has no web interface, so for now the console shows only the Docket's
+own cards.</p>
+<p>It could show a card for the CAD renders or a generated build sheet, if
+seeing those at a glance would be useful.</p>
+<p><strong>Working assumption:</strong> <strong>no project cards.</strong> The console shows the Docket,
+the questions and the capture page, and nothing else.</p>
+<hr />
+<h2 id="questions-answered">Answered</h2>
+<p><em>Settled questions move to <a href="answered_questions.md"><code>answered_questions.md</code></a>.</em></p>
+</article>
+<article id="devplan"><div class="head"><b>development_plan.md</b><span>How</span></div>
+<h1>Rock tumbler — Development Plan</h1>
+<p><strong>How it is built.</strong> Architecture, file map, and the reasoning behind specific
+choices, especially the ones that look arbitrary later.</p>
+<blockquote>
+<p>Companions: <a href="features_and_functions.md"><code>features_and_functions.md</code></a> — what ·
+<a href="Gameplan.md"><code>Gameplan.md</code></a> — why · <a href="lessons_learned.md"><code>lessons_learned.md</code></a>
+— what broke. The long-form argument for nearly every choice below is in
+<a href="README.md"><code>README.md</code></a>; this document is the map, not the essay.</p>
+</blockquote>
+<hr />
+<h2 id="devplan-layout">Layout</h2>
+<pre><code>VERSION                     the project version: the one constant (TB4)
+tools/tumbler_calc.py       barrel speed, cradle geometry, torque, VACTUAL   TA1
+tools/timer1_calc.py        AVR Timer1 arithmetic and failure demos          TA2
+tools/render.sh             CAD: parse, manifold, interference, renders      TB1
+cad/tumbler.scad            the parametric model; PART selects a part        M, B
+cad/renders/                committed renders: assembly, section, liner
+build/                      exported STLs (regenerated by render.sh)
+firmware/tmc2209.py         TMC2209 single-wire UART driver        } Pico     FA
+firmware/main.py            control loop, odometer, slip, reversal }
+firmware/arduino/tumbler_uno/tumbler_uno.ino   Timer1 route        } Arduino  FB
+firmware/arduino/test/      avr-gcc compile harness (shim, not runtime)       TB2
+scripts/                    the Docket's checks and tools
+docket-archive/             superseded documents, with a manifest
+</code></pre>
+<hr />
+<h2 id="devplan-one-model-computed-twice">One model, computed twice</h2>
+<p>The physical model lives in two places on purpose: <code>tools/tumbler_calc.py</code>
+computes the build sheet, and <code>cad/tumbler.scad</code> computes the same geometry to
+cut the parts. They agree to four figures (97.7037 mm shaft spacing, 58.2194
+mm ride height). Two implementations in two languages agreeing is stronger
+evidence than either alone (<strong>LE-07</strong>). That agreement is not yet gated
+(<strong>TB5</strong>).</p>
+<p>The chain, from inputs to outputs:</p>
+<pre><code>barrel ID ──► N_crit = 42.3/√D ──► × 0.45 ──► barrel rpm            (KB)
+barrel OD, roller OD, 40° ──► shaft spacing, ride height            (MA1)
+barrel rpm × OD/roller ──► roller rpm ──► motor rpm ──► step rate   (KD)
+step rate ──► VACTUAL (Pico)  |  OCR1A (Arduino)                    (FA1, FB1)
+</code></pre>
+<p><strong>Three constants must move together</strong> when the real barrel is measured:
+<code>BARREL_OD_MM</code> in <code>cad/tumbler.scad</code>, <code>firmware/main.py</code> and
+<code>firmware/arduino/tumbler_uno/tumbler_uno.ino</code>. Nothing checks that they
+agree. That is a candidate gate, and worth writing before the first real
+measurement changes one of them.</p>
+<hr />
+<h2 id="devplan-decisions-with-a-technical-shape">Decisions with a technical shape</h2>
+<h3 id="devplan-fa1-why-the-pico-route-uses-vactual">FA1 — Why the Pico route uses VACTUAL</h3>
+<p>The TMC2209 has an internal step generator: write a velocity to register
+<code>0x22</code> and it spins indefinitely with no step pulses from the controller. For
+a machine whose whole job is to hold one speed for six weeks, that removes
+every source of timing jitter. Reversal is a sign change. The oscillator is
+only good to a few percent, hence calibration (<strong>FD1</strong>).</p>
+<h3 id="devplan-fb1-why-the-arduino-route-uses-timer1-on-d9">FB1 — Why the Arduino route uses Timer1 on D9</h3>
+<p>See <strong>KI</strong>. Timer1 in CTC mode toggles OC1A in hardware:
+<code>f = F_CPU / (2·N·(1 + OCR1A))</code>. Quantisation error is bounded by
+<code>1/(2·(OCR1A+1))</code>, which is 0.056% at the recommended build. One trap is handled in
+code: writing <code>OCR1A</code> below the current <code>TCNT1</code> misses the compare and leaves a
+4 ms hole in the pulse train, so <code>TCNT1</code> is reset when the target drops.</p>
+<h3 id="devplan-fb2-why-the-odometer-is-a-ring-in-eeprom">FB2 — Why the odometer is a ring in EEPROM</h3>
+<p>EEPROM endures ~100,000 writes per cell. Saving every 500 revolutions is ~4,800
+writes a campaign, which would wear out a fixed cell in about twenty
+campaigns. Thirty-two 8-byte slots, each checksummed, and boot takes the newest
+valid one: this spreads the wear and survives a power cut mid-write.</p>
+<h3 id="devplan-fb3-why-integer-arithmetic-and-wrap-safe-timing">FB3 — Why integer arithmetic and wrap-safe timing</h3>
+<p>See <strong>KJ</strong> and <strong>LE-09</strong>. Dose is <code>runSec × rpm_x10 / 600</code>, peaking near
+3.6 × 10⁸, inside a <code>uint32_t</code>.</p>
+<h3 id="devplan-fc3-how-slip-is-measured">FC3 — How slip is measured</h3>
+<p>Expected revolutions come from commanded motion; measured revolutions come
+from the hall sensor (<strong>EB1</strong>). Slip is <code>1 − measured/expected</code>, reported as a
+warning at 15% and latched as a fault at 40%. It needs ten expected
+revolutions before it reports anything, so a startup cannot trip it.</p>
+<h3 id="devplan-bb3-how-the-rubber-sheet-is-held-without-adhesive">BB3 — How the rubber sheet is held without adhesive</h3>
+<p><code>RUBBER_T</code> shrinks both liners' outer radius by the sheet thickness, so the
+printed sleeve's own springiness clamps the rubber against the barrel wall.
+It all comes out for cleaning, which a glued liner never does, and grit
+trapped in a glued seam is a permanent contamination source between stages.</p>
+<hr />
+<h2 id="devplan-verification">Verification</h2>
+<p>Every check runs without hardware. <code>./scripts/check-docs.sh</code> runs the ones
+this Mac can run, and says which it skipped and why.</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>What it proves</th>
+<th>Kind</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tools/tumbler_calc.py --selftest</code></td>
+<td>The mill constant is 42.3; a 4.5-inch barrel lands at 48–62 rpm, as a Lortone 3A does; geometry degenerates correctly</td>
+<td><strong>Against the world</strong></td>
+</tr>
+<tr>
+<td><code>tools/timer1_calc.py --selftest</code></td>
+<td>Timer1 arithmetic and its bound; both long-run AVR bugs reproduced numerically</td>
+<td>Mixed</td>
+</tr>
+<tr>
+<td><code>firmware/tmc2209.py</code></td>
+<td>CRC agrees with an independent implementation; the datagram shape matches the datasheet</td>
+<td>Against the datasheet</td>
+</tr>
+<tr>
+<td><code>firmware/main.py --selftest</code></td>
+<td>Control logic, including a simulated campaign landing at ~7 days</td>
+<td>Drift guard: the simulation is the system under test</td>
+</tr>
+<tr>
+<td><code>tools/render.sh</code></td>
+<td>The CAD parses, every part is a manifold solid, nothing collides (with a control)</td>
+<td>Against OpenSCAD</td>
+</tr>
+<tr>
+<td><code>firmware/arduino/test</code> <code>make</code></td>
+<td>The sketch compiles for the ATmega328P with no warnings</td>
+<td>Against the compiler; needs <code>avr-gcc</code></td>
+</tr>
+</tbody>
+</table>
+<p><em>"Against the world"</em> means the assertion would hold whatever this code
+said. <em>"Drift guard"</em> means it can only catch the code changing, not the code
+being wrong. The distinction is in the Docket framework's §4.</p>
+</article>
+<article id="changelog"><div class="head"><b>CHANGELOG.md</b><span>When</span></div>
+<h1>Rock tumbler — Changelog</h1>
+<p><strong>Current: 0.6.0</strong> — designed, computed and verified in software; nothing printed, wired or measured yet.</p>
+<blockquote>
+<p>Codes in brackets refer to <a href="features_and_functions.md"><code>features_and_functions.md</code></a>.
+The version is a single constant, in <a href="VERSION"><code>VERSION</code></a>.</p>
+</blockquote>
+<p><em>Every change gets a version and an entry here, in the same turn it is made:
+one version per change, never batched, never unversioned. Checked by
+<code>check_status.py</code>, which requires <code>README.md</code> to agree with the </em><em>Current</em><em>
+line above.</em></p>
+<p><em>Versions </em><em>0.1.0</em><em>–</em><em>0.5.1</em><em> were assigned retroactively on 2026-09-22, one
+per commit, when the Docket was adopted. Before then the project had no
+version. Their dates and contents come from the commit record; the version
+numbers themselves are reconstructed.</em></p>
+<hr />
+<h2 id="changelog-060-2026-09-22-the-docket-adopted">0.6.0 — 2026-09-22 — The Docket adopted</h2>
+<ul>
+<li>Adopted the Docket documentation framework (4.2.0) in place: <code>Gameplan.md</code>,
+  <code>features_and_functions.md</code>, <code>development_plan.md</code>, <code>critical_path.md</code>,
+  <code>open_questions.md</code>, <code>answered_questions.md</code>, <code>chapters/</code>, this changelog,
+  and the framework's scripts, including <code>scripts/check-docs.sh</code>.</li>
+<li>Seven domains confirmed by the owner (<strong>KM</strong>); eleven earlier decisions
+  confirmed as standing (<strong>KA</strong>–<strong>KK</strong>); platform recorded as local-only
+  (<strong>KL</strong>).</li>
+<li><code>LESSONS_LEARNED.md</code> renamed to <code>lessons_learned.md</code> and each lesson given a
+  permanent code, <strong>LE-01</strong>–<strong>LE-17</strong>. Found <strong>LE-18</strong> while verifying a claim
+  about <code>tools/render.sh</code>: its part-export loop reads stale STLs.</li>
+<li><code>WHATS_NEXT.md</code> redistributed into the critical path, the feature list and
+  four open questions (<strong>Q-01</strong>–<strong>Q-04</strong>), then archived with a manifest.</li>
+<li>Added the project's own gates to <code>check-docs.sh</code>: the four Python
+  self-tests, <code>tools/render.sh</code> when OpenSCAD is present, and the Arduino
+  compile check when <code>avr-gcc</code> is present.</li>
+<li>Added <code>VERSION</code>, the project's single version constant.</li>
+</ul>
+<h2 id="changelog-051-2026-09-21-project-state-documented-0ec8a74">0.5.1 — 2026-09-21 — Project state documented · <code>0ec8a74</code></h2>
+<ul>
+<li><code>WHATS_NEXT.md</code> (the phased plan, four decisions, risks) and
+  <code>LESSONS_LEARNED.md</code> (seventeen lessons) written.</li>
+</ul>
+<h2 id="changelog-050-2026-09-21-cad-rendered-for-the-first-time-63577c9">0.5.0 — 2026-09-21 — CAD rendered for the first time · <code>63577c9</code></h2>
+<ul>
+<li>OpenSCAD run against <code>cad/tumbler.scad</code> for the first time. It <strong>did not
+  parse</strong> (adjacent string literals, <strong>LE-02</strong>) and the rollers sat 3 mm off,
+  putting the barrel end on a flange. Both fixed.</li>
+<li><code>tools/render.sh</code> added: parse, manifold export, interference tests with a
+  control, renders (<strong>TB1</strong>). A <code>section</code> view added.</li>
+</ul>
+<h2 id="changelog-040-2026-09-21-rubber-sheet-option-327b8ec">0.4.0 — 2026-09-21 — Rubber sheet option · <code>327b8ec</code></h2>
+<ul>
+<li><code>RUBBER_T</code>: a rubber sheet sits behind either printed liner, held without
+  adhesive (<strong>BB3</strong>). Parts list split into a common chassis and three barrel
+  routes.</li>
+</ul>
+<h2 id="changelog-030-2026-09-20-lifter-bar-liner-2e2ef5f">0.3.0 — 2026-09-20 — Lifter-bar liner · <code>2e2ef5f</code></h2>
+<ul>
+<li>Symmetric lifter-bar liner alongside the hexagonal one (<strong>BB2</strong>, <strong>KG</strong>).
+  Damping and lift separated into two materials.</li>
+</ul>
+<h2 id="changelog-022-2026-09-20-build-or-buy-analysis-980e4a3">0.2.2 — 2026-09-20 — Build-or-buy analysis · <code>980e4a3</code></h2>
+<ul>
+<li>Honest cost comparison against commercial machines; recommendation to buy
+  the barrel (<strong>KH</strong>, <strong>KK</strong>).</li>
+</ul>
+<h2 id="changelog-021-2026-09-19-working-notes-8b99e5e">0.2.1 — 2026-09-19 — Working notes · <code>8b99e5e</code></h2>
+<ul>
+<li><code>CLAUDE.md</code> added so a fresh session inherits the project's context.</li>
+</ul>
+<h2 id="changelog-020-2026-09-19-arduino-route-ec40f3b">0.2.0 — 2026-09-19 — Arduino route · <code>ec40f3b</code></h2>
+<ul>
+<li>Arduino firmware for any STEP/DIR driver: Timer1 hardware stepping on D9
+  (<strong>FB1</strong>, <strong>KI</strong>), EEPROM ring odometer (<strong>FB2</strong>), wrap-safe timing and
+  integer dose arithmetic (<strong>FB3</strong>, <strong>KJ</strong>). Compile harness (<strong>TB2</strong>) and
+  <code>tools/timer1_calc.py</code> (<strong>TA2</strong>).</li>
+</ul>
+<h2 id="changelog-010-2026-09-19-first-design-45a32a1">0.1.0 — 2026-09-19 — First design · <code>45a32a1</code></h2>
+<ul>
+<li>Design calculator (<strong>TA1</strong>), parametric OpenSCAD model, and the Pico +
+  TMC2209 firmware (<strong>FA1</strong>, <strong>FA2</strong>) with revolution dosing, reversal and
+  slip detection.</li>
+</ul>
+</article>
+<article id="lessons"><div class="head"><b>lessons_learned.md</b><span>What broke</span></div>
+<h1>Rock tumbler — Lessons Learned</h1>
+<p><strong>Traps already hit, and what stops them recurring.</strong> A record of <strong>how each
+one hid</strong> — the ones worth writing down produced <em>plausible wrong output</em>
+rather than a crash, because those are the ones that survive testing.</p>
+<blockquote>
+<p><strong>A lesson without a check is a lesson you will relearn.</strong> Where a lesson
+has become a gate, its entry says so on a <strong>Gate:</strong> line. Codes are
+permanent: <code>LE-01</code> always means that lesson.</p>
+</blockquote>
+<p><em>Adopted into the Docket 2026-09-22. The group headings (Verification,
+Designing for the long run, …) are kept from the original file; each lesson
+now carries its own <code>LE</code> code.</em></p>
+<p>Written while the design was still warm. Most of these cost something to find
+out, and a few of them were embarrassing enough to be worth recording properly.</p>
+<hr />
+<h2 id="lessons-verification">Verification</h2>
+<h2 id="lessons-le-01-a-structural-check-is-not-a-syntax-check">LE-01 — A structural check is not a syntax check</h2>
+<p><strong>Gate:</strong> <code>tools/render.sh</code> parses the file with OpenSCAD itself; <code>check-docs.sh</code> runs it whenever OpenSCAD is installed.</p>
+<p><code>cad/tumbler.scad</code> was committed across four sessions and declared
+"structurally verified" every time. The check was a Python script counting
+<code>{}</code>, <code>()</code> and <code>[]</code> for balance, plus confirming every dispatched <code>PART</code> had a
+matching <code>module</code>.</p>
+<p>It all passed. <strong>The file did not parse.</strong> It had never parsed.</p>
+<p>Balanced brackets say nothing about grammar. A file can be perfectly balanced
+and syntactically meaningless. The only check that counts is running the real
+tool against it, and that check took ninety seconds once it was finally tried.</p>
+<blockquote>
+<p>If you find yourself inventing a proxy for "does this work", the proxy is
+probably the problem. Go and get the actual tool.</p>
+</blockquote>
+<h2 id="lessons-le-02-cross-language-muscle-memory-is-the-dangerous-kind">LE-02 — Cross-language muscle memory is the dangerous kind</h2>
+<p>The parse failure was this:</p>
+<pre><code class="language-c">&quot; mm (circumference at the mid-thickness, &quot;
+&quot;plus ~10 mm overlap)&quot;
+</code></pre>
+<p>C concatenates adjacent string literals. So does Python. <strong>OpenSCAD does
+not</strong> — it needs them as separate <code>str()</code> arguments.</p>
+<p>The bugs that survive review are the ones that look idiomatic. Nothing about
+those two lines looks wrong; they look wrong only in a language you weren't
+thinking in. Be most careful in the languages that <em>resemble</em> ones you know
+well.</p>
+<h2 id="lessons-le-03-a-test-that-can-only-report-success-is-not-a-test">LE-03 — A test that can only report success is not a test</h2>
+<p><strong>Gate:</strong> the self-intersection control in <code>tools/render.sh</code>, which must come back non-empty or the whole run fails.</p>
+<p>The boolean interference harness — does the barrel collide with the end plates
+or the roller flanges? — returned confident, wrong answers <strong>twice</strong>:</p>
+<ol>
+<li><strong>First version</strong> didn't strip the file's dispatch block, so setting
+   <code>PART="none"</code> fell through to <code>else assembly()</code> and every test rendered the
+   entire assembly instead of the intersection. Both tests reported collisions.</li>
+<li><strong>Second version</strong> fixed that but counted a stale file: OpenSCAD writes <em>no
+   output file at all</em> for an empty object, so each empty test silently
+   recounted the previous test's STL.</li>
+</ol>
+<p>The fix was a <strong>control</strong>: intersect the barrel with itself, which must be
+non-empty. If the control comes back empty, the harness is broken and every
+other result in the run is meaningless.</p>
+<blockquote>
+<p>Every verification harness needs at least one case whose answer you already
+know, and it should be a case that fails loudly if the plumbing is wrong.</p>
+</blockquote>
+<h2 id="lessons-le-04-identical-results-from-different-tests-are-a-smell">LE-04 — Identical results from different tests are a smell</h2>
+<p>The first broken harness reported <code>16280 facets</code> for two completely different
+intersections. Two unrelated questions returning byte-identical answers is
+almost never a coincidence — it means neither question was actually asked.</p>
+<p>Watch for suspiciously equal numbers. They are cheaper to notice than to debug.</p>
+<h2 id="lessons-le-05-grep--i-error-matches-noerror">LE-05 — <code>grep -i error</code> matches <code>NoError</code></h2>
+<p>The validation script marked all six parts as FAILED because OpenSCAD's
+<em>success</em> line is:</p>
+<pre><code>Status:     NoError
+</code></pre>
+<p>Case-insensitive substring matching on <code>error</code> is a trap in any toolchain that
+reports <code>NoError</code>, <code>ErrorCount: 0</code>, or <code>errors=0</code>. Match the tool's actual
+error prefix — <code>^ERROR:</code> — not a hopeful substring.</p>
+<h2 id="lessons-le-06-empty-output-is-not-the-same-as-no-output">LE-06 — Empty output is not the same as no output</h2>
+<p><strong>Gate:</strong> partial. <code>tools/render.sh</code> deletes the interference-test target before each run, but its part-export loop does not — a part that rendered empty would be reported <code>ok</code> from the previous run's STL. Found 2026-09-22 while adopting the Docket; see <strong>LE-18</strong>.</p>
+<p>OpenSCAD writes nothing when a result is empty. Many tools behave this way.
+If your script reads the output file afterwards, it reads whatever was there
+before.</p>
+<p><strong>Delete the target before you generate it.</strong> One line, and it removes a class
+of silent false-pass.</p>
+<h2 id="lessons-le-07-two-independent-implementations-agreeing-is-real-evidence">LE-07 — Two independent implementations agreeing is real evidence</h2>
+<p><strong>Gate:</strong> none yet — the agreement was checked by eye. ⬜ A gate comparing the OpenSCAD echo to <code>tumbler_calc.py</code> would make it permanent (<strong>TB5</strong>).</p>
+<p>The cradle geometry is computed twice — once in <code>tools/tumbler_calc.py</code> for the
+build sheet, once in <code>cad/tumbler.scad</code> for the model. They agree to four
+figures (97.7037 mm spacing, 58.2194 mm ride height).</p>
+<p>That agreement is worth far more than either number alone, because the two were
+written at different times in different languages and would have to be wrong
+in exactly the same way to be wrong together.</p>
+<h2 id="lessons-le-08-validate-the-model-against-something-real-before-writing-any-code">LE-08 — Validate the model against something real before writing any code</h2>
+<p><strong>Gate:</strong> <code>tools/tumbler_calc.py --selftest</code> asserts the 4.5-inch barrel lands at 48–62 rpm; <code>check-docs.sh</code> runs it.</p>
+<p>The single best check in the project cost nothing: the critical-speed formula
+<code>N = 42.3/√D</code>, run at 45%, predicts <strong>56 rpm</strong> for a 4.5-inch barrel. A Lortone
+3A — on hobbyists' benches since the 1960s — runs at 55–60.</p>
+<p>Physics and sixty years of folklore agreeing meant the whole physical model was
+sound before a single part was drawn. Find that anchor early. It is the
+cheapest confidence you will ever buy.</p>
+<hr />
+<h2 id="lessons-designing-for-the-long-run">Designing for the long run</h2>
+<h2 id="lessons-le-09-systems-that-run-for-weeks-have-their-own-bug-class">LE-09 — Systems that run for weeks have their own bug class</h2>
+<p><strong>Gate:</strong> <code>tools/timer1_calc.py --selftest</code> demonstrates both failures numerically on every run of <code>check-docs.sh</code>.</p>
+<p>Two faults in the Arduino firmware would have been invisible in every test and
+fatal in week four:</p>
+<table>
+<thead>
+<tr>
+<th>Bug</th>
+<th>Why it bites</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>millis()</code> wraps at <strong>49.7 days</strong></td>
+<td>A stage runs 42 days; a four-stage campaign runs months</td>
+<td><code>(uint32_t)(now - then) &gt;= gap</code>, which is correct across the wrap</td>
+</tr>
+<tr>
+<td>AVR <code>float</code> is <strong>32-bit</strong></td>
+<td>24-bit mantissa: above ~16.7 M, increments start vanishing. A microstep counter crosses that in half an hour; a realistic fractional accumulator drifts <strong>4% in fifty minutes</strong></td>
+<td>Integer dose arithmetic throughout</td>
+</tr>
+</tbody>
+</table>
+<p>Neither shows up in a ten-minute bench test. Both were found by asking "what
+does this look like on day 40?" — a question worth asking explicitly of
+anything designed to run unattended.</p>
+<h2 id="lessons-le-10-choose-the-dose-variable-the-physics-cares-about">LE-10 — Choose the dose variable the physics cares about</h2>
+<p>Every tumbling instruction says "run seven days." Abrasive wear follows
+<strong>Archard's law</strong> — volume removed is proportional to load × <em>sliding
+distance</em> — and sliding distance is <strong>revolutions</strong>, not hours.</p>
+<p>The striking part: a current commercial machine's headline feature is a memory
+function that survives a power cut. They solved exactly the same persistence
+problem, engineered storage for it, <strong>and stored the weaker variable</strong>.</p>
+<blockquote>
+<p>Before building the machinery to record a number, check you are recording the
+right number.</p>
+</blockquote>
+<h2 id="lessons-le-11-features-couple-across-subsystems-in-ways-you-cannot-anticipate">LE-11 — Features couple across subsystems in ways you cannot anticipate</h2>
+<p>Direction reversal was added for load packing and even tyre wear — a control
+decision, in firmware.</p>
+<p>It reached back three subsystems and constrained a <em>rubber profile inside the
+barrel</em>. Commercial barrels use an asymmetric scoop lifter, which lifts
+beautifully in one direction; a machine that reverses would drag it backwards
+through the charge half the time. So the printed lifter had to be a symmetric
+trapezoid — slightly worse at lifting, identical both ways.</p>
+<p>You only find couplings like that by designing the whole machine, not a pile of
+subsystems.</p>
+<hr />
+<h2 id="lessons-materials-and-sourcing">Materials and sourcing</h2>
+<h2 id="lessons-le-12-match-the-material-property-to-the-job-not-to-convenience">LE-12 — Match the material property to the job, not to convenience</h2>
+<p>TPU was the obvious liner material: printable, tough, wonderfully abrasion
+resistant. But the job is <em>two</em> jobs — <strong>damping</strong> and <strong>lift</strong> — and TPU is
+only good at one of them. It is resilient; it gives energy back rather than
+dissipating it as heat.</p>
+<p>Tire rubber (SBR/natural rubber, carbon black) is formulated for high
+hysteretic damping <em>and</em> abrasion resistance. A truck mudflap is nearly free.</p>
+<p>The answer was to split the jobs: <strong>rubber sheet for damping, printed TPU bars
+for geometry.</strong> Cheaper and better than either alone.</p>
+<h2 id="lessons-le-13-dont-print-what-you-should-buy">LE-13 — Don't print what you should buy</h2>
+<p>Three reasons not to print the barrel, each sufficient: layer lines leak over a
+six-week wet run, silicon carbide excavates layer boundaries, and a leaking
+barrel redistributes abrasive slurry across everything you own.</p>
+<p>Owning a 3D printer creates a quiet pressure to print everything. The barrel is
+the one component where the commercial product is genuinely better engineering,
+and it carries the project's largest failure risk. Buy it.</p>
+<h2 id="lessons-le-14-read-the-commercial-product-as-a-design-document">LE-14 — Read the commercial product as a design document</h2>
+<p>Two Amazon listing images were worth more than an hour of thinking:</p>
+<ul>
+<li>The control panel counts <strong>days</strong>, has <strong>three fixed speeds</strong>, and advertises
+  a memory function — which told us what the market values, and where it
+  settles for a proxy.</li>
+<li>The barrel cutaway showed <strong>discrete lifter bars, not hex flats</strong>, an
+  <strong>asymmetric scoop</strong> profile, <strong>tire rubber</strong>, and a <strong>compression lid with
+  no threads in the grit path</strong>.</li>
+</ul>
+<p>Competitors have already paid for a lot of iteration. The photographs are free.</p>
+<h2 id="lessons-le-15-check-marketing-numbers-for-internal-consistency">LE-15 — Check marketing numbers for internal consistency</h2>
+<p>The barrel claims "up to 75% quieter" and "70 dB → 40 dB" on the same image.
+30 dB is a <em>thousandfold</em> reduction in acoustic power, and 40 dB is roughly a
+quiet library. By the usual convention of 10 dB per halving of perceived
+loudness, 30 dB is ~87% — while 75% corresponds to about 20 dB.</p>
+<p><strong>Their own two numbers disagree.</strong> The mechanism was real and worth copying;
+the magnitude was not. You rarely need outside data to catch this — just make
+the claims agree with each other first.</p>
+<hr />
+<h2 id="lessons-honesty">Honesty</h2>
+<h2 id="lessons-le-16-say-plainly-when-the-economics-dont-work">LE-16 — Say plainly when the economics don't work</h2>
+<p>~$60 of parts against a $170–200 finished machine, for fifteen to twenty-five
+hours of work. That is well under minimum wage.</p>
+<p>Building it is still right — for the instrumentation, the parametric sizing,
+and because building it is the point. But "it's cheaper" is not a reason, and a
+design document that implies otherwise is lying to its reader.</p>
+<h2 id="lessons-le-17-distinguish-committed-from-confirmed">LE-17 — Distinguish "committed" from "confirmed"</h2>
+<p>For four rounds, the CAD was described as verified when it had only been
+<em>checked</em>. Writing "this has never actually been run" into the open-items list
+is what eventually made someone install OpenSCAD.</p>
+<p>Every document here now separates what was tested from what was merely
+written. <code>CLAUDE.md</code> carries an explicit <strong>Open items</strong> list for exactly this
+reason, and right now its most important line is that <em>nothing has been
+printed yet</em> — so every clearance in this repo remains nominal.</p>
+<hr />
+<h2 id="lessons-found-while-adopting-the-docket">Found while adopting the Docket</h2>
+<h2 id="lessons-le-18-a-fix-applied-to-one-loop-is-not-a-fix-applied-to-the-harness">LE-18 — A fix applied to one loop is not a fix applied to the harness</h2>
+<p><em>Found 2026-09-22, reading <code>tools/render.sh</code> to verify a claim about it.</em></p>
+<p><strong>LE-06</strong> was learned in <code>render.sh</code>'s interference tests: OpenSCAD writes no
+file for an empty result, so a stale file gets recounted. The fix, deleting
+the target first, went into the <code>facets()</code> helper those tests use.</p>
+<p>The same script's <strong>part-export loop</strong> has the identical shape and never got
+it. It exports each part and then checks <code>[ -s "$BUILD/$p.stl" ]</code>. A part
+that rendered empty would leave last run's STL in place and be reported
+<code>ok</code> with a plausible facet count. That is the exact false-pass <strong>LE-06</strong>
+describes, still live in the file that taught it.</p>
+<p>How it hid: the lesson was written up against the helper where it was
+<em>noticed</em>, not against the <em>pattern</em>. And every part currently renders
+non-empty, so nothing has exercised the gap.</p>
+<blockquote>
+<p>When a bug is fixed, search the file for the pattern, not only the line
+that failed.</p>
+</blockquote>
+<p><strong>Gate:</strong> ⬜ the fix is a separate change (<strong>TB1</strong>); this entry will say so
+when it lands.</p>
+</article>
+<article id="answered"><div class="head"><b>answered_questions.md</b><span>Settled</span></div>
+<h1>Rock tumbler — Answered Questions</h1>
+<p><strong>The settled half of <a href="open_questions.md"><code>open_questions.md</code></a>.</strong></p>
+<blockquote>
+<p>Nothing is ever deleted. A question that was asked and settled is part of the
+reasoning — including the ones whose answers were later superseded, which are
+often the most instructive.</p>
+</blockquote>
+<p>Each entry carries the answer, the date, and a pointer to where the decision was
+recorded. <strong>Put the ✅ in the <code>###</code> heading.</strong></p>
+<p><em>No questions have been answered yet. The four questions asked at adoption on
+2026-09-22 (what this is, the domains, the platform, and the earlier decisions)
+were asked before any <code>Q-nn</code> existed. Their answers went straight into
+<code>Gameplan.md</code> as </em><em>KK</em><em>, </em><em>KL</em><em> and </em><em>KM</em><em>, and as the confirmations on
+</em><em>KA</em><em>–</em><em>KK</em><em>.</em></p>
+<hr />
+</article>
+<a class="top" href="#top">↑ top</a>
+</main></wa-page><script type='module'>
+const f=document.getElementById('filter');
+const docs=()=>[...document.querySelectorAll('nav wa-details.docd')];
+
+/* **Filtering has to open what it finds.** A shut `wa-details` hides its
+   matches, so typing a word that occurs three documents down used to leave an
+   apparently empty rail — the search worked and looked broken. A document with
+   a hit is opened, one without is shut, and clearing the box puts every
+   accordion back the way the reader left it. */
+let beforeFilter=null;
+f.addEventListener('input',()=>{
+  const q=f.value.trim().toLowerCase();
+  if(q && beforeFilter===null) beforeFilter=docs().map(d=>d.open);
+  document.querySelectorAll('nav li').forEach(li=>{
+    li.classList.toggle('hide', q && !li.textContent.toLowerCase().includes(q));
+  });
+  document.querySelectorAll('.codes tbody tr').forEach(tr=>{
+    tr.classList.toggle('hide', q && !tr.textContent.toLowerCase().includes(q));
+  });
+  if(q){
+    docs().forEach(d=>{ d.open = d.textContent.toLowerCase().includes(q); });
+  }else if(beforeFilter){
+    docs().forEach((d,i)=>{ d.open = beforeFilter[i]; });
+    beforeFilter=null;
+  }
+});
+
+// Keep the sticky document label clear of the header bar. Measured, not
+// assumed: the bar's height changes with the theme's heading font.
+function topbarHeight(){
+  const bar=document.querySelector('.topbar');
+  if(!bar) return;
+  const h=Math.ceil(bar.getBoundingClientRect().height);
+  if(h>0) document.documentElement.style.setProperty('--topbar-h', h+'px');
+}
+topbarHeight();
+// Watch the bar rather than measure it once. A single reading was 54px against
+// a bar that settled at 61 — the heading font had not loaded yet — and the
+// document label then sat 7px over the controls, which is exactly the bug this
+// was fixing, smaller. ResizeObserver covers the font load, the theme switch,
+// a window resize and the mobile breakpoint without needing to know about any
+// of them.
+const bar=document.querySelector('.topbar');
+if(bar&&window.ResizeObserver) new ResizeObserver(topbarHeight).observe(bar);
+else addEventListener('resize', topbarHeight);
+
+const ea=document.getElementById('expandall');
+const ca=document.getElementById('collapseall');
+if(ea) ea.addEventListener('click',()=>{docs().forEach(d=>d.open=true); beforeFilter=null;});
+if(ca) ca.addEventListener('click',()=>{docs().forEach(d=>d.open=false); beforeFilter=null;});
+// scroll-spy: the tree shows where you are in the structure
+const links=[...document.querySelectorAll('.tree a[href^="#"]')];
+const byId=new Map(links.map(a=>[a.getAttribute('href').slice(1),a]));
+const seen=new Set();
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>e.isIntersecting?seen.add(e.target.id):seen.delete(e.target.id));
+  let best=null;
+  for(const a of links){const id=a.getAttribute('href').slice(1);
+    if(seen.has(id)){best=a;break;}}
+  links.forEach(a=>a.classList.remove('on'));
+  if(best){best.classList.add('on');
+    const li=best.closest('li.doc');
+    if(li){
+      const j=li.querySelector('a.jump'); if(j) j.classList.add('on');
+      /* Open the document you have scrolled into, so the rail follows the
+         reader rather than needing to be driven. */
+      const d=li.querySelector('wa-details.docd');
+      if(d&&!d.open&&!f.value.trim()) d.open=true;
+    }}
+},{rootMargin:'0px 0px -72% 0px'});
+document.querySelectorAll('article[id],article h2[id],article h3[id]')
+  .forEach(el=>io.observe(el));
+document.addEventListener('keydown',e=>{
+  if(e.key==='/'&&document.activeElement!==f){e.preventDefault();f.focus();}
+  if(e.key==='Escape'&&document.activeElement===f){f.value='';f.dispatchEvent(new Event('input'));f.blur();}
+  if((e.key==='t'||e.key==='T')&&document.activeElement!==f&&!e.metaKey&&!e.ctrlKey){flipTheme();}
+});
+/* ── Look and light/dark ──────────────────────────────────────────────────
+   Shared with the five RainZips pages through the same two localStorage keys,
+   so a choice made here is the choice they make. `dark()` resolves what is
+   ACTUALLY showing: an explicit choice if one exists, the OS otherwise —
+   because `data-theme` is absent, not "light", when nothing has been picked. */
+const root=document.documentElement;
+const store=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+const recall=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const dark=()=>root.getAttribute('data-theme')
+  ? root.getAttribute('data-theme')==='dark'
+  : matchMedia('(prefers-color-scheme: dark)').matches;
+
+function applyTheme(t){
+  root.setAttribute('data-theme',t);
+  root.classList.toggle('wa-dark', t==='dark');
+  store('docket.theme',t);
+  paintMermaid(); diag();
+}
+/* What the page actually resolved to, printed where it can be read without
+   opening devtools. `wa` says whether the theme stylesheets are live: if it
+   reads FAIL the colours are coming from the classic fallback, which is the
+   difference between "the switch is broken" and "the theme never loaded". */
+function diag(){
+  const el=document.getElementById('diag'); if(!el) return;
+  const cs=getComputedStyle(root);
+  const g=cs.getPropertyValue('--ground').trim()||'(unset)';
+  const wa=cs.getPropertyValue('--wa-color-surface-default').trim();
+  /* The look's *name*, not the theme it resolves to. `docket` is the default
+     theme with the natural palette, so reading the class printed `default`
+     — a diagnostic naming something the reader cannot find in the menu. */
+  const look=root.getAttribute('data-look')||recall('docket.look')||recall('tripwire.look')||'docket';
+  el.innerHTML='<b>'+look+'</b> · <b>'+(root.getAttribute('data-theme')||'auto')+
+    '</b> · wa '+(wa?'ok':'<span class="bad">FAIL</span>')+' · '+g;
+}
+/* The same table as the bootstrap in <head>, and it has to stay the same:
+   a look that paints one way before the script runs and another way after is
+   a flash somebody will report as a rendering bug. `docket` is the framework's
+   own theme — the default theme with the natural palette, which is what every
+   other Docket surface uses. */
+const LOOKS={docket:['default','natural'],mellow:['mellow','natural'],
+             playful:['playful','rudimentary']};
+function applyLook(l){
+  root.className=root.className.replace(/wa-theme-\S+|wa-palette-\S+/g,'').trim();
+  if(l==='classic'){root.setAttribute('data-look','classic');}
+  else{root.removeAttribute('data-look');
+    const q=LOOKS[l]||LOOKS.docket;
+    root.className=(root.className+' wa-theme-'+q[0]+' wa-palette-'+q[1]).trim();}
+  if(dark()) root.classList.add('wa-dark');
+  store('docket.look',l);
+}
+
+function flipTheme(){ applyTheme(dark()?'light':'dark'); }
+/* ── One handler, by delegation. LE-73. ──────────────────────────────────
+   This was bound twice — once on the host and once on `.look` by delegation —
+   with the delegated one guarded by `e.target !== themebtn` to stop them both
+   firing. **That guard was written for the wrong retargeting rule.**
+
+   A click on a component's *shadow* content is retargeted to the host, so
+   `e.target === themebtn` and the guard holds. But `<wa-icon>` inside
+   `<wa-button>` is a **slotted light-DOM child**, so a real click keeps
+   `e.target === WA-ICON`: the guard passes, the delegated handler fires, the
+   host handler fires too, and `flipTheme()` runs **twice — flipping the theme
+   and flipping it straight back**.
+
+   So the button was never dead. It worked exactly twice, which looks identical
+   to not working at all, and `t` worked because it is a third path that touches
+   neither. Diagnosed 2026-09-17 by clicking it with a real mouse rather than
+   `element.click()` — the JS call *did* work, because it targets the host and
+   the guard then suppressed the second fire. **The reproduction only exists
+   under a genuine click.**
+
+   One listener now, on the container, using `closest()`. It catches a click on
+   the host, on the slotted icon, and on shadow content retargeted to the host —
+   three cases, one path, and no arithmetic about which fired. */
+const themebtn=document.getElementById('themebtn');
+const lookbar=document.querySelector('.look')||document;
+lookbar.addEventListener('click',e=>{
+  const t=e.target;
+  if(t&&t.closest&&t.closest('#themebtn')) flipTheme();
+});
+const looksel=document.getElementById('look');
+if(looksel){
+  /* The same default as the bootstrap in <head> and as applyLook. Three
+     places is two too many, but they run in three contexts — inline head
+     script, page script, and the markup's own value attribute — and a
+     select that disagrees with the theme it is showing is a control that
+     lies about the state of the page. */
+  try{looksel.value=recall('docket.look')||recall('tripwire.look')||'docket'}catch(e){}
+  looksel.addEventListener('change',e=>{applyLook(e.target.value);diag();});
+}
+/* Nothing chosen yet? Then follow the OS as it changes, and stop the moment
+   the reader picks a side. */
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{
+  if(!root.getAttribute('data-theme')){ paintMermaid(); diag(); }
+});
+diag();
+
+/* ── Mermaid, re-themed rather than re-loaded ─────────────────────────────
+   Mermaid bakes its colours in at render, so a toggle has to put the source
+   back and run it again. The source is kept here before the first render,
+   because by the second one the element holds an <svg> and the text is gone. */
+let MM=null;
+const MSRC=new Map();
+document.querySelectorAll('.mermaid').forEach((el,i)=>{
+  const id='mm'+i; el.dataset.mid=id; MSRC.set(id, el.textContent);
+});
+function paintMermaid(){
+  if(!MM) return;
+  const d=dark();
+  MSRC.forEach((src,id)=>{
+    const el=document.querySelector('[data-mid="'+id+'"]');
+    if(!el) return;
+    el.removeAttribute('data-processed'); el.innerHTML=''; el.textContent=src;
+  });
+  MM.initialize({startOnLoad:false, theme:d?'dark':'neutral',
+    themeVariables:d
+      ? {background:'#0a0906',primaryColor:'#1f1b13',primaryTextColor:'#ece3cd',
+         primaryBorderColor:'#c9a35c',lineColor:'#c9a35c',
+         fontFamily:'IBM Plex Mono,monospace'}
+      : {background:'#efe7d4',primaryColor:'#f1ead8',primaryTextColor:'#2a2318',
+         primaryBorderColor:'#7a5c18',lineColor:'#7a5c18',
+         fontFamily:'IBM Plex Mono,monospace'}});
+  MM.run({querySelector:'.mermaid'});
+}
+import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs')
+  .then(({default:m})=>{MM=m; paintMermaid();})
+  .catch(()=>document.querySelectorAll('.mermaid').forEach(p=>{
+    p.style.whiteSpace='pre';p.style.fontFamily='monospace';p.style.fontSize='.75rem';
+    p.style.color='var(--soft)';
+    const d=p.parentElement.querySelector('.msrc'); if(d) d.open=true;
+  }));
+</script>
+</body></html>

@@ -1,0 +1,181 @@
+<!-- The Docket chrome: the banner, the navigation rail, and the script that
+     fills them. One file, injected into every Docket page by the server where
+     the page carries the WA_CHROME placeholder comment.
+
+     `wa-page` renders `slot="navigation"` as the desktop sidebar AND as the
+     mobile drawer, and supplies the drawer's hamburger itself — so the rail is
+     written once here and the header keeps only what the rail is not.
+
+     It is self-contained on purpose: the markup and the script that paints it
+     travel together, so a page gets a working rail by carrying one comment
+     rather than by remembering to call something. -->
+
+<div slot="banner" class="docket-banner" id="docket-banner" hidden>
+  <wa-icon name="crown"></wa-icon> Master Docket
+  <span class="said">a change here is a release</span>
+</div>
+
+<div slot="navigation-header" class="rail-head">
+  <div class="name" id="docket-railname">…</div>
+  <div class="wa-cluster wa-gap-2xs" style="margin-block-start:var(--wa-space-2xs)">
+    <wa-tag size="s" appearance="outlined" id="docket-railver">Docket</wa-tag>
+  </div>
+</div>
+
+<nav slot="navigation" class="rail" id="docket-rail">
+  <p class="rail-group">This project</p>
+  <a href="/" class="t-gray" data-path="/"><wa-icon name="house"></wa-icon> Console</a>
+  <a href="/dashboard" class="t-cyan" data-path="/dashboard"><wa-icon name="inbox"></wa-icon> Capture</a>
+  <a href="/questions" class="t-red" data-path="/questions"><wa-icon name="circle-question"></wa-icon> Questions
+    <span class="grow"></span><wa-badge id="docket-nav-open" variant="danger" hidden>0</wa-badge></a>
+  <a href="/docket" class="t-purple" data-path="/docket"><wa-icon name="book"></wa-icon> The Docket</a>
+
+  <p class="rail-group">Framework</p>
+  <a href="/dashboard#releases" class="t-green" id="docket-nav-releases"><wa-icon name="tag"></wa-icon> Releases
+    <span class="grow"></span><wa-badge id="docket-nav-behind" variant="warning" hidden>0</wa-badge></a>
+</nav>
+
+<div slot="navigation-footer" class="rail-foot">
+  <!-- The look picker lives with the navigation, not in the page, because it is
+       a property of every Docket surface rather than of this one. The choice is
+       stored under `docket.look` and the Docket viewer reads the same key. -->
+  <div class="wa-cluster wa-gap-2xs wa-align-items-center" style="margin-block-end:var(--wa-space-xs)">
+    <wa-select id="docket-look" size="s" value="docket" aria-label="Look"
+               style="flex:1 1 auto;min-width:7rem">
+      <wa-option value="docket">Docket</wa-option>
+      <wa-option value="mellow">Mellow</wa-option>
+      <wa-option value="playful">Playful</wa-option>
+    </wa-select>
+    <wa-tooltip for="docket-themebtn">Light or dark</wa-tooltip>
+    <wa-button id="docket-themebtn" size="s" appearance="outlined">
+      <wa-icon name="circle-half-stroke" label="Light or dark"></wa-icon>
+    </wa-button>
+  </div>
+  <div class="quiet" style="font-size:var(--wa-font-size-xs)" id="docket-railfoot"></div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
+  };
+
+  /* Which entry is the page you are on, decided from the URL rather than from
+     a per-page attribute somebody has to remember to set. */
+  var here = location.pathname.replace(/\/+$/, '') || '/';
+  var links = document.querySelectorAll('#docket-rail a[data-path]');
+  for (var i = 0; i < links.length; i++) {
+    if (links[i].getAttribute('data-path') === here) {
+      links[i].setAttribute('aria-current', 'page');
+    }
+  }
+
+  /* A badge showing `0` is noise. A count of nothing hides. */
+  function badge(id, n) {
+    var el = $(id);
+    if (!el) return;
+    el.textContent = n;
+    el.hidden = !n;
+  }
+
+  /* Releases is a tab on the capture dashboard and a destination everywhere
+     else. Both are the same link; only one of them needs intercepting. */
+  document.addEventListener('click', function (e) {
+    if (!e.target || !e.target.closest) return;
+    if (!e.target.closest('#docket-nav-releases')) return;
+    var tabs = document.getElementById('tabs');
+    if (tabs) { e.preventDefault(); tabs.active = 'releases'; }
+  });
+
+  /* ── Look and light/dark ─────────────────────────────────────────────────
+     The same table as `theme.html`'s pre-paint script and as the viewer's. It
+     has to stay the same: a look that paints one way before the script runs and
+     another way after is a flash somebody reports as a rendering bug. */
+  var LOOKS = { docket:   ['default', 'natural'],
+                mellow:  ['mellow',  'natural'],
+                playful: ['playful', 'rudimentary'] };
+
+  function applyLook(l) {
+    var h = document.documentElement;
+    var q = LOOKS[l] || LOOKS.docket;
+    h.className = (h.className.replace(/wa-theme-\S+|wa-palette-\S+/g, '') +
+                   ' wa-theme-' + q[0] + ' wa-palette-' + q[1]).trim();
+    if (h.getAttribute('data-theme') === 'dark') h.classList.add('wa-dark');
+    try { localStorage.setItem('docket.look', l); } catch (e) {}
+  }
+
+  var look = $('docket-look');
+  if (look) {
+    try { look.value = localStorage.getItem('docket.look') || 'docket'; } catch (e) {}
+    /* `wa-select` fires `change` on the host; read the element rather than the
+       event target, which retargets from shadow content. */
+    look.addEventListener('change', function () { applyLook(look.value); });
+  }
+
+  /* One delegated listener. A click on slotted light-DOM content keeps its own
+     target while a click on shadow content retargets to the host, so binding
+     both fires twice and the theme flips straight back — which is
+     indistinguishable from a dead button. */
+  document.addEventListener('click', function (e) {
+    if (!e.target || !e.target.closest || !e.target.closest('#docket-themebtn')) return;
+    var h = document.documentElement;
+    var next = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    h.setAttribute('data-theme', next);
+    h.classList.toggle('wa-dark', next === 'dark');
+    try { localStorage.setItem('docket.theme', next); } catch (err) {}
+  });
+
+  fetch('/api/state').then(function (r) { return r.json(); }).then(function (s) {
+    var v = s.docket || {};
+    var name = (s.project || '').replace(/^The\s+/, '');
+    if (name) $('docket-railname').textContent = name;
+
+    var rv = $('docket-railver');
+    rv.textContent = 'Docket ' + (v.installed || 'unstamped');
+    if (v.master) {
+      rv.setAttribute('variant', 'brand');
+      rv.setAttribute('appearance', 'filled');
+      $('docket-banner').hidden = false;
+    } else if (v.behind || v.unstamped) {
+      rv.setAttribute('variant', 'warning');
+    }
+
+    badge('docket-nav-open', s.counts ? s.counts.open : 0);
+    badge('docket-nav-behind', v.behind ? v.changes.length : 0);
+
+    $('docket-railfoot').innerHTML = v.master
+      ? 'Master — defines <b>' + esc(v.current || '') + '</b>'
+      : v.behind ? '<b>' + esc(v.current) + '</b> available'
+      : v.current ? 'framework ' + esc(v.current)
+      : 'no skill on this machine';
+    /* **A server running older code than the project has, saying so.**
+       Editing a file changes nothing for a process already holding it in
+       memory, so an update lands and the new surface simply is not there —
+       indistinguishable from a feature that does not work. This is the only
+       thing on the page allowed to shout, because it is the only one that
+       explains an absence. */
+    var st = s.staleness;
+    if (st && st.stale) {
+      var bar = document.createElement('div');
+      bar.setAttribute('style',
+        'position:fixed;inset-block-start:0;inset-inline:0;z-index:9999;' +
+        'padding:.45rem .9rem;font:500 14px/1.4 system-ui,sans-serif;' +
+        'background:#7a4a00;color:#fff;display:flex;gap:.75rem;align-items:center');
+      bar.innerHTML = '<span>&#9888;</span><span><b>This server is out of date.</b> '
+        + 'It started on ' + esc(st.loaded || 'an earlier version')
+        + (st.now && st.now !== st.loaded ? '; the project is now on <b>' + esc(st.now) + '</b>' : '')
+        + '. Anything added since will not appear until you restart it.</span>'
+        + '<code style="margin-inline-start:auto;opacity:.85">Ctrl-C, then ./scripts/docket-server.py</code>';
+      document.body.appendChild(bar);
+      document.body.style.paddingBlockStart = '2.6rem';
+    }
+  }).catch(function () {
+    /* The rail is furniture. A page whose state call fails still has to work,
+       so a failure here is silent by design rather than by neglect. */
+  });
+})();
+</script>

@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Open questions — the Docket</title>
+<!--{{WA_HEAD}}-->
+<style>
+  html, body { min-height: 100%; padding: 0; margin: 0; }
+  wa-page { --menu-width: auto; }
+  .gutter { padding-inline: var(--wa-space-l); }
+  .lede { color: var(--wa-color-neutral-on-quiet); max-width: 70ch; }
+  .brand { font-weight: var(--wa-font-weight-bold); }
+  .grow { flex: 1 1 auto; }
+  .num { font-variant-numeric: tabular-nums; }
+  .quiet { color: var(--wa-color-neutral-on-quiet); }
+
+  /* One row per question. The whole row is the affordance — a reader scanning
+     seventy-eight of them should not have to find a link inside each one. */
+  /* **Urgency is carried by the row, not by a dot.** Seventy-eight rows with a
+     7px dot each is a list you have to read; the same rows tinted by tone are a
+     list you can sort by eye. The ground is the hue's faintest tint and the
+     band is its border colour, so a blocking question is visibly a different
+     kind of thing from a whenever. */
+  .q { border-block-end: var(--wa-border-width-s) solid var(--wa-color-surface-border);
+       border-inline-start: var(--wa-border-width-l, 3px) solid var(--c-line);
+       background: color-mix(in srgb, var(--c-bg) 55%, transparent); }
+  .qhead { display: flex; gap: var(--wa-space-s); align-items: baseline;
+           padding: var(--wa-space-s) var(--wa-space-s); cursor: pointer; }
+  .qhead:hover { background: color-mix(in srgb, var(--c-bg) 80%, transparent); }
+  .code { font-family: var(--wa-font-family-code); font-weight: var(--wa-font-weight-bold);
+          min-width: 4.2rem; color: var(--c-ink); }
+  .qtitle { flex: 1 1 auto; }
+  .qgist { color: var(--wa-color-neutral-on-quiet); font-size: var(--wa-font-size-s);
+           margin: var(--wa-space-3xs) 0 0; }
+  .dot { width: .7rem; height: .7rem; border-radius: 999px; flex: 0 0 auto;
+         display: inline-block; background: var(--c-ink); }
+  .body { padding: 0 var(--wa-space-s) var(--wa-space-m) 4.9rem; }
+  .md { display: block; font-size: var(--wa-font-size-s); line-height: 1.55;
+        max-height: 26rem; overflow-y: auto;
+        border-inline-start: var(--wa-border-width-l, 3px) solid var(--wa-color-surface-border);
+        padding-inline-start: var(--wa-space-s); }
+  .md :first-child { margin-block-start: 0; }
+  .md :last-child { margin-block-end: 0; }
+  .md table { border-collapse: collapse; margin-block: var(--wa-space-2xs); }
+  .md th, .md td { border: var(--wa-border-width-s) solid var(--wa-color-surface-border);
+                   padding: var(--wa-space-3xs) var(--wa-space-2xs); text-align: start; }
+  .md code { font-family: var(--wa-font-family-code); font-size: .92em;
+             background: var(--wa-color-neutral-fill-quiet);
+             padding: 0 .25em; border-radius: var(--wa-border-radius-s); }
+  .md blockquote { margin-inline: 0; padding-inline-start: var(--wa-space-s);
+                   border-inline-start: var(--wa-border-width-s) solid var(--wa-color-surface-border);
+                   color: var(--wa-color-neutral-on-quiet); }
+  .prev { border-inline-start: var(--wa-border-width-l, 3px) solid var(--wa-color-success-fill-loud);
+          padding: var(--wa-space-2xs) var(--wa-space-s);
+          margin-block: var(--wa-space-2xs); font-size: var(--wa-font-size-s); }
+</style>
+</head>
+<body>
+<wa-page mobile-breakpoint="900">
+
+  <!--{{WA_CHROME}}-->
+
+  <header slot="header" class="gutter wa-cluster wa-align-items-center">
+    <span class="brand docket-headname" id="brand">Open questions</span>
+    <span class="grow"></span>
+    <span id="counts" class="wa-cluster wa-gap-2xs"></span>
+    <!-- The framework version, asked of the server. It was a hardcoded
+         `v1.1.0` here — a number that could only ever be right by accident,
+         and which said nothing about the framework anyway. -->
+    <wa-tag size="s" appearance="outlined" id="ver">Docket</wa-tag>
+  </header>
+
+  <main class="gutter wa-stack wa-gap-m">
+
+    <!-- The project's name first and largest: this page looks identical across
+         every project that adopted the Docket. -->
+    <div class="docket-masthead" id="masthead">
+      <h1 class="docket-project" id="proj">Open questions</h1>
+      <p class="docket-tagline">
+        Everything still waiting on a decision. Answer one here and it is stored
+        straight away; the Docket itself is updated afterwards by hand, because
+        closing a question properly means clearing its marks from every document
+        that mentions it.
+      </p>
+    </div>
+
+    <div class="wa-cluster wa-gap-s wa-align-items-end">
+      <wa-select id="sort" label="Sort by" size="s" value="urgency">
+        <wa-option value="urgency">Urgency, then newest</wa-option>
+        <wa-option value="recent">Most recently asked</wa-option>
+        <wa-option value="number">Number</wa-option>
+      </wa-select>
+      <wa-select id="show" label="Show" size="s" value="open">
+        <wa-option value="open">Still open</wa-option>
+        <wa-option value="blocking">Blocking only</wa-option>
+        <wa-option value="soon">Needed soon</wa-option>
+        <wa-option value="mine">Mine to answer</wa-option>
+        <wa-option value="answered">Answered here, not yet filed</wa-option>
+        <wa-option value="all">Everything</wa-option>
+      </wa-select>
+      <wa-input id="find" label="Find" size="s" placeholder="word, code or number"></wa-input>
+    </div>
+
+    <div id="list"><p class="quiet">loading…</p></div>
+  </main>
+</wa-page>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var DATA = [], SUM = {};
+
+  function el(tag, cls, txt) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (txt != null) e.textContent = String(txt);
+    return e;
+  }
+  function j(url, opts) {
+    return fetch(url, opts).then(function (r) {
+      return r.json().then(function (b) { return { ok: r.ok, body: b }; });
+    });
+  }
+
+  /* The name and the framework version, from the state every other Docket page
+     already fetches. The page works without this — it is about the questions —
+     so a failure here is silent by design rather than by neglect. */
+  function identify() {
+    fetch('/api/state').then(function (r) { return r.json(); }).then(function (d) {
+      var name = (d.project || '').replace(/^The\s+/, '');
+      if (name) {
+        $('proj').textContent = name;
+        $('brand').textContent = name + ' — questions';
+        document.title = name + ' — open questions';
+      }
+      var v = d.docket, tag = $('ver');
+      if (!v || !tag) return;
+      if (v.master) { $('masthead').classList.add('is-master'); }
+      tag.textContent = 'Docket ' + (v.installed || 'unstamped');
+      if (v.master) { tag.title = 'The master Docket defines this version'; return; }
+      if (v.unstamped || v.behind) {
+        tag.setAttribute('variant', 'warning');
+        tag.setAttribute('appearance', 'filled');
+        tag.title = v.unstamped
+          ? 'No .docket-version — run ./scripts/docket.sh --update --apply'
+          : v.current + ' is available. Run ./scripts/docket.sh --update';
+      }
+    }).catch(function () {});
+  }
+
+  function counts() {
+    var c = $('counts');
+    c.innerHTML = '';
+    [['danger', SUM.blocking, 'blocking'],
+     ['warning', SUM.soon, 'soon'],
+     ['neutral', SUM.whenever, 'whenever'],
+     ['success', SUM.answered_waiting, 'answered']].forEach(function (p) {
+      if (!p[1]) return;
+      var t = el('wa-tag', null, p[1] + ' ' + p[2]);
+      t.setAttribute('variant', p[0]); t.setAttribute('size', 's');
+      c.appendChild(t);
+    });
+  }
+
+  /* ── Reading a Web Awesome control before it exists ──────────────────────
+     `wa-input` and `wa-select` are custom elements. **Until the loader upgrades
+     them, `.value` is `undefined`** — so `$('find').value.trim()` threw on first
+     paint, `draw()` never ran, and the page rendered its header counts and then
+     nothing at all. It looked like "no questions" rather than like an error,
+     which is why it needed the console to find.
+
+     Two halves to the fix: read defensively, and do the first render only once
+     the components are defined so the selects report their real values. */
+  function val(id, dflt) {
+    var e = $(id);
+    var v = e && e.value;
+    return (v === undefined || v === null) ? (dflt || '') : v;
+  }
+  /* **No waiting on `customElements.whenDefined`.** The first attempt did, and
+     hung forever: the Web Awesome loader registers a component on demand, so
+     `whenDefined('wa-textarea')` never resolves on a page that has not created
+     one yet — the list stayed on "loading…" instead of throwing, which is worse
+     than the bug it replaced. `val()` already makes an un-upgraded control
+     harmless, and the defaults it falls back to are the ones in the markup. */
+
+  function sorted(rows) {
+    var how = val('sort', 'urgency');
+    var c = rows.slice();
+    if (how === 'number') c.sort(function (a, b) { return a.n - b.n; });
+    else if (how === 'recent') c.sort(function (a, b) {
+      return String(b.raised || '').localeCompare(String(a.raised || '')) || b.n - a.n;
+    });
+    else c.sort(function (a, b) {
+      return a.priority_rank - b.priority_rank ||
+             String(b.raised || '').localeCompare(String(a.raised || '')) || b.n - a.n;
+    });
+    return c;
+  }
+
+  function filtered() {
+    var show = val('show', 'open'), q = val('find').trim().toLowerCase();
+    return DATA.filter(function (r) {
+      if (show === 'blocking' && r.priority !== '\u{1F534}') return false;
+      if (show === 'soon' && r.priority !== '\u{1F7E1}') return false;
+      if (show === 'mine' && r['for']) return false;
+      if (show === 'answered' && !r.has_answer) return false;
+      if (show === 'open' && r.answered) return false;
+      if (q) {
+        var hay = (r.code + ' ' + r.title + ' ' + r.gist + ' ' +
+                   (r.affects || []).join(' ')).toLowerCase();
+        if (hay.indexOf(q) === -1) return false;
+      }
+      return true;
+    });
+  }
+
+  function answerBox(r, host) {
+    var wrap = el('div', 'wa-stack wa-gap-2xs');
+    (r.answers || []).forEach(function (a) {
+      var p = el('div', 'prev');
+      p.appendChild(el('div', null, a.answer));
+      p.appendChild(el('div', 'quiet',
+        a.at.replace('T', ' ') + (a.decided ? ' — marked as settling it' : ' — a note')));
+      wrap.appendChild(p);
+    });
+    var ta = el('wa-textarea');
+    ta.setAttribute('label', r.answers && r.answers.length ? 'Add to your answer' : 'Your answer');
+    ta.setAttribute('rows', '4');
+    ta.setAttribute('resize', 'auto');
+    wrap.appendChild(ta);
+    var row = el('div', 'wa-cluster wa-gap-s wa-align-items-center');
+    var sw = el('wa-switch', null, 'This settles it');
+    row.appendChild(sw);
+    var btn = el('wa-button', null, 'Save answer');
+    btn.setAttribute('variant', 'brand');
+    btn.setAttribute('size', 's');
+    btn.addEventListener('click', function () {
+      var text = ta.value;
+      if (!text || !text.trim()) { ta.setAttribute('label', 'Type something first'); return; }
+      btn.loading = true;
+      j('/api/questions/' + encodeURIComponent(r.code) + '/answer', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ answer: text, decided: sw.checked })
+      }).then(function (res) {
+        btn.loading = false;
+        if (!res.ok) { ta.setAttribute('label', res.body.error || 'did not save'); return; }
+        load();
+      });
+    });
+    row.appendChild(btn);
+    wrap.appendChild(row);
+    host.appendChild(wrap);
+  }
+
+  function draw() {
+    var host = $('list');
+    host.innerHTML = '';
+    var rows = sorted(filtered());
+    if (!rows.length) { host.appendChild(el('p', 'quiet', 'nothing matches')); return; }
+    host.appendChild(el('p', 'quiet', rows.length + ' of ' + DATA.length));
+    rows.forEach(function (r) {
+      /* The same three tones the capture dashboard gives the priorities, so a
+         question is the same colour wherever it is seen. */
+      var TONE = { blocking: 't-red', soon: 't-orange', whenever: 't-gray' };
+      var box = el('div', 'q ' + (TONE[r.priority_name] || 't-gray'));
+      var head = el('div', 'qhead');
+      head.appendChild(el('span', 'dot d-' + r.priority_name));
+      head.appendChild(el('span', 'code', r.code));
+      var mid = el('span', 'qtitle');
+      mid.appendChild(el('div', null, r.title));
+      if (r.gist) mid.appendChild(el('p', 'qgist', r.gist.slice(0, 180)));
+      head.appendChild(mid);
+      if (r['for']) {
+        var f = el('wa-tag', null, r['for']);
+        f.setAttribute('size', 's'); f.setAttribute('variant', 'neutral');
+        head.appendChild(f);
+      }
+      if (r.has_answer) {
+        var a = el('wa-tag', null, r.decided ? 'answered' : 'note');
+        a.setAttribute('size', 's');
+        a.setAttribute('variant', r.decided ? 'success' : 'brand');
+        head.appendChild(a);
+      }
+      head.appendChild(el('span', 'quiet num', r.raised || '—'));
+      box.appendChild(head);
+
+      var body = el('div', 'body');
+      body.hidden = true;
+      head.addEventListener('click', function () {
+        body.hidden = !body.hidden;
+        if (!body.hidden && !body.dataset.built) {
+          body.dataset.built = '1';
+          /* **Rendered, not printed.** The body was going in as text, so
+             `**Working assumption:**` arrived with its asterisks showing and a
+             table arrived as pipes. `wa-markdown` parses it in the browser —
+             the content is our own Docket files on a local page, so the
+             component's warning about unsanitised input does not apply here.
+             The markdown goes in a `script type="text/markdown"` child, which
+             is how the component takes it and why the text is never parsed as
+             anything executable. */
+          var md = document.createElement('wa-markdown');
+          md.className = 'md';
+          var sc = document.createElement('script');
+          sc.type = 'text/markdown';
+          sc.textContent = r.body;
+          md.appendChild(sc);
+          body.appendChild(md);
+          if (r.affects && r.affects.length) {
+            var af = el('p', 'quiet');
+            af.textContent = 'Touches: ' + r.affects.join(', ');
+            body.appendChild(af);
+          }
+          answerBox(r, body);
+        }
+      });
+      box.appendChild(body);
+      host.appendChild(box);
+    });
+  }
+
+  function load() {
+    j('/api/questions?all=1').then(function (r) {
+      DATA = r.body.questions || [];
+      SUM = r.body.summary || {};
+      counts();
+      draw();
+    });
+  }
+
+  ['sort', 'show'].forEach(function (id) {
+    $(id).addEventListener('change', draw);
+  });
+  $('find').addEventListener('input', draw);
+  identify();
+  load();
+})();
+</script>
+</body>
+</html>

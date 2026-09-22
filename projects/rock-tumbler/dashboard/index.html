@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Capture — the Docket</title>
+<!--{{WA_HEAD}}-->
+<style>
+  html, body { min-height: 100%; margin: 0; padding: 0; }
+  wa-page { --menu-width: auto; }
+  .gutter { padding-inline: var(--wa-space-l); }
+  .grow { flex: 1 1 auto; }
+  .quiet { color: var(--wa-color-neutral-on-quiet); }
+  .num { font-variant-numeric: tabular-nums; }
+  .lede { color: var(--wa-color-neutral-on-quiet); max-width: 72ch; }
+
+  /* A section is a tone. The heading carries the hue's ink and sits on a rule
+     in the hue's border colour — so the eye lands on "Run" or "Inbox" as a
+     colour first and a word second. */
+  section.band { margin-block-start: var(--wa-space-2xl); }
+  section.band > h2 {
+    margin: 0 0 var(--wa-space-2xs);
+    padding-block-end: var(--wa-space-3xs);
+    border-block-end: var(--wa-border-width-l, 3px) solid var(--c-line);
+    color: var(--c-ink);
+    font-size: var(--wa-font-size-xl);
+  }
+
+  /* The counts. These were four white boxes holding the largest numerals on the
+     page — the two facts most worth reacting to, in no colour at all. */
+  .stats { display: grid; gap: var(--wa-space-xs); padding: 0; margin: 0; list-style: none;
+           grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); }
+  .stats li {
+    background: var(--c-bg);
+    border: var(--wa-border-width-s) solid var(--c-line);
+    border-radius: var(--wa-border-radius-l);
+    padding: var(--wa-space-s) var(--wa-space-m);
+  }
+  .stats b { display: block; font-size: var(--wa-font-size-3xl); line-height: 1;
+             font-family: var(--wa-font-family-heading); font-weight: 600;
+             color: var(--c-ink); font-variant-numeric: tabular-nums; }
+  .stats span { font-family: var(--wa-font-family-code); font-size: var(--wa-font-size-xs);
+                letter-spacing: .08em; text-transform: uppercase; color: var(--c-ink);
+                opacity: .85; }
+  /* Zero is not news. A count of nothing keeps its tone but stops shouting. */
+  .stats li.nil { opacity: .55; }
+
+  .q-title { margin: var(--wa-space-2xs) 0 var(--wa-space-xs);
+             font-size: var(--wa-font-size-l); color: var(--c-ink); }
+  .q-assume { font-size: var(--wa-font-size-s);
+              border-inline-start: var(--wa-border-width-l, 3px) solid var(--c-line);
+              padding-inline-start: var(--wa-space-s); margin-block: 0 var(--wa-space-s); }
+  .code { font-family: var(--wa-font-family-code); font-weight: var(--wa-font-weight-bold);
+          color: var(--c-ink); }
+  /* The answer box sits on a tinted card, so it needs its own ground to read as
+     somewhere to type rather than as more card. */
+  wa-card.toned wa-textarea::part(base) { background: var(--wa-color-surface-default); }
+
+  /* Tab panels inherit the tone of the section they hold, so the colour does
+     not stop at the tab strip. */
+  wa-tab-panel::part(base) { padding-block: var(--wa-space-m) 0; }
+  wa-tab[panel]::part(base) { font-family: var(--wa-font-family-heading); }
+
+  /* ── Releases ──────────────────────────────────────────────────────────── */
+  .rel { margin-block-end: var(--wa-space-2xs); }
+  .rel::part(base) {
+    border: var(--wa-border-width-s) solid var(--wa-color-surface-border);
+    border-radius: var(--wa-border-radius-m);
+    background: var(--wa-color-surface-default);
+  }
+  /* A release this project does not have is the one worth looking at. */
+  .rel-missing::part(base) {
+    border-color: var(--c-line);
+    background: var(--c-bg);
+  }
+  .rel-sum { display: flex; flex-wrap: wrap; align-items: baseline;
+             gap: var(--wa-space-xs); width: 100%; }
+  .rel-date { font-family: var(--wa-font-family-code);
+              font-size: var(--wa-font-size-xs); }
+  .rel-what { flex: 1 1 14rem; }
+  .rel-bullets { margin: 0; padding-inline-start: var(--wa-space-l);
+                 font-size: var(--wa-font-size-s); line-height: 1.55; }
+  .rel-bullets li { margin-block-end: var(--wa-space-3xs); }
+  .rel-do { color: var(--c-ink); }
+  /* The line between what this project has and what it has not. */
+  .rel-rule { display: flex; align-items: center; gap: var(--wa-space-s);
+              margin-block: var(--wa-space-m) var(--wa-space-xs);
+              font-family: var(--wa-font-family-code);
+              font-size: var(--wa-font-size-xs); letter-spacing: .08em;
+              text-transform: uppercase; color: var(--wa-color-neutral-on-quiet); }
+  .rel-rule::after { content: ""; flex: 1 1 auto; height: 1px;
+                     background: var(--wa-color-surface-border); }
+
+  pre { background: var(--c-bg, var(--wa-color-neutral-fill-quiet));
+        border: var(--wa-border-width-s) solid var(--c-line, var(--wa-color-surface-border));
+        border-radius: var(--wa-border-radius-l); padding: var(--wa-space-m);
+        overflow: auto; max-height: 26rem; font-family: var(--wa-font-family-code);
+        font-size: var(--wa-font-size-s); line-height: 1.5; white-space: pre-wrap; }
+
+  /* Without the kit nothing upgrades and the page becomes an unstyled outline.
+     These keep it usable while saying, by looking plain, that something is
+     wrong — which is better than looking fine and being half-dead. */
+  wa-card:not(:defined) { display: block; border: 1px solid #ccc; border-radius: 8px;
+                          padding: 14px 16px; margin-block-end: 12px }
+  wa-button:not(:defined), wa-tag:not(:defined) { display: inline-block; border: 1px solid #bbb;
+                          border-radius: 999px; padding: 2px 10px; font-size: 13px }
+  wa-textarea:not(:defined) { display: block; margin-block: 8px }
+</style>
+</head>
+<body>
+<wa-page mobile-breakpoint="900">
+
+  <!--{{WA_CHROME}}-->
+
+  <header slot="header" class="gutter wa-cluster wa-align-items-center">
+    <span class="quiet docket-headname" id="brandsmall">Capture</span>
+    <span class="grow"></span>
+  </header>
+
+  <main class="gutter">
+
+    <!-- **The name, at the size of the question it answers.** Which project is
+         this? It is asked of every Docket console on the machine, and they are
+         otherwise identical. -->
+    <div class="docket-masthead" id="masthead">
+      <div class="docket-mast-row">
+        <div>
+          <h1 class="docket-project" id="proj">…</h1>
+          <p class="docket-tagline" id="current"></p>
+        </div>
+        <div class="wa-cluster wa-gap-2xs wa-align-items-center" id="versionbox"></div>
+      </div>
+      <div id="versionwhat"></div>
+    </div>
+
+    <ul class="stats" id="stats"></ul>
+
+    <!-- The sections are tabs rather than a scroll. Four of the five are things
+         you do; the fifth is a thing you read. Stacking them meant the inbox —
+         the one that says work is waiting — was always below the fold. -->
+    <wa-tab-group id="tabs" placement="top">
+      <wa-tab panel="questions" slot="nav">
+        Open questions
+        <wa-badge id="tab-open" variant="danger" hidden>0</wa-badge>
+      </wa-tab>
+      <wa-tab panel="capture" slot="nav">Capture</wa-tab>
+      <wa-tab panel="run" slot="nav">Run</wa-tab>
+      <wa-tab panel="inbox" slot="nav">
+        Inbox
+        <wa-badge id="tab-inbox" variant="warning" hidden>0</wa-badge>
+      </wa-tab>
+      <wa-tab panel="releases" slot="nav">Releases</wa-tab>
+
+      <wa-tab-panel name="questions" class="t-red">
+        <p class="lede">Answering here appends to <code>docket-inbox.md</code>. It does not
+          edit the Docket — filing an answer means marking it ✅, recording the decision,
+          removing its ❓ markers and archiving the entry, which is the agent's job.
+          <strong>You answer; the agent files.</strong></p>
+        <div class="wa-grid wa-gap-m" style="--min-column-size:21rem" id="questions"></div>
+      </wa-tab-panel>
+
+      <wa-tab-panel name="capture" class="t-cyan">
+        <div class="toned">
+          <wa-textarea id="idea" rows="4" resize="auto"
+            placeholder="Anything — a feature, a worry, a half-thought. It lands in the inbox with a timestamp and the agent picks it up next session."></wa-textarea>
+          <div class="wa-cluster wa-gap-xs" style="margin-block-start:var(--wa-space-xs)">
+            <wa-button id="idea-save" variant="brand">
+              <wa-icon slot="start" name="plus"></wa-icon>Capture
+            </wa-button>
+          </div>
+        </div>
+      </wa-tab-panel>
+
+      <wa-tab-panel name="run" class="t-indigo">
+        <div class="toned">
+          <div class="wa-cluster wa-gap-xs" id="actions"></div>
+          <p class="lede" style="margin-block-end:0">An allowlist, defined in
+            <code>docket-server.py</code>. Anything not on it is refused — an allowlist
+            is the whole security model here.</p>
+        </div>
+        <pre id="out" hidden></pre>
+      </wa-tab-panel>
+
+      <wa-tab-panel name="inbox" class="t-yellow">
+        <p class="lede">Captured and waiting for the agent to file. Filing one means
+          marking it, recording the decision, clearing every ❓ it touched and moving
+          the entry — which is why a form post does not do it.</p>
+        <pre id="inbox" class="quiet">nothing captured yet</pre>
+      </wa-tab-panel>
+
+      <!-- **Both halves of the question.** What this project is running, and
+           what it is missing. A panel that lists only the missing releases
+           answers half of it. -->
+      <wa-tab-panel name="releases" class="t-green" id="releases">
+        <p class="lede" id="rel-lede">…</p>
+        <div id="rel-list"></div>
+      </wa-tab-panel>
+    </wa-tab-group>
+
+    <div style="height:var(--wa-space-3xl)"></div>
+  </main>
+</wa-page>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (s) { return document.querySelector(s); };
+  var root = document.documentElement;
+  var esc = function (s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+    });
+  };
+
+  /* Light/dark and the look live in the navigation rail, shared by every page.
+     See `dashboard/chrome.html`. */
+
+  function toast(msg, variant) {
+    var a = Object.assign(document.createElement('wa-callout'), { variant: variant || 'brand' });
+    a.setAttribute('open', '');
+    a.style.cssText = 'position:fixed;inset-block-end:1rem;inset-inline-end:1rem;z-index:9;max-width:24rem';
+    a.textContent = msg;
+    document.body.appendChild(a);
+    setTimeout(function () { a.remove(); }, 2600);
+  }
+
+  /* ── The version, said plainly ───────────────────────────────────────────
+     Two numbers and the distance between them: what this project has, and what
+     the skill on this machine has. When they differ the page does not merely
+     show a different number — it says what the difference contains, because
+     "2.1.3 → 2.2.0" is not something anybody can act on. */
+  function paintVersion(v) {
+    var box = document.getElementById('versionbox');
+    var what = document.getElementById('versionwhat');
+    box.innerHTML = '';
+    what.innerHTML = '';
+    if (!v) return;
+
+    var tag = document.createElement('wa-tag');
+    tag.setAttribute('size', 's');
+    tag.setAttribute('appearance', 'outlined');
+    tag.className = 'num';
+    tag.textContent = 'Docket ' + (v.installed || 'unstamped');
+    box.appendChild(tag);
+
+    /* **The master is the framework, so it is never behind it.** Showing a
+       comparison here — even a passing one — invites somebody to "update" the
+       thing that defines the update. */
+    if (v.master) {
+      document.getElementById('masthead').classList.add('is-master');
+      var m = document.createElement('wa-tag');
+      m.setAttribute('size', 's'); m.setAttribute('variant', 'brand');
+      m.textContent = 'defines this version';
+      box.appendChild(m);
+      what.innerHTML =
+        '<wa-callout variant="brand" style="margin-block-start:var(--wa-space-m)">' +
+        '<wa-icon slot="icon" name="crown"></wa-icon>' +
+        '<strong>This is the master Docket.</strong> A change made here is a release: ' +
+        'bump <code>VERSION</code> and write the <code>CHANGES.md</code> entry in the ' +
+        'same turn. Every project\'s update report is derived from that file.' +
+        '</wa-callout>';
+      return;
+    }
+
+    if (v.unstamped) {
+      var w = document.createElement('wa-tag');
+      w.setAttribute('size', 's'); w.setAttribute('variant', 'warning');
+      w.textContent = 'no .docket-version';
+      box.appendChild(w);
+      what.innerHTML = '<wa-callout variant="warning" open style="margin-block-start:var(--wa-space-m)">' +
+        '<strong>This project cannot say which Docket it has.</strong> ' +
+        'Run <code>./scripts/docket.sh --update --apply</code> — until it is stamped, ' +
+        'an update cannot tell a script this project customised from one that is ' +
+        'merely old, and leaves both alone.</wa-callout>';
+      return;
+    }
+    if (!v.behind) {
+      var ok = document.createElement('span');
+      ok.className = 'quiet';
+      ok.style.fontSize = 'var(--wa-font-size-xs)';
+      ok.textContent = v.current ? 'current' : 'skill not on this machine';
+      box.appendChild(ok);
+      return;
+    }
+
+    var av = document.createElement('wa-tag');
+    av.setAttribute('size', 's'); av.setAttribute('variant', 'warning');
+    av.textContent = v.current + ' available';
+    box.appendChild(av);
+
+    var html = '<wa-callout variant="warning" style="margin-block-start:var(--wa-space-m)">' +
+      '<wa-icon slot="icon" name="circle-up"></wa-icon>' +
+      '<strong>' + v.changes.length + ' release' + (v.changes.length === 1 ? '' : 's') +
+      ' behind.</strong> Run <code>./scripts/docket.sh --update</code> — it reports ' +
+      'first and changes nothing until <code>--apply</code>.' +
+      '<wa-details summary="What is in them" style="margin-block-start:var(--wa-space-xs)">';
+    v.changes.forEach(function (e) {
+      html += '<p style="margin:0 0 .25rem"><b class="code">' + esc(e.version) + '</b> — ' +
+              esc(e.summary) + '</p><ul style="margin:0 0 .75rem;padding-inline-start:1.1rem">' +
+              e.bullets.map(function (b) { return '<li>' + esc(b) + '</li>'; }).join('') +
+              (e.do.length ? e.do.map(function (d) {
+                 return '<li><b>By hand:</b> ' + esc(d) + '</li>'; }).join('') : '') +
+              '</ul>';
+    });
+    what.innerHTML = html + '</wa-details></wa-callout>';
+  }
+
+  /* ── The releases panel ──────────────────────────────────────────────────
+     Every release, newest first, each marked with whether this project has it.
+     The line between "have" and "missing" is the interesting part of the list,
+     so it is drawn rather than implied. */
+  function paintReleases(v) {
+    var lede = $('#rel-lede'), host = $('#rel-list');
+    if (!v || !v.history || !v.history.length) {
+      lede.textContent = 'No framework changelog found on this machine.';
+      host.innerHTML = '';
+      return;
+    }
+    var missing = v.history.filter(function (e) { return !e.have; });
+    lede.textContent = v.master
+      ? 'Every release of the framework. This project defines them — a change here ' +
+        'is a release, and the entry is written in the same turn.'
+      : missing.length
+        ? 'This project is on ' + (v.installed || 'no recorded version') + '. ' +
+          missing.length + ' release' + (missing.length === 1 ? '' : 's') +
+          ' since then, newest first.'
+        : 'This project has every release. ' + v.history.length + ' in total.';
+
+    host.innerHTML = v.history.map(function (e, i) {
+      var first = missing.length && i === missing.length;
+      return (first ? '<p class="rel-rule"><span>on this project since ' +
+                      esc(v.installed || '—') + '</span></p>' : '') +
+        '<wa-details class="rel' + (e.have ? '' : ' rel-missing') + '"' +
+          (e.have ? '' : ' open') + '>' +
+        '<span slot="summary" class="rel-sum">' +
+          '<b class="code">' + esc(e.version) + '</b>' +
+          '<span class="rel-date quiet">' + esc(e.date) + '</span>' +
+          '<span class="rel-what">' + esc(e.summary) + '</span>' +
+          (e.have ? '<wa-tag size="s" variant="success" appearance="outlined">have</wa-tag>'
+                  : '<wa-tag size="s" variant="warning">missing</wa-tag>') +
+        '</span>' +
+        '<ul class="rel-bullets">' +
+          e.bullets.map(function (b) { return '<li>' + esc(b) + '</li>'; }).join('') +
+          e.do.map(function (d) {
+            return '<li class="rel-do"><b>By hand:</b> ' + esc(d) + '</li>'; }).join('') +
+        '</ul></wa-details>';
+    }).join('');
+  }
+
+  /* The rail, the banner and their badges are painted by the shared chrome
+     (`dashboard/chrome.html`), which fetches the same state. What stays here is
+     only what this page has and the others do not: the tab badges. */
+  function badge(id, n) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = n;
+    el.hidden = !n;
+  }
+
+  function paintInbox(text) {
+    var el = $('#inbox');
+    var has = text && text.trim();
+    el.textContent = has ? text : 'nothing captured yet';
+    el.classList.toggle('quiet', !has);
+  }
+
+  function load() {
+    return fetch('/api/state').then(function (r) { return r.json(); }).then(function (s) {
+      var name = s.project.replace(/^The\s+/, '');
+      $('#proj').textContent = name;
+      $('#brandsmall').textContent = name + ' — capture';
+      document.title = name + ' — capture';
+      $('#current').textContent = s.current && s.current !== '—'
+        ? 'Currently ' + s.current : '';
+      paintVersion(s.docket);
+      paintReleases(s.docket);
+      badge('tab-open', s.counts.open);
+      badge('tab-inbox', (s.inbox.match(/^### /gm) || []).length);
+
+      /* A tone per count, and the same hue that count's section wears: open
+         questions are red here and red below, so the tile and the section it
+         summarises are visibly the same thing. */
+      $('#stats').innerHTML = [
+        ['open questions', s.counts.open, 't-red'],
+        ['answered', s.counts.answered, 't-green'],
+        ['decisions', s.counts.decisions, 't-blue'],
+        ['lessons', s.counts.lessons, 't-purple']
+      ].map(function (p) {
+        return '<li class="' + p[2] + (p[1] ? '' : ' nil') + '"><b>' + p[1] +
+               '</b><span>' + p[0] + '</span></li>';
+      }).join('');
+
+      var order = { blocking: 0, soon: 1, whenever: 2 };
+      var qs = s.questions.slice().sort(function (a, b) {
+        return order[a.priority] - order[b.priority];
+      });
+      /* Urgency is a hue, not a 3px edge: blocking reads red across the whole
+         card, needed-soon amber, whenever a quiet grey — sortable by eye from
+         the other side of the desk. */
+      var TONE = { blocking: 't-red', soon: 't-orange', whenever: 't-gray' };
+      $('#questions').innerHTML = qs.length ? qs.map(function (q) {
+        return '<wa-card class="toned ' + TONE[q.priority] + '">' +
+          '<span class="code">' + esc(q.code) + '</span> ' +
+          '<wa-tag size="s" variant="' +
+            (q.priority === 'blocking' ? 'danger' : q.priority === 'soon' ? 'warning' : 'neutral') +
+            '">' + q.priority + '</wa-tag>' +
+          '<p class="q-title">' + esc(q.title) + '</p>' +
+          (q.affects ? '<p class="quiet" style="margin:0 0 .5rem;font-size:var(--wa-font-size-s)">Affects ' + esc(q.affects) + '</p>' : '') +
+          (q.assumption ? '<p class="q-assume"><b>Working assumption:</b> ' + esc(q.assumption) + '</p>' : '') +
+          '<wa-textarea rows="2" resize="auto" data-q="' + esc(q.code) + '" placeholder="Your answer — a sentence is enough"></wa-textarea>' +
+          '<div class="wa-cluster wa-gap-xs" style="margin-block-start:var(--wa-space-xs)">' +
+          '<wa-button size="s" variant="brand" data-answer="' + esc(q.code) + '">Answer</wa-button></div>' +
+          '</wa-card>';
+      }).join('') : '<p class="quiet">No open questions. Unlikely, but pleasant.</p>';
+
+      $('#actions').innerHTML = s.actions.map(function (a) {
+        return '<wa-button size="s" appearance="outlined" data-run="' + esc(a) + '">' + esc(a) + '</wa-button>';
+      }).join('');
+      paintInbox(s.inbox);
+    });
+  }
+
+  function capture(kind, code, text) {
+    return fetch('/api/capture', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kind: kind, code: code, text: text })
+    }).then(function (r) {
+      return r.json().then(function (j) {
+        if (!r.ok) { toast(j.error || 'could not capture', 'danger'); return false; }
+        paintInbox(j.inbox); return true;
+      });
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    if (!e.target || !e.target.closest) return;
+
+    var ans = e.target.closest('[data-answer]');
+    if (ans) {
+      var code = ans.dataset.answer;
+      var ta = document.querySelector('wa-textarea[data-q="' + code + '"]');
+      if (!ta.value.trim()) { ta.focus(); return; }
+      capture('Answer', code, ta.value).then(function (ok) {
+        if (ok) { ta.value = ''; toast(code + ' captured — the agent files it next session', 'success'); }
+      });
+      return;
+    }
+
+    if (e.target.closest('#idea-save')) {
+      var idea = $('#idea');
+      if (!idea.value.trim()) { idea.focus(); return; }
+      capture('Idea', '', idea.value).then(function (ok) {
+        if (ok) { idea.value = ''; toast('idea captured', 'success'); }
+      });
+      return;
+    }
+
+    var run = e.target.closest('[data-run]');
+    if (run) {
+      var name = run.dataset.run;
+      var out = $('#out');
+      out.hidden = false;
+      out.textContent = 'running ' + name + '…';
+      document.querySelectorAll('[data-run]').forEach(function (b) { b.disabled = true; });
+      fetch('/api/run', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: name })
+      }).then(function (r) { return r.json(); }).then(function (j) {
+        out.textContent = j.out || j.error || '(no output)';
+        toast(j.ok ? name + ' passed' : name + ' failed', j.ok ? 'success' : 'danger');
+      }).catch(function (err) {
+        out.textContent = String(err);
+      }).then(function () {
+        document.querySelectorAll('[data-run]').forEach(function (b) { b.disabled = false; });
+        load();
+      });
+    }
+  });
+
+  load();
+  setInterval(load, 30000);
+})();
+</script>
+</body>
+</html>

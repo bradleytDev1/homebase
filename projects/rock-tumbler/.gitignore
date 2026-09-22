@@ -5,3 +5,10 @@ __pycache__/
 build/
 .DS_Store
 firmware/arduino/test/sketch.cpp
+
+# Third-party reference designs downloaded from Printables, kept local only
+# until the owner decides whether to commit them (Q-08). One is CC BY-NC-SA.
+affordable-rock-tumbler-nema17-version-for-cnc-routing-model_files/
+affordable-rock-tumbler-nema17-version-for-cnc-routing-model_files.zip
+rock-tumbler-heavy-duty-adjustable-model_files/
+rock-tumbler-heavy-duty-adjustable-model_files.zip

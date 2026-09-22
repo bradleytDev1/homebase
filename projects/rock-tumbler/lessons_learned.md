@@ -1,4 +1,17 @@
-# Lessons learned
+# Rock tumbler — Lessons Learned
+
+**Traps already hit, and what stops them recurring.** A record of **how each
+one hid** — the ones worth writing down produced *plausible wrong output*
+rather than a crash, because those are the ones that survive testing.
+
+> **A lesson without a check is a lesson you will relearn.** Where a lesson
+> has become a gate, its entry says so on a **Gate:** line. Codes are
+> permanent: `LE-01` always means that lesson.
+
+*Adopted into the Docket 2026-09-22. The group headings (Verification,
+Designing for the long run, …) are kept from the original file; each lesson
+now carries its own `LE` code.*
+
 
 Written while the design was still warm. Most of these cost something to find
 out, and a few of them were embarrassing enough to be worth recording properly.
@@ -7,7 +20,9 @@ out, and a few of them were embarrassing enough to be worth recording properly.
 
 ## Verification
 
-### A structural check is not a syntax check
+## LE-01 — A structural check is not a syntax check
+
+**Gate:** `tools/render.sh` parses the file with OpenSCAD itself; `check-docs.sh` runs it whenever OpenSCAD is installed.
 
 `cad/tumbler.scad` was committed across four sessions and declared
 "structurally verified" every time. The check was a Python script counting
@@ -23,7 +38,7 @@ tool against it, and that check took ninety seconds once it was finally tried.
 > If you find yourself inventing a proxy for "does this work", the proxy is
 > probably the problem. Go and get the actual tool.
 
-### Cross-language muscle memory is the dangerous kind
+## LE-02 — Cross-language muscle memory is the dangerous kind
 
 The parse failure was this:
 
@@ -40,7 +55,9 @@ those two lines looks wrong; they look wrong only in a language you weren't
 thinking in. Be most careful in the languages that *resemble* ones you know
 well.
 
-### A test that can only report success is not a test
+## LE-03 — A test that can only report success is not a test
+
+**Gate:** the self-intersection control in `tools/render.sh`, which must come back non-empty or the whole run fails.
 
 The boolean interference harness — does the barrel collide with the end plates
 or the roller flanges? — returned confident, wrong answers **twice**:
@@ -59,7 +76,7 @@ other result in the run is meaningless.
 > Every verification harness needs at least one case whose answer you already
 > know, and it should be a case that fails loudly if the plumbing is wrong.
 
-### Identical results from different tests are a smell
+## LE-04 — Identical results from different tests are a smell
 
 The first broken harness reported `16280 facets` for two completely different
 intersections. Two unrelated questions returning byte-identical answers is
@@ -67,7 +84,7 @@ almost never a coincidence — it means neither question was actually asked.
 
 Watch for suspiciously equal numbers. They are cheaper to notice than to debug.
 
-### `grep -i error` matches `NoError`
+## LE-05 — `grep -i error` matches `NoError`
 
 The validation script marked all six parts as FAILED because OpenSCAD's
 *success* line is:
@@ -80,7 +97,9 @@ Case-insensitive substring matching on `error` is a trap in any toolchain that
 reports `NoError`, `ErrorCount: 0`, or `errors=0`. Match the tool's actual
 error prefix — `^ERROR:` — not a hopeful substring.
 
-### Empty output is not the same as no output
+## LE-06 — Empty output is not the same as no output
+
+**Gate:** partial. `tools/render.sh` deletes the interference-test target before each run, but its part-export loop does not — a part that rendered empty would be reported `ok` from the previous run's STL. Found 2026-09-22 while adopting the Docket; see **LE-18**.
 
 OpenSCAD writes nothing when a result is empty. Many tools behave this way.
 If your script reads the output file afterwards, it reads whatever was there
@@ -89,7 +108,9 @@ before.
 **Delete the target before you generate it.** One line, and it removes a class
 of silent false-pass.
 
-### Two independent implementations agreeing is real evidence
+## LE-07 — Two independent implementations agreeing is real evidence
+
+**Gate:** none yet — the agreement was checked by eye. ⬜ A gate comparing the OpenSCAD echo to `tumbler_calc.py` would make it permanent (**TB5**).
 
 The cradle geometry is computed twice — once in `tools/tumbler_calc.py` for the
 build sheet, once in `cad/tumbler.scad` for the model. They agree to four
@@ -99,7 +120,9 @@ That agreement is worth far more than either number alone, because the two were
 written at different times in different languages and would have to be wrong
 in exactly the same way to be wrong together.
 
-### Validate the model against something real before writing any code
+## LE-08 — Validate the model against something real before writing any code
+
+**Gate:** `tools/tumbler_calc.py --selftest` asserts the 4.5-inch barrel lands at 48–62 rpm; `check-docs.sh` runs it.
 
 The single best check in the project cost nothing: the critical-speed formula
 `N = 42.3/√D`, run at 45%, predicts **56 rpm** for a 4.5-inch barrel. A Lortone
@@ -113,7 +136,9 @@ cheapest confidence you will ever buy.
 
 ## Designing for the long run
 
-### Systems that run for weeks have their own bug class
+## LE-09 — Systems that run for weeks have their own bug class
+
+**Gate:** `tools/timer1_calc.py --selftest` demonstrates both failures numerically on every run of `check-docs.sh`.
 
 Two faults in the Arduino firmware would have been invisible in every test and
 fatal in week four:
@@ -127,7 +152,7 @@ Neither shows up in a ten-minute bench test. Both were found by asking "what
 does this look like on day 40?" — a question worth asking explicitly of
 anything designed to run unattended.
 
-### Choose the dose variable the physics cares about
+## LE-10 — Choose the dose variable the physics cares about
 
 Every tumbling instruction says "run seven days." Abrasive wear follows
 **Archard's law** — volume removed is proportional to load × *sliding
@@ -140,7 +165,7 @@ problem, engineered storage for it, **and stored the weaker variable**.
 > Before building the machinery to record a number, check you are recording the
 > right number.
 
-### Features couple across subsystems in ways you cannot anticipate
+## LE-11 — Features couple across subsystems in ways you cannot anticipate
 
 Direction reversal was added for load packing and even tyre wear — a control
 decision, in firmware.
@@ -158,7 +183,7 @@ subsystems.
 
 ## Materials and sourcing
 
-### Match the material property to the job, not to convenience
+## LE-12 — Match the material property to the job, not to convenience
 
 TPU was the obvious liner material: printable, tough, wonderfully abrasion
 resistant. But the job is *two* jobs — **damping** and **lift** — and TPU is
@@ -171,7 +196,7 @@ hysteretic damping *and* abrasion resistance. A truck mudflap is nearly free.
 The answer was to split the jobs: **rubber sheet for damping, printed TPU bars
 for geometry.** Cheaper and better than either alone.
 
-### Don't print what you should buy
+## LE-13 — Don't print what you should buy
 
 Three reasons not to print the barrel, each sufficient: layer lines leak over a
 six-week wet run, silicon carbide excavates layer boundaries, and a leaking
@@ -181,7 +206,7 @@ Owning a 3D printer creates a quiet pressure to print everything. The barrel is
 the one component where the commercial product is genuinely better engineering,
 and it carries the project's largest failure risk. Buy it.
 
-### Read the commercial product as a design document
+## LE-14 — Read the commercial product as a design document
 
 Two Amazon listing images were worth more than an hour of thinking:
 
@@ -194,7 +219,7 @@ Two Amazon listing images were worth more than an hour of thinking:
 
 Competitors have already paid for a lot of iteration. The photographs are free.
 
-### Check marketing numbers for internal consistency
+## LE-15 — Check marketing numbers for internal consistency
 
 The barrel claims "up to 75% quieter" and "70 dB → 40 dB" on the same image.
 30 dB is a *thousandfold* reduction in acoustic power, and 40 dB is roughly a
@@ -209,7 +234,7 @@ the claims agree with each other first.
 
 ## Honesty
 
-### Say plainly when the economics don't work
+## LE-16 — Say plainly when the economics don't work
 
 ~$60 of parts against a $170–200 finished machine, for fifteen to twenty-five
 hours of work. That is well under minimum wage.
@@ -218,7 +243,7 @@ Building it is still right — for the instrumentation, the parametric sizing,
 and because building it is the point. But "it's cheaper" is not a reason, and a
 design document that implies otherwise is lying to its reader.
 
-### Distinguish "committed" from "confirmed"
+## LE-17 — Distinguish "committed" from "confirmed"
 
 For four rounds, the CAD was described as verified when it had only been
 *checked*. Writing "this has never actually been run" into the open-items list
@@ -228,3 +253,31 @@ Every document here now separates what was tested from what was merely
 written. `CLAUDE.md` carries an explicit **Open items** list for exactly this
 reason, and right now its most important line is that *nothing has been
 printed yet* — so every clearance in this repo remains nominal.
+
+---
+
+## Found while adopting the Docket
+
+## LE-18 — A fix applied to one loop is not a fix applied to the harness
+
+*Found 2026-09-22, reading `tools/render.sh` to verify a claim about it.*
+
+**LE-06** was learned in `render.sh`'s interference tests: OpenSCAD writes no
+file for an empty result, so a stale file gets recounted. The fix, deleting
+the target first, went into the `facets()` helper those tests use.
+
+The same script's **part-export loop** has the identical shape and never got
+it. It exports each part and then checks `[ -s "$BUILD/$p.stl" ]`. A part
+that rendered empty would leave last run's STL in place and be reported
+`ok` with a plausible facet count. That is the exact false-pass **LE-06**
+describes, still live in the file that taught it.
+
+How it hid: the lesson was written up against the helper where it was
+*noticed*, not against the *pattern*. And every part currently renders
+non-empty, so nothing has exercised the gap.
+
+> When a bug is fixed, search the file for the pattern, not only the line
+> that failed.
+
+**Gate:** ⬜ the fix is a separate change (**TB1**); this entry will say so
+when it lands.
