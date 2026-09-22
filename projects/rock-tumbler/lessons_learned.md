@@ -99,7 +99,7 @@ error prefix — `^ERROR:` — not a hopeful substring.
 
 ## LE-06 — Empty output is not the same as no output
 
-**Gate:** partial. `tools/render.sh` deletes the interference-test target before each run, but its part-export loop does not — a part that rendered empty would be reported `ok` from the previous run's STL. Found 2026-09-22 while adopting the Docket; see **LE-18**.
+**Gate:** `tools/render.sh` deletes every target before generating it — the interference tests since 0.5.0, the part exports since 0.6.1 (**LE-18**).
 
 OpenSCAD writes nothing when a result is empty. Many tools behave this way.
 If your script reads the output file afterwards, it reads whatever was there
@@ -279,5 +279,7 @@ non-empty, so nothing has exercised the gap.
 > When a bug is fixed, search the file for the pattern, not only the line
 > that failed.
 
-**Gate:** ⬜ the fix is a separate change (**TB1**); this entry will say so
-when it lands.
+**Gate:** fixed in 0.6.1 (**TB1**). The export loop now deletes each STL
+before rendering it. Reproduced first: rendering an empty model into an
+existing `part.stl` left the old 12-facet file in place, which the loop would
+have counted as a pass.

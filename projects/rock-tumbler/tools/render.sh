@@ -46,6 +46,9 @@ echo
 echo "== parts =="
 for p in "${PARTS[@]}"; do
     printf "  %-14s " "$p"
+    # Delete first: OpenSCAD writes no file for an empty result, so a stale
+    # STL from the last run would be counted as this run's part (LE-18).
+    rm -f "$BUILD/$p.stl"
     out=$(openscad -D "PART=\"$p\"" -o "$BUILD/$p.stl" "$SCAD" 2>&1)
     # Match OpenSCAD's real error prefix only. A case-insensitive "error"
     # also matches its SUCCESS line, "Status: NoError".

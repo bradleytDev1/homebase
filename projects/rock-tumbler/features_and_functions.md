@@ -130,7 +130,7 @@ MA1      Feature
 
 ### TB — Verification
 
-- ✅ **TB1** `tools/render.sh`: parses the CAD with OpenSCAD, exports every part as a manifold STL, runs interference tests with a control, and writes renders. *Its part-export loop does not delete stale STLs first (**LE-18**)*
+- ✅ **TB1** `tools/render.sh`: parses the CAD with OpenSCAD, exports every part as a manifold STL, runs interference tests with a control, and writes renders. Every target is deleted before it is generated (**LE-18**, fixed 0.6.1)
 - 🔨 **TB2** Arduino compile check (`firmware/arduino/test/`): real ATmega328P headers through a minimal Arduino shim. Passed in the cloud container; **cannot run on this Mac until `avr-gcc` is installed**
 - ✅ **TB3** Firmware self-tests: `firmware/tmc2209.py` and `firmware/main.py --selftest`, the latter a simulated six-week campaign
 - ⬜ **TB4** The project version shown in the upper-right corner of every interface: both calculators' output, `render.sh`'s output, and each firmware's serial banner. Wired to the single `VERSION` file. Required by the owner's standing rule for all projects

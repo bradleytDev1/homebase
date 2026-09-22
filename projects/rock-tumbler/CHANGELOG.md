@@ -1,6 +1,6 @@
 # Rock tumbler — Changelog
 
-**Current: 0.6.0** — designed, computed and verified in software; nothing printed, wired or measured yet.
+**Current: 0.6.1** — designed, computed and verified in software; nothing printed, wired or measured yet.
 
 > Codes in brackets refer to [`features_and_functions.md`](features_and_functions.md).
 > The version is a single constant, in [`VERSION`](VERSION).
@@ -16,6 +16,13 @@ version. Their dates and contents come from the commit record; the version
 numbers themselves are reconstructed.*
 
 ---
+
+## 0.6.1 — 2026-09-22 — `render.sh` no longer counts stale STLs
+
+- The part-export loop in `tools/render.sh` now deletes each STL before
+  rendering it (**TB1**, **LE-18**). OpenSCAD writes no file for an empty
+  result, so a part that rendered empty was reported `ok` from the previous
+  run's file. Reproduced before fixing.
 
 ## 0.6.0 — 2026-09-22 — The Docket adopted
 
